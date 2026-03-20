@@ -107,6 +107,24 @@ body {
     border-color: rgba(124, 154, 184, 0.5);
 }
 
+.header-auth-user {
+    padding: 0.5rem 1rem;
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: var(--text);
+    text-decoration: none;
+    border-radius: 8px;
+    border: 1px solid var(--border);
+    background: rgba(255, 255, 255, 0.05);
+    transition: background 0.2s, border-color 0.2s, color 0.2s;
+}
+
+.header-auth-user:hover {
+    background: rgba(255, 255, 255, 0.1);
+    border-color: rgba(255, 255, 255, 0.2);
+    color: var(--text);
+}
+
 /* Аватар пользователя Telegram (справа при открытии из бота) */
 .tg-user-avatar {
     position: fixed;
