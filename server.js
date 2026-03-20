@@ -136,6 +136,10 @@ app.post('/api/analytics', (req, res) => {
 
 app.use(express.static(path.join(__dirname)));
 
+app.get('/', (req, res) => {
+  res.sendFile(path.join(__dirname, 'index.html'));
+});
+
 app.get('/admin-subscribers.html', (req, res) => {
   res.sendFile(path.join(__dirname, 'admin-subscribers.html'));
 });
