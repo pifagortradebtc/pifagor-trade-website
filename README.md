@@ -2,6 +2,18 @@
 
 Веб-версия приложения Pifagor Trade с той же функциональностью: аналитика, индикаторы, торговые сигналы, обучение, реферальная программа.
 
+## Публикация на GitHub
+
+1. Создайте новый репозиторий на GitHub (например, `pifagor-trade-website`)
+2. Выполните:
+
+```bash
+cd pifagor-trade-website
+git remote add origin https://github.com/ВАШ_АККАУНТ/pifagor-trade-website.git
+git branch -M main
+git push -u origin main
+```
+
 ## Возможности
 
 - **Индикаторы** — доступ к индикаторам TradingView
