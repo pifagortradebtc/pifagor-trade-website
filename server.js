@@ -84,10 +84,16 @@ app.use(express.urlencoded({ extended: true }));
 
 // Динамический конфиг API — страницы получают правильный URL бэкенда
 const API_PUBLIC_URL = (process.env.API_PUBLIC_URL || '').trim();
+const TELEGRAM_LOGIN_BOT = (process.env.TELEGRAM_LOGIN_BOT || '').trim();
+
 app.get('/api-config.js', (req, res) => {
   const base = API_PUBLIC_URL || `${req.protocol}://${req.get('host')}`;
   const apiBase = base.replace(/\/$/, '') + '/api';
-  res.type('application/javascript').send(`window.API_BASE = ${JSON.stringify(apiBase)};`);
+  const vars = [
+    `window.API_BASE = ${JSON.stringify(apiBase)}`,
+    `window.TELEGRAM_LOGIN_BOT = ${JSON.stringify(TELEGRAM_LOGIN_BOT)}`,
+  ];
+  res.type('application/javascript').send(vars.join(';\n') + ';');
 });
 
 // Аналитика: приём событий от мини-приложения

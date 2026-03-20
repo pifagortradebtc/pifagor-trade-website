@@ -28,7 +28,83 @@ body {
     position: relative;
     overflow-x: hidden;
     background: #0f172a;
-    padding-bottom: 4.5rem;
+    padding-bottom: 2rem;
+}
+
+/* Кнопка «Поддержка» справа снизу — фиксированная иконка */
+.support-fab {
+    position: fixed;
+    bottom: 1.5rem;
+    right: 1.5rem;
+    z-index: 1000;
+    width: 56px;
+    height: 56px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(124, 154, 184, 0.9);
+    border: 2px solid var(--accent);
+    border-radius: 50%;
+    color: var(--text);
+    text-decoration: none;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+    transition: background 0.2s, transform 0.2s;
+}
+
+.support-fab:hover {
+    background: var(--accent);
+    transform: scale(1.05);
+}
+
+.support-fab svg {
+    width: 28px;
+    height: 28px;
+}
+
+/* Кнопки Войти и Регистрация — фиксированные в правом верхнем углу */
+.header-auth-bar {
+    position: fixed;
+    top: 0;
+    right: 0;
+    z-index: 1001;
+    padding: 1rem 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.header-auth-btns {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.header-auth-btn {
+    padding: 0.5rem 1rem;
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: var(--text);
+    text-decoration: none;
+    border-radius: 8px;
+    border: 1px solid var(--border);
+    background: rgba(255, 255, 255, 0.05);
+    transition: background 0.2s, border-color 0.2s, color 0.2s;
+}
+
+.header-auth-btn:hover {
+    background: rgba(255, 255, 255, 0.1);
+    border-color: rgba(255, 255, 255, 0.2);
+}
+
+.header-auth-btn-reg {
+    background: rgba(124, 154, 184, 0.2);
+    border-color: rgba(124, 154, 184, 0.4);
+    color: var(--accent);
+}
+
+.header-auth-btn-reg:hover {
+    background: rgba(124, 154, 184, 0.3);
+    border-color: rgba(124, 154, 184, 0.5);
 }
 
 /* Аватар пользователя Telegram (справа при открытии из бота) */
@@ -207,6 +283,231 @@ body {
     font-weight: 400;
 }
 
+/* ========== Главная страница — полная переработка ========== */
+.page-home {
+    max-width: 680px;
+}
+
+.header-home {
+    padding-bottom: 0;
+    border-bottom: none;
+}
+
+/* Hero */
+.hero-home {
+    position: relative;
+    margin-top: 2rem;
+    border-radius: 20px;
+    overflow: hidden;
+    min-height: 340px;
+    display: flex;
+    align-items: flex-end;
+}
+
+.hero-home-bg {
+    position: absolute;
+    inset: 0;
+    background-image: url('images/indicators-bg.png');
+    background-size: cover;
+    background-position: center;
+}
+
+.hero-home-bg::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, rgba(15, 23, 42, 0.98) 0%, rgba(15, 23, 42, 0.5) 50%, rgba(15, 23, 42, 0.2) 100%);
+}
+
+.hero-home-bg::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse 80% 60% at 70% 20%, rgba(124, 154, 184, 0.15) 0%, transparent 60%);
+}
+
+.hero-home-inner {
+    position: relative;
+    z-index: 1;
+    padding: 2.25rem 1.75rem;
+    width: 100%;
+}
+
+.hero-home-eyebrow {
+    font-size: 0.8rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: rgba(255, 255, 255, 0.6);
+    margin-bottom: 0.5rem;
+}
+
+.hero-home-title {
+    font-family: 'Instrument Serif', Georgia, serif;
+    font-size: 2.25rem;
+    font-weight: 400;
+    line-height: 1.2;
+    color: #fff;
+    margin-bottom: 0.75rem;
+}
+
+.hero-home-desc {
+    font-size: 1rem;
+    color: rgba(255, 255, 255, 0.85);
+    line-height: 1.5;
+    margin-bottom: 1.5rem;
+    max-width: 420px;
+}
+
+.hero-home-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+}
+
+.hero-home-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.75rem 1.5rem;
+    font-size: 0.9rem;
+    font-weight: 600;
+    border-radius: 999px;
+    text-decoration: none;
+    transition: all 0.2s ease;
+}
+
+.hero-home-btn-primary {
+    background: #fff;
+    color: #0f172a;
+}
+
+.hero-home-btn-primary:hover {
+    background: rgba(255, 255, 255, 0.95);
+    transform: scale(1.02);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+}
+
+.hero-home-btn-outline {
+    background: transparent;
+    color: #fff;
+    border: 2px solid rgba(255, 255, 255, 0.5);
+}
+
+.hero-home-btn-outline:hover {
+    border-color: #fff;
+    background: rgba(255, 255, 255, 0.1);
+}
+
+/* Горизонтальные навигационные строки (вместо квадратных карточек) */
+.main.main-home {
+    padding-top: 2rem;
+}
+
+.home-nav {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    margin-top: 2rem;
+}
+
+.home-nav-item {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 0.9rem 1.25rem;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 14px;
+    text-decoration: none;
+    color: var(--text);
+    font-size: 1rem;
+    font-weight: 500;
+    transition: all 0.2s ease;
+}
+
+.home-nav-item:hover {
+    background: rgba(255, 255, 255, 0.06);
+    border-color: rgba(124, 154, 184, 0.3);
+    transform: translateX(4px);
+}
+
+.home-nav-item-btn {
+    width: 100%;
+    text-align: left;
+    font-family: inherit;
+    cursor: pointer;
+}
+
+.home-nav-thumb {
+    width: 48px;
+    height: 48px;
+    min-width: 48px;
+    border-radius: 12px;
+    background-color: #1e293b;
+    background-image: var(--nav-bg);
+    background-size: cover;
+    background-position: center;
+}
+
+.home-nav-label {
+    flex: 1;
+}
+
+.home-nav-arrow {
+    font-size: 1.1rem;
+    color: var(--text-muted);
+    transition: transform 0.2s;
+}
+
+.home-nav-item:hover .home-nav-arrow {
+    color: var(--accent);
+    transform: translateX(4px);
+}
+
+/* CTA баннер */
+.home-cta-banner {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-top: 2rem;
+    padding: 1.5rem 1.75rem;
+    background: linear-gradient(135deg, rgba(124, 154, 184, 0.25) 0%, rgba(124, 154, 184, 0.1) 100%);
+    border: 1px solid rgba(124, 154, 184, 0.4);
+    border-radius: 16px;
+    text-decoration: none;
+    color: var(--text);
+    transition: all 0.2s ease;
+}
+
+.home-cta-banner:hover {
+    background: linear-gradient(135deg, rgba(124, 154, 184, 0.35) 0%, rgba(124, 154, 184, 0.15) 100%);
+    border-color: var(--accent);
+    box-shadow: 0 8px 32px rgba(124, 154, 184, 0.2);
+}
+
+.home-cta-banner-text {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--accent);
+}
+
+.home-cta-banner-desc {
+    flex: 1;
+    font-size: 0.9rem;
+    color: var(--text-muted);
+}
+
+.home-cta-banner-arrow {
+    font-size: 1.5rem;
+    color: var(--accent);
+    transition: transform 0.2s;
+}
+
+.home-cta-banner:hover .home-cta-banner-arrow {
+    transform: translateX(6px);
+}
+
 .home-banner {
     display: flex;
     align-items: flex-end;
@@ -277,112 +578,6 @@ body {
     padding: 2.5rem 0;
 }
 
-/* ========== Главная: сетка карточек с картинками ========== */
-/* Фиксированные размеры кнопок (не менять при работе с изображениями):
-   - Сетка: 2 колонки, gap 0.75rem
-   - Обычные карточки: aspect-ratio 1/1 (квадрат)
-   - CTA «Получить всё бесплатно»: aspect-ratio 2.2/1, grid-column 1/-1
-   - border-radius: 24px */
-.home-cards-grid {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 0.75rem;
-    margin-top: 1rem;
-}
-
-.home-card {
-    position: relative;
-    border-radius: 24px;
-    overflow: hidden;
-    text-decoration: none;
-    cursor: pointer;
-    font-family: inherit;
-    display: flex;
-    align-items: flex-end;
-    padding: 0;
-    border: none;
-    transition: transform 0.2s ease;
-}
-
-.home-card-img {
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-    aspect-ratio: 1 / 1;
-}
-
-.home-card-img::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(to top, rgba(0, 0, 0, 0.8) 0%, rgba(0, 0, 0, 0.3) 40%, transparent 100%);
-    pointer-events: none;
-}
-
-.home-card-img::after {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(135deg, var(--neon-green) 0%, transparent 60%);
-    pointer-events: none;
-}
-
-/* Открытый конверт — картинка на всю кнопку */
-.home-card-investors {
-    background-size: cover;
-    background-position: center;
-}
-
-.home-card-investors::before {
-    display: block;
-    background: linear-gradient(to top, rgba(0, 0, 0, 0.7) 0%, transparent 55%);
-}
-
-.home-card-investors::after {
-    display: none;
-}
-
-.home-card-text {
-    position: relative;
-    z-index: 1;
-    padding: 1rem 1.25rem;
-    color: #fff;
-    font-size: 1.05rem;
-    font-weight: 700;
-    text-align: left;
-    text-transform: uppercase;
-    letter-spacing: 0.03em;
-    text-shadow: 0 0 20px rgba(0, 0, 0, 1), 0 0 8px rgba(0, 0, 0, 0.95), 0 2px 4px rgba(0, 0, 0, 0.9);
-    line-height: 1.3;
-    background: linear-gradient(to top, rgba(0, 0, 0, 0.6) 0%, rgba(0, 0, 0, 0.2) 70%, transparent 100%);
-    margin-top: auto;
-}
-
-.home-card:hover {
-    transform: scale(1.02);
-}
-
-.home-card:active {
-    transform: scale(0.98);
-}
-
-.home-card-cta {
-    grid-column: 1 / -1;
-    aspect-ratio: 2.2 / 1;
-    border: 2px solid rgba(124, 154, 184, 0.5);
-    box-shadow: 0 0 20px rgba(124, 154, 184, 0.15);
-}
-
-.home-card-cta:hover {
-    border-color: var(--accent);
-    box-shadow: 0 0 24px rgba(124, 154, 184, 0.25);
-    transform: scale(1.02);
-}
-
-.home-card-cta .home-card-text {
-    font-size: 1.15rem;
-}
-
 /* ========== Кнопки (для других страниц) ========== */
 .btn {
     display: block;
@@ -414,9 +609,121 @@ body {
     background: rgba(124, 154, 184, 0.35);
 }
 
+/* ========== Боковая навигация по разделам ========== */
+.page-with-sidebar {
+    max-width: none !important;
+    min-height: 100vh;
+}
+
+/* Единая ширина контента для всех страниц с сайдбаром (как индикаторы) */
+.page-with-sidebar .page-content-wrap {
+    max-width: 720px;
+}
+
+.section-nav {
+    position: fixed;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 260px;
+    padding: 2rem 1.25rem;
+    background: rgba(15, 23, 42, 0.98);
+    border-right: 1px solid var(--border);
+    overflow-y: auto;
+    z-index: 100;
+}
+
+.section-nav-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    padding-top: 1.5rem;
+}
+
+.section-nav-item {
+    display: block;
+    padding: 0.75rem 1.1rem;
+    font-size: 0.9rem;
+    color: var(--text-muted);
+    text-decoration: none;
+    border-radius: 10px;
+    border: 1px solid transparent;
+    transition: background 0.2s, color 0.2s, border-color 0.2s;
+}
+
+.section-nav-item:hover {
+    background: rgba(255, 255, 255, 0.05);
+    color: var(--text);
+    border-color: rgba(255, 255, 255, 0.08);
+}
+
+.section-nav-item.section-nav-active {
+    background: rgba(124, 154, 184, 0.15);
+    color: var(--accent);
+    font-weight: 600;
+    border-color: rgba(124, 154, 184, 0.25);
+}
+
+/* Кнопка в сайдбаре (автоматизация) — визуально как ссылка */
+button.section-nav-item {
+    width: 100%;
+    text-align: left;
+    background: none;
+    border: 1px solid transparent;
+    font-family: inherit;
+    cursor: pointer;
+}
+
+.page-content-wrap {
+    margin-left: 260px;
+    min-width: 0;
+    max-width: 720px;
+    padding: 3rem 1.5rem;
+    display: flex;
+    flex-direction: column;
+}
+
+@media (max-width: 767px) {
+    .section-nav {
+        left: auto;
+        top: auto;
+        bottom: auto;
+        width: 100%;
+        position: static;
+        max-height: none;
+        border-right: none;
+        border-bottom: 1px solid var(--border);
+        padding: 1rem;
+        overflow-x: auto;
+        overflow-y: hidden;
+    }
+
+    .section-nav-list {
+        flex-direction: row;
+        gap: 0.5rem;
+        flex-wrap: nowrap;
+        padding-top: 0;
+        padding-bottom: 0.25rem;
+    }
+
+    .section-nav-item {
+        flex-shrink: 0;
+        white-space: nowrap;
+        padding: 0.6rem 1rem;
+        font-size: 0.85rem;
+    }
+
+    .page-content-wrap {
+        margin-left: 0;
+        margin-right: 0;
+        padding: 2rem 1.25rem;
+        max-width: none;
+    }
+}
+
 /* ========== Страница индикаторов ========== */
 .page-indicators {
-    max-width: 720px;
+    max-width: none;
 }
 
 .page-title {
@@ -1593,6 +1900,65 @@ details[open] .faq-question::after {
     color: var(--text);
 }
 
+/* ========== Модальное окно входа ========== */
+.login-modal-content {
+    text-align: center;
+    padding: 2rem 1.75rem;
+}
+
+.login-modal-logo {
+    width: 72px;
+    height: 72px;
+    margin: 0 auto 1.25rem;
+    border-radius: 50%;
+    background: var(--accent);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
+
+.login-modal-logo-img {
+    width: 48px;
+    height: 48px;
+    object-fit: contain;
+}
+
+.login-modal-title {
+    font-size: 1.35rem;
+    font-weight: 700;
+    color: var(--text);
+    margin-bottom: 1.5rem;
+}
+
+.login-modal-telegram {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.login-modal-hint {
+    font-size: 0.9rem;
+    color: var(--text-muted);
+    margin-bottom: 1rem;
+}
+
+.btn-telegram-fallback {
+    display: inline-block;
+    padding: 0.75rem 1.5rem;
+    background: #0088cc;
+    color: #fff;
+    border-radius: 999px;
+    text-decoration: none;
+    font-weight: 600;
+    transition: background 0.2s;
+}
+
+.btn-telegram-fallback:hover {
+    background: #0099dd;
+}
+
 /* ========== Модальное окно индикатора ========== */
 .indicator-modal-content {
     max-width: 560px;
@@ -2446,6 +2812,52 @@ details[open] .faq-question::after {
         padding: 2rem 1.25rem;
     }
 
+    .hero-home {
+        min-height: 300px;
+        margin-top: 1.25rem;
+    }
+
+    .hero-home-inner {
+        padding: 1.75rem 1.25rem;
+    }
+
+    .hero-home-title {
+        font-size: 1.85rem;
+    }
+
+    .hero-home-desc {
+        font-size: 0.95rem;
+    }
+
+    .hero-home-actions {
+        flex-direction: column;
+    }
+
+    .hero-home-btn {
+        width: 100%;
+    }
+
+    .home-nav-item {
+        padding: 0.75rem 1rem;
+    }
+
+    .home-nav-thumb {
+        width: 40px;
+        height: 40px;
+        min-width: 40px;
+    }
+
+    .home-cta-banner {
+        flex-wrap: wrap;
+        padding: 1.25rem 1.25rem;
+    }
+
+    .home-cta-banner-desc {
+        order: 3;
+        width: 100%;
+        margin-top: 0.25rem;
+    }
+
     .profile-data-block {
         overflow: visible;
     }
@@ -2460,14 +2872,6 @@ details[open] .faq-question::after {
 
     .indicators-grid {
         grid-template-columns: 1fr;
-    }
-
-    .home-card-text {
-        font-size: 0.95rem;
-    }
-
-    .home-card-cta .home-card-text {
-        font-size: 1.05rem;
     }
 
     .example-video {

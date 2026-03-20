@@ -72,7 +72,8 @@
       var el = e.target.closest('a, button, [data-track]');
       if (!el) return;
       var label = el.getAttribute('data-track') ||
-        (el.querySelector('.home-card-text') && el.querySelector('.home-card-text').textContent) ||
+        (el.querySelector('.home-nav-label') && el.querySelector('.home-nav-label').textContent) ||
+        (el.querySelector('.home-cta-banner-text') && el.querySelector('.home-cta-banner-text').textContent) ||
         (el.querySelector('.home-banner-text') && el.querySelector('.home-banner-text').textContent) ||
         (el.textContent || '').trim().slice(0, 80);
       var href = el.href || '';
