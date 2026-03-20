@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Профиль — Pifagor Trade</title>
+    <link rel="icon" href="images/logo.png" type="image/png">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+    <script src="https://telegram.org/js/telegram-web-app.js" async></script>
+</head>
+<body>
+    <div class="page page-profile">
+        <header class="header header-profile">
+            <div class="header-line-row">
+                <a href="index.html" class="back-link">← Назад</a>
+                <span class="header-line"></span>
+            </div>
+        </header>
+
+        <main class="main main-profile">
+            <section class="profile-card">
+                <div class="profile-avatar-block">
+                    <div class="profile-avatar" id="profile-avatar">
+                        <img id="profile-avatar-img" src="" alt="" class="profile-avatar-img" hidden>
+                        <span class="profile-avatar-placeholder" id="profile-avatar-placeholder">👤</span>
+                    </div>
+                    <div class="profile-name-row">
+                        <span class="profile-checkmark" id="profile-checkmark" hidden aria-label="Реферал подтверждён"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg></span>
+                        <h1 class="profile-name" id="profile-name">Пользователь</h1>
+                    </div>
+                    <p class="profile-handle" id="profile-handle" hidden></p>
+                </div>
+
+                <div class="profile-status">
+                    <p class="profile-status-text" id="profile-status-confirmed">Вы уже подтвердили, что вы реферал.</p>
+                    <p class="profile-status-text" id="profile-status-not-confirmed">Вы ещё не подтвердили, что вы реферал.</p>
+                    <p class="profile-status-hint">Но это очень легко сделать.</p>
+                </div>
+
+                <a href="get-free.html" class="btn btn-profile-confirm" id="profile-confirm-btn" data-track="Подтвердить реферала">Подтвердить</a>
+
+                <div class="profile-data-block" id="profile-data-block" hidden>
+                    <div class="profile-data-row">
+                        <span class="profile-data-label">UID Bybit:</span>
+                        <span class="profile-data-value" id="profile-uid">—</span>
+                    </div>
+                    <div class="profile-data-row">
+                        <span class="profile-data-label">Email:</span>
+                        <span class="profile-data-value" id="profile-email">—</span>
+                    </div>
+                    <div class="profile-data-row">
+                        <span class="profile-data-label">TradingView:</span>
+                        <span class="profile-data-value" id="profile-tradingview">—</span>
+                    </div>
+                    <button type="button" class="btn btn-profile-change btn-profile-change-full" id="profile-change-btn">Изменить</button>
+                </div>
+            </section>
+        </main>
+
+        <div id="profile-change-modal" class="modal" role="dialog" aria-modal="true" hidden>
+            <div class="modal-backdrop" id="profile-change-modal-backdrop"></div>
+            <div class="modal-content modal-content-check">
+                <button type="button" class="modal-close" id="profile-change-modal-close" aria-label="Закрыть">&times;</button>
+                <h2 class="modal-title">Изменить Email и TradingView</h2>
+                <form id="profile-change-form">
+                    <label class="referral-access-label">Email</label>
+                    <input type="email" class="referral-input" id="profile-email-input" placeholder="example@mail.com" required>
+                    <label class="referral-access-label">TradingView</label>
+                    <input type="text" class="referral-input" id="profile-tv-input" placeholder="Например: pifagor trade" required>
+                    <button type="submit" class="btn btn-check">Сохранить</button>
+                </form>
+                <p id="profile-change-result" class="referral-result" role="alert"></p>
+            </div>
+        </div>
+
+        <nav class="bottom-nav" role="navigation">
+            <button type="button" class="bottom-nav-item bottom-nav-back" id="bottom-nav-back" aria-label="Назад">
+                <span class="bottom-nav-icon"><svg viewBox="0 0 24 24"><path d="M19 12H5M12 19l-7-7 7-7"/></svg></span>
+                <span class="bottom-nav-label">Назад</span>
+            </button>
+            <span class="bottom-nav-divider"></span>
+            <a href="index.html" class="bottom-nav-item">
+                <span class="bottom-nav-icon"><svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></span>
+                <span class="bottom-nav-label">Главная</span>
+            </a>
+            <a href="profile.html" class="bottom-nav-item bottom-nav-active" aria-current="page">
+                <span class="bottom-nav-icon"><svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></span>
+                <span class="bottom-nav-label">Профиль</span>
+            </a>
+            <a href="support.html" class="bottom-nav-item">
+                <span class="bottom-nav-icon"><svg viewBox="0 0 24 24"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg></span>
+                <span class="bottom-nav-label">Поддержка</span>
+            </a>
+        </nav>
+    </div>
+
+    <script src="api-config.js"></script>
+    <script>
+    (function() {
+        var apiBase = window.API_BASE || '/api';
+        var tg = window.Telegram && window.Telegram.WebApp;
+        var user = tg && tg.initDataUnsafe && tg.initDataUnsafe.user;
+
+        var nameEl = document.getElementById('profile-name');
+        var handleEl = document.getElementById('profile-handle');
+        var avatarImg = document.getElementById('profile-avatar-img');
+        var avatarPlaceholder = document.getElementById('profile-avatar-placeholder');
+
+        if (user) {
+            if (tg) tg.ready();
+            var displayName = [user.first_name, user.last_name].filter(Boolean).join(' ') || 'Пользователь';
+            nameEl.textContent = displayName;
+            if (user.username) {
+                handleEl.textContent = '@' + user.username;
+                handleEl.removeAttribute('hidden');
+            }
+
+            if (user.photo_url) {
+                avatarImg.src = user.photo_url;
+                avatarImg.alt = displayName;
+                avatarImg.removeAttribute('hidden');
+                avatarPlaceholder.setAttribute('hidden', '');
+            }
+        }
+
+        var isReferral = localStorage.getItem('referral_confirmed') === 'true';
+        var storedUid = localStorage.getItem('referral_uid') || '';
+        var confirmedEl = document.getElementById('profile-status-confirmed');
+        var notConfirmedEl = document.getElementById('profile-status-not-confirmed');
+        var confirmBtn = document.getElementById('profile-confirm-btn');
+        var profileDataBlock = document.getElementById('profile-data-block');
+        var profileCheckmark = document.getElementById('profile-checkmark');
+
+        var hintEl = document.querySelector('.profile-status-hint');
+        if (isReferral) {
+            confirmedEl.style.display = '';
+            notConfirmedEl.style.display = 'none';
+            if (hintEl) hintEl.style.display = 'none';
+            if (confirmBtn) confirmBtn.style.display = 'none';
+            if (profileDataBlock) profileDataBlock.removeAttribute('hidden');
+            if (profileCheckmark) profileCheckmark.removeAttribute('hidden');
+            if (nameEl) { nameEl.textContent = ''; nameEl.style.display = 'none'; }
+            var uidEl = document.getElementById('profile-uid');
+            if (uidEl && storedUid) uidEl.textContent = storedUid;
+        } else {
+            confirmedEl.style.display = 'none';
+            notConfirmedEl.style.display = '';
+            if (hintEl) hintEl.style.display = '';
+            confirmBtn.style.display = '';
+            if (profileCheckmark) profileCheckmark.setAttribute('hidden', '');
+            if (nameEl) nameEl.style.display = '';
+        }
+
+        var loadingSpinnerHtml = '<span class="profile-data-loading-spinner" aria-hidden="true"></span>';
+
+        function setProfileDataLoading(loading) {
+            var emailEl = document.getElementById('profile-email');
+            var tvEl = document.getElementById('profile-tradingview');
+            var uidEl = document.getElementById('profile-uid');
+            if (loading) {
+                if (emailEl) emailEl.innerHTML = loadingSpinnerHtml;
+                if (tvEl) tvEl.innerHTML = loadingSpinnerHtml;
+                if (uidEl) uidEl.innerHTML = loadingSpinnerHtml;
+            }
+        }
+
+        function showProfileData(email, tradingview, uid) {
+            var emailEl = document.getElementById('profile-email');
+            var tvEl = document.getElementById('profile-tradingview');
+            var uidEl = document.getElementById('profile-uid');
+            if (emailEl) { emailEl.textContent = ''; emailEl.textContent = email || '—'; }
+            if (tvEl) { tvEl.textContent = ''; tvEl.textContent = tradingview || '—'; }
+            if (uidEl) uidEl.textContent = (uid || storedUid) || '—';
+        }
+
+        var profileEmailEl = document.getElementById('profile-email');
+        var profileTvEl = document.getElementById('profile-tradingview');
+
+        function getTelegramFromWebApp() {
+            var t = window.Telegram && window.Telegram.WebApp;
+            var u = t && t.initDataUnsafe && t.initDataUnsafe.user;
+            return (u && u.username) ? ('@' + u.username) : '';
+        }
+
+        function waitForTelegramThenLoad(cb) {
+            var attempt = 0;
+            function tryLoad() {
+                var username = getTelegramFromWebApp();
+                if (username) { cb(username); return; }
+                if (++attempt >= 30) {
+                    setProfileDataLoading(false);
+                    showProfileData('—', '—', '');
+                    return;
+                }
+                setTimeout(tryLoad, 200);
+            }
+            tryLoad();
+        }
+
+        function loadReferralProfile(uid, telegram, onDone) {
+            var q = [];
+            if (uid) q.push('uid=' + encodeURIComponent(uid));
+            if (telegram) q.push('telegram=' + encodeURIComponent(telegram));
+            if (q.length === 0) { if (onDone) onDone(null); return; }
+            setProfileDataLoading(true);
+            fetch(apiBase + '/referral-profile?' + q.join('&'))
+                .then(function(r) { return r.json(); })
+                .then(function(data) {
+                    setProfileDataLoading(false);
+                    if (data.success) {
+                        if (data.uid) {
+                            storedUid = data.uid;
+                            localStorage.setItem('referral_uid', data.uid);
+                        }
+                        showProfileData(data.email, data.tradingview, data.uid);
+                    } else {
+                        showProfileData('', '', storedUid || '');
+                    }
+                    if (onDone) onDone(data);
+                })
+                .catch(function() {
+                    setProfileDataLoading(false);
+                    showProfileData('', '', storedUid || '');
+                    if (onDone) onDone(null);
+                });
+        }
+
+        if (isReferral && profileDataBlock) {
+            if (storedUid) {
+                loadReferralProfile(storedUid, null, null);
+            } else {
+                setProfileDataLoading(true);
+                var tgUsername = getTelegramFromWebApp();
+                if (tgUsername) {
+                    loadReferralProfile(null, tgUsername, null);
+                } else {
+                    waitForTelegramThenLoad(function(username) {
+                        loadReferralProfile(null, username, null);
+                    });
+                }
+            }
+        }
+
+        var changeModal = document.getElementById('profile-change-modal');
+        function openChangeModal() {
+            if (changeModal) {
+                var em = profileEmailEl ? profileEmailEl.textContent : '';
+                var tv = profileTvEl ? profileTvEl.textContent : '';
+                document.getElementById('profile-email-input').value = (em && em !== '—') ? em : '';
+                document.getElementById('profile-tv-input').value = (tv && tv !== '—') ? tv : '';
+                document.getElementById('profile-change-result').textContent = '';
+                changeModal.hidden = false;
+                document.body.style.overflow = 'hidden';
+            }
+        }
+        function closeChangeModal() {
+            if (changeModal) { changeModal.hidden = true; document.body.style.overflow = ''; }
+        }
+
+        document.getElementById('profile-change-btn')?.addEventListener('click', openChangeModal);
+        document.getElementById('profile-change-modal-close')?.addEventListener('click', closeChangeModal);
+        document.getElementById('profile-change-modal-backdrop')?.addEventListener('click', closeChangeModal);
+
+        document.getElementById('profile-change-form')?.addEventListener('submit', async function(e) {
+            e.preventDefault();
+            var email = document.getElementById('profile-email-input').value.trim().toLowerCase();
+            var tv = document.getElementById('profile-tv-input').value.trim();
+            var uid = localStorage.getItem('referral_uid') || '';
+            if (!uid) { alert('Сначала загрузите данные по UID'); return; }
+            var resultEl = document.getElementById('profile-change-result');
+            try {
+                var r = await fetch(apiBase + '/referral-update', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ uid: uid, email: email, tradingview: tv })
+                });
+                var data = await r.json();
+                if (data.success) {
+                    if (profileEmailEl) profileEmailEl.textContent = email;
+                    if (profileTvEl) profileTvEl.textContent = tv;
+                    resultEl.className = 'referral-result referral-result-success';
+                    resultEl.textContent = 'Данные обновлены.';
+                    setTimeout(closeChangeModal, 1000);
+                } else {
+                    resultEl.className = 'referral-result referral-result-error';
+                    resultEl.textContent = data.error || 'Ошибка';
+                }
+            } catch (err) {
+                resultEl.className = 'referral-result referral-result-error';
+                resultEl.textContent = 'Ошибка сети';
+            }
+        });
+    })();
+    </script>
+    <script src="api-config.js"></script>
+    <script src="js/analytics.js"></script>
+    <script src="js/page-loading.js"></script>
+</body>
+</html>

@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Подписчики — Pifagor Trade</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .admin-page { max-width: 800px; margin: 2rem auto; padding: 1.5rem; }
+        .admin-title { margin-bottom: 1rem; }
+        .admin-key-form { display: flex; gap: 0.5rem; margin-bottom: 1.5rem; }
+        .admin-key-form input { flex: 1; padding: 0.5rem 0.75rem; border-radius: 6px; border: 1px solid var(--border); background: rgba(255,255,255,0.05); color: var(--text); }
+        .admin-list { background: rgba(30,41,59,0.6); border: 1px solid var(--border); border-radius: 10px; padding: 1rem; }
+        .admin-list-item { padding: 0.5rem 0; border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; }
+        .admin-list-item:last-child { border-bottom: none; }
+        .admin-actions { margin-top: 1rem; display: flex; gap: 0.5rem; flex-wrap: wrap; }
+        .admin-error { color: #f87171; margin-top: 0.5rem; }
+        .admin-count { color: var(--text-muted); font-size: 0.9rem; margin-bottom: 0.5rem; }
+    </style>
+</head>
+<body>
+    <div class="page admin-page">
+        <div class="header-line-row">
+            <a href="index.html" class="back-link back-link-admin">← Назад</a>
+            <span class="header-line"></span>
+        </div>
+        <h1 class="admin-title">Подписчики на мероприятия</h1>
+        <p class="admin-count" id="admin-hint">Введите ADMIN_KEY из .env и нажмите «Загрузить»</p>
+        <form class="admin-key-form" id="admin-form">
+            <input type="password" id="admin-key" placeholder="ADMIN_KEY" autocomplete="off">
+            <button type="submit" class="btn btn-check" id="admin-load-btn">Загрузить</button>
+        </form>
+        <div id="admin-error" class="admin-error"></div>
+        <div class="admin-list" id="admin-list" style="display:none;">
+            <p class="admin-count" id="admin-count"></p>
+            <div id="admin-items"></div>
+            <div class="admin-actions">
+                <button type="button" class="btn btn-check" id="export-csv">Экспорт в CSV</button>
+            </div>
+        </div>
+
+        <nav class="bottom-nav" role="navigation">
+            <button type="button" class="bottom-nav-item bottom-nav-back" id="bottom-nav-back" aria-label="Назад">
+                <span class="bottom-nav-icon"><svg viewBox="0 0 24 24"><path d="M19 12H5M12 19l-7-7 7-7"/></svg></span>
+                <span class="bottom-nav-label">Назад</span>
+            </button>
+            <span class="bottom-nav-divider"></span>
+            <a href="index.html" class="bottom-nav-item">
+                <span class="bottom-nav-icon"><svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></span>
+                <span class="bottom-nav-label">Главная</span>
+            </a>
+            <a href="profile.html" class="bottom-nav-item">
+                <span class="bottom-nav-icon"><svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></span>
+                <span class="bottom-nav-label">Профиль</span>
+            </a>
+            <a href="support.html" class="bottom-nav-item">
+                <span class="bottom-nav-icon"><svg viewBox="0 0 24 24"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg></span>
+                <span class="bottom-nav-label">Поддержка</span>
+            </a>
+        </nav>
+    </div>
+    <script src="api-config.js"></script>
+    <script>
+      (function () {
+        var form = document.getElementById('admin-form');
+        var keyInput = document.getElementById('admin-key');
+        var listEl = document.getElementById('admin-list');
+        var itemsEl = document.getElementById('admin-items');
+        var countEl = document.getElementById('admin-count');
+        var errorEl = document.getElementById('admin-error');
+        var exportBtn = document.getElementById('export-csv');
+
+        var params = new URLSearchParams(location.search);
+        if (params.get('key')) {
+          keyInput.value = params.get('key');
+        }
+
+        var loadBtn = document.getElementById('admin-load-btn');
+
+        function load() {
+          var key = (keyInput && keyInput.value || '').trim();
+          if (!key) {
+            errorEl.textContent = 'Введите ADMIN_KEY';
+            listEl.style.display = 'none';
+            return Promise.resolve();
+          }
+
+          errorEl.textContent = '';
+          if (loadBtn) {
+            loadBtn.disabled = true;
+            loadBtn.classList.add('btn-loading');
+          }
+          var apiBase = window.API_BASE || '/api';
+          return fetch(apiBase + '/subscribers?key=' + encodeURIComponent(key))
+            .then(function (r) {
+              if (!r.ok) throw new Error(r.status === 403 ? 'Неверный ключ' : 'Ошибка загрузки');
+              return r.json();
+            })
+            .then(function (data) {
+              listEl.style.display = 'block';
+              window._subscribersList = data.subscribers || [];
+              if (data.useGoogleSheet) {
+                countEl.textContent = 'Данные сохраняются в Google Таблице';
+                exportBtn.style.display = 'none';
+                if (data.googleSheetUrl) {
+                  itemsEl.innerHTML = '<div class="admin-list-item" style="border-bottom:none;flex-direction:column;align-items:flex-start;gap:0.5rem;"><p style="margin:0;color:var(--text-muted);">Подписчики и рефералы записываются в листы «Путешествия» и «Рефералы».</p><a href="' + data.googleSheetUrl + '" target="_blank" rel="noopener noreferrer" class="btn btn-check" style="display:inline-block;text-decoration:none;">Открыть Google Таблицу</a></div>';
+                } else {
+                  itemsEl.innerHTML = '<div class="admin-list-item" style="border-bottom:none;"><p style="margin:0;color:var(--text-muted);">Настройте GOOGLE_SHEET_URL в .env для ссылки на таблицу.</p></div>';
+                }
+              } else {
+                exportBtn.style.display = '';
+                countEl.textContent = 'Всего: ' + window._subscribersList.length + ' подписчик(ов)';
+                itemsEl.innerHTML = window._subscribersList.map(function (s) {
+                  return '<div class="admin-list-item"><span>' + (s.email || '') + '</span><span style="color:var(--text-muted);font-size:0.85rem">' + (s.date ? s.date.slice(0, 10) : '') + '</span></div>';
+                }).join('');
+              }
+            })
+            .catch(function (err) {
+              errorEl.textContent = err.message || 'Ошибка';
+              listEl.style.display = 'none';
+            })
+            .finally(function () {
+              if (loadBtn) {
+                loadBtn.disabled = false;
+                loadBtn.classList.remove('btn-loading');
+              }
+            });
+        }
+
+        if (form) {
+          form.addEventListener('submit', function (e) {
+            e.preventDefault();
+            load();
+          });
+        }
+
+        if (exportBtn) {
+          exportBtn.addEventListener('click', function () {
+            var list = window._subscribersList || [];
+            if (list.length === 0) {
+              alert('Нет данных для экспорта');
+              return;
+            }
+            var csv = 'email,date\n' + list.map(function (s) {
+              return '"' + (s.email || '').replace(/"/g, '""') + '","' + (s.date || '') + '"';
+            }).join('\n');
+            var blob = new Blob(['\ufeff' + csv], { type: 'text/csv;charset=utf-8' });
+            var a = document.createElement('a');
+            a.href = URL.createObjectURL(blob);
+            a.download = 'subscribers-' + new Date().toISOString().slice(0, 10) + '.csv';
+            a.click();
+            URL.revokeObjectURL(a.href);
+          });
+        }
+      })();
+    </script>
+    <script src="js/page-loading.js"></script>
+</body>
+</html>

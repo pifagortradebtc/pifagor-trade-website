@@ -1,0 +1,580 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Получить всё бесплатно — Pifagor Trade</title>
+    <link rel="icon" href="images/logo.png" type="image/png">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=DM+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <script src="https://telegram.org/js/telegram-web-app.js" async></script>
+</head>
+<body>
+    <div class="page page-get-free">
+        <header class="header">
+            <a href="index.html" class="logo">
+                <img src="images/logo.png" alt="Pifagor Trade" class="logo-icon">
+                <span class="logo-text">Pifagor Trade</span>
+            </a>
+            <p class="tagline">Рыночная аналитика, торговые сигналы и индикаторы</p>
+            <div class="header-line-row">
+                <a href="index.html" class="back-link">← Назад</a>
+                <span class="header-line"></span>
+            </div>
+            <h1 class="page-title page-title-get-free">Рефералам бесплатно</h1>
+        </header>
+
+        <main class="main">
+            <div class="access-card">
+                <p class="access-price">Вы платите мне 0 USDT</p>
+                <p class="access-note access-note-small">При торговле на бирже вы платите комиссию. Если вы мой реферал, то часть потраченной комиссии биржа отдаёт мне. <span class="access-note-highlight">То есть вы не платите ничего сверх.</span> Ваши расходы те же. Но взамен вы получаете множество дополнительных опций, которые я, как разработчик и трейдер, могу предложить вам.</p>
+            </div>
+
+            <section class="referral-check referral-check-block">
+                <h2 class="section-title" id="referral-check-title">Введите свой UID для проверки 👉</h2>
+                <p class="referral-check-hint" id="referral-check-hint">UID необходимо ввести числом, без букв и пробелов. <button type="button" class="btn-uid-help" id="open-uid-help-btn">Что такое UID?</button></p>
+                <form class="referral-check-form" id="referral-form">
+                    <input type="text" class="referral-input" placeholder="UID" id="referral-uid" inputmode="numeric" pattern="[0-9]*" autocomplete="off" required>
+                    <button type="submit" class="btn btn-check" id="referral-check-btn" data-track="Проверить UID">Проверить</button>
+                </form>
+                <div id="referral-result" class="referral-result" role="alert" aria-live="polite"></div>
+            </section>
+
+            <section class="not-referral-block not-referral-block-visual">
+                <h2 class="section-title">Но если вы ещё не мой реферал (Один шаг) ↓</h2>
+                <div class="access-options">
+                    <button type="button" class="btn btn-option btn-option-primary" id="open-register-modal-2">Зарегистрироваться на Bybit</button>
+                    <button type="button" class="btn btn-option" id="open-account-referral-modal">Зарегистрирован, но не ваш реферал</button>
+                </div>
+            </section>
+
+            <section class="faq">
+                <h2 class="faq-title">Вопрос-ответ</h2>
+                <div class="faq-list">
+                    <details class="faq-item" id="faq-transfer-failed">
+                        <summary class="faq-question">Не удалось перенести аккаунт</summary>
+                        <div class="faq-answer">
+                            <p>Очень жаль, такое бывает, если вы давно являетесь чьим-то рефералом. Но выход есть и из этой ситуации.</p>
+                            <ol>
+                                <li>Регистрируете новый аккаунт по реферальной ссылке: <span class="link-copy-row"><a href="https://www.bybit.com/ru-RU/aff-bind?affiliate_id=24722" target="_blank" rel="noopener noreferrer">https://www.bybit.com/ru-RU/aff-bind?affiliate_id=24722</a><button type="button" class="btn-copy-link" aria-label="Скопировать" title="Скопировать">📋</button></span></li>
+                                <li>Далее, заходите в свой старый (верифицированный) аккаунт, переходите в свой профиль, и нажимаете перенести верификацию (Identity Transfer).</li>
+                            </ol>
+                            <div class="faq-images-grid">
+                                <img src="images/transfer-step1.png" alt="Главная → профиль в ByBit" class="uid-help-img">
+                                <img src="images/transfer-step2.png" alt="Кнопка верификации в профиле ByBit" class="uid-help-img">
+                                <img src="images/transfer-step3.png" alt="Меню верификации в ByBit" class="uid-help-img">
+                                <img src="images/transfer-step4.png" alt="Перенести данные верификации в ByBit" class="uid-help-img">
+                            </div>
+                            <p>Перед переносом верификации убедитесь, что ваши сделки закрыты, а средства временно переведены на другой (такой же безопасный) кошелёк, чтобы не решать через поддержку возможные казусы.</p>
+                            <p>Полную информацию о возможных нюансах с переносом аккаунта читайте <span class="link-copy-row"><a href="https://www.bybit.com/ru-RU/help-center/article/How-to-Transfer-Your-Identity-to-Another-Account" target="_blank" rel="noopener noreferrer" class="faq-link">здесь</a><button type="button" class="btn-copy-link" aria-label="Скопировать" title="Скопировать">📋</button></span>.</p>
+                        </div>
+                    </details>
+                    <details class="faq-item" id="faq-uid">
+                        <summary class="faq-question">Что такое UID и где его найти?</summary>
+                        <div class="faq-answer">
+                            <p>UID (User ID) — уникальный числовой идентификатор аккаунта на Bybit.</p>
+                            <h4>Веб-версия</h4>
+                            <p>Наведите курсор на аватар в правом верхнем углу → скопируйте UID из выпадающего меню.</p>
+                            <img src="images/uid-web.png" alt="Где найти UID в веб-версии Bybit" class="uid-help-img">
+                            <h4>Мобильное приложение</h4>
+                            <p>Главная → иконка профиля в левом верхнем углу → UID под именем с иконкой копирования.</p>
+                            <img src="images/uid-mobile.png" alt="Где найти UID в мобильном приложении Bybit" class="uid-help-img">
+                        </div>
+                    </details>
+                    <details class="faq-item" id="faq-bot-not-referral">
+                        <summary class="faq-question">Бот не видит, что я реферал</summary>
+                        <div class="faq-answer">
+                            <p>Возможно, при регистрации потерялся наш реферальный код 24722.</p>
+                            <p>Нажмите на свой аватар в ByBit и проверьте, есть ли в личном кабинете информация о присоединении к нам. Если нет — пишите в поддержку ByBit.</p>
+                            <div class="faq-images-grid">
+                                <img src="images/referral-avatar.png" alt="Где нажать аватар в ByBit" class="uid-help-img">
+                                <img src="images/referral-in-team.png" alt="Проверка статуса реферала в ByBit" class="uid-help-img">
+                                <img src="images/referral-settings.png" alt="Альтернативно: иконка настроек в ByBit" class="uid-help-img">
+                                <img src="images/referral-pifagor-connected.png" alt="Связаны с Pifagor Trade в ByBit" class="uid-help-img">
+                            </div>
+                            <p>Если вы только что стали нашим рефералом - попробуйте сделать запрос через бота через несколько часов, предварительно перезапустив бота.</p>
+                        </div>
+                    </details>
+                </div>
+            </section>
+        </main>
+
+        <nav class="bottom-nav" role="navigation">
+            <button type="button" class="bottom-nav-item bottom-nav-back" id="bottom-nav-back" aria-label="Назад">
+                <span class="bottom-nav-icon"><svg viewBox="0 0 24 24"><path d="M19 12H5M12 19l-7-7 7-7"/></svg></span>
+                <span class="bottom-nav-label">Назад</span>
+            </button>
+            <span class="bottom-nav-divider"></span>
+            <a href="index.html" class="bottom-nav-item">
+                <span class="bottom-nav-icon"><svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></span>
+                <span class="bottom-nav-label">Главная</span>
+            </a>
+            <a href="profile.html" class="bottom-nav-item">
+                <span class="bottom-nav-icon"><svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></span>
+                <span class="bottom-nav-label">Профиль</span>
+            </a>
+            <a href="support.html" class="bottom-nav-item">
+                <span class="bottom-nav-icon"><svg viewBox="0 0 24 24"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg></span>
+                <span class="bottom-nav-label">Поддержка</span>
+            </a>
+        </nav>
+    </div>
+
+    <div id="uid-help-modal" class="modal" role="dialog" aria-modal="true" aria-labelledby="uid-help-modal-title" hidden>
+        <div class="modal-backdrop" id="uid-help-modal-backdrop"></div>
+        <div class="modal-content modal-content-check">
+            <button type="button" class="modal-close" id="uid-help-modal-close" aria-label="Закрыть">&times;</button>
+            <h2 class="modal-title" id="uid-help-modal-title">Что такое UID и где его найти?</h2>
+            <div class="faq-answer">
+                <p>UID (User ID) — уникальный числовой идентификатор аккаунта на Bybit.</p>
+                <h4>Веб-версия</h4>
+                <p>Наведите курсор на аватар в правом верхнем углу → скопируйте UID из выпадающего меню.</p>
+                <img src="images/uid-web.png" alt="Где найти UID в веб-версии Bybit" class="uid-help-img">
+                <h4>Мобильное приложение</h4>
+                <p>Главная → иконка профиля в левом верхнем углу → UID под именем с иконкой копирования.</p>
+                <img src="images/uid-mobile.png" alt="Где найти UID в мобильном приложении Bybit" class="uid-help-img">
+            </div>
+        </div>
+    </div>
+
+    <div id="account-referral-modal" class="modal" role="dialog" aria-modal="true" aria-labelledby="account-referral-modal-title" hidden>
+        <div class="modal-backdrop" id="account-referral-modal-backdrop"></div>
+        <div class="modal-content modal-content-check">
+            <button type="button" class="modal-close" id="account-referral-modal-close" aria-label="Закрыть">&times;</button>
+            <h2 class="modal-title account-referral-title" id="account-referral-modal-title">Не волнуйтесь, перенос займёт одну минуту.</h2>
+            <div class="faq-answer account-referral-content">
+                <p class="account-referral-arrow">↓</p>
+                <img src="images/bybit-aff-bind.png" alt="Форма запроса на участие в комьюнити партнёра Bybit" class="uid-help-img">
+                <p class="account-referral-link-row">
+                    <a href="https://www.bybit.com/ru-RU/aff-bind?affiliate_id=24722" target="_blank" rel="noopener noreferrer" class="faq-link" id="account-referral-link">https://www.bybit.com/ru-RU/aff-bind?affiliate_id=24722</a>
+                    <button type="button" class="btn-copy-link" id="account-referral-copy-btn" aria-label="Скопировать ссылку" title="Скопировать">📋</button>
+                </p>
+                <p><span class="account-referral-hint">(Скопируйте ссылку в браузер, где вы залогинены в Bybit)</span></p>
+            </div>
+        </div>
+    </div>
+
+    <div id="register-modal" class="modal" role="dialog" aria-modal="true" aria-labelledby="modal-title" hidden>
+        <div class="modal-backdrop" id="modal-backdrop"></div>
+        <div class="modal-content">
+            <button type="button" class="modal-close" id="modal-close" aria-label="Закрыть">&times;</button>
+            <h2 class="modal-title" id="modal-title">Стать рефералом очень просто:</h2>
+            <ul class="modal-checklist">
+                <li>Пройти регистрацию и не забыть указать партнёрский код: <strong class="partner-code">24722</strong></li>
+                <li>Пополнить на <strong>100 USDT</strong></li>
+            </ul>
+            <div class="modal-buttons">
+                <a href="https://www.bybit.com/ru-RU/aff-bind?affiliate_id=24722" target="_blank" rel="noopener noreferrer" class="btn btn-modal">Зарегистрироваться на Bybit</a>
+                <a href="https://www.bybit.com/ru-RU/help-center/article/How-to-Add-and-Check-Registered-Affiliate-Code#C" target="_blank" rel="noopener noreferrer" class="btn btn-modal btn-modal-secondary">Я не знаю, как добавить код партнёра</a>
+                <a href="https://www.bybit.com/ru-RU/help-center/article/How-to-Complete-Individual-KYC-Verification" target="_blank" rel="noopener noreferrer" class="btn btn-modal btn-modal-secondary">Я не знаю, как верифицировать аккаунт</a>
+                <a href="https://t.me/pifagor_admin" target="_blank" rel="noopener noreferrer" class="btn btn-modal btn-modal-secondary">Написать админу</a>
+            </div>
+        </div>
+    </div>
+
+    <div id="referral-access-modal" class="modal" role="dialog" aria-modal="true" aria-labelledby="referral-access-title" hidden>
+        <div class="modal-backdrop" id="referral-access-backdrop"></div>
+        <div class="modal-content modal-content-check">
+            <button type="button" class="modal-close" id="referral-access-close" aria-label="Закрыть">&times;</button>
+            <h2 class="modal-title" id="referral-access-title">Получить доступ</h2>
+            <p class="check-modal-hint">Вы подтверждены как реферал. Укажите данные для открытия индикаторов:</p>
+            <form class="referral-access-form" id="referral-access-form">
+                <label class="referral-access-label">Никнейм в TradingView (для открытия индикаторов)</label>
+                <input type="text" class="referral-input" name="tradingview" placeholder="Например: john_trader" required id="referral-access-tradingview">
+                <label class="referral-access-label">Telegram (никнейм или @username)</label>
+                <input type="text" class="referral-input" name="telegram" placeholder="@username или id123456" id="referral-access-telegram">
+                <label class="referral-access-label">Email (для рассылки писем инвесторам)</label>
+                <input type="email" class="referral-input" name="email" placeholder="example@mail.com" required id="referral-access-email">
+                <button type="submit" class="btn btn-check" id="referral-access-btn">Отправить</button>
+            </form>
+            <div id="referral-access-result" class="referral-result" role="alert" aria-live="polite"></div>
+        </div>
+    </div>
+
+    <div id="check-modal" class="modal" role="dialog" aria-modal="true" aria-labelledby="check-modal-title" hidden>
+        <div class="modal-backdrop" id="check-modal-backdrop"></div>
+        <div class="modal-content modal-content-check">
+            <button type="button" class="modal-close" id="check-modal-close" aria-label="Закрыть">&times;</button>
+            <h2 class="modal-title" id="check-modal-title">Проверить, являетесь ли вы рефералом</h2>
+            <p class="check-modal-hint">Введите свой UID с биржи Bybit</p>
+            <form class="referral-check-form" id="check-modal-form">
+                <input type="text" class="referral-input" placeholder="UID" id="check-modal-uid" inputmode="numeric" pattern="[0-9]*" autocomplete="off" required>
+                <button type="submit" class="btn btn-check" id="check-modal-btn">Проверить</button>
+            </form>
+            <div id="check-modal-result" class="referral-result" role="alert" aria-live="polite"></div>
+            <details class="check-modal-uid-help">
+                <summary class="btn btn-modal btn-modal-secondary">Я не знаю, что такое UID</summary>
+                <div class="uid-help-content">
+                    <h4>1. Веб-версия</h4>
+                    <p>Наведите курсор на аватар в правом верхнем углу → скопируйте UID из выпадающего меню.</p>
+                    <img src="images/uid-web.png" alt="Как найти UID в веб-версии Bybit" class="uid-help-img">
+                    <h4>2. Мобильное приложение</h4>
+                    <p>Главная → нажмите на иконку профиля в левом верхнем углу → UID отображается под именем с иконкой копирования.</p>
+                    <img src="images/uid-mobile.png" alt="Как найти UID в мобильном приложении Bybit" class="uid-help-img">
+                </div>
+            </details>
+        </div>
+    </div>
+
+    <script src="api-config.js"></script>
+    <script>
+    (function() {
+      const form = document.getElementById('referral-form');
+      const uidInput = document.getElementById('referral-uid');
+      const checkBtn = document.getElementById('referral-check-btn');
+      const resultEl = document.getElementById('referral-result');
+      const checkTitle = document.getElementById('referral-check-title');
+      const checkHint = document.getElementById('referral-check-hint');
+
+      const apiBase = window.API_BASE || '/api';
+
+      (function initReferralCheckState() {
+        const isConfirmed = localStorage.getItem('referral_confirmed') === 'true';
+        const storedUid = localStorage.getItem('referral_uid') || '';
+        if (isConfirmed && storedUid) {
+          if (checkTitle) checkTitle.textContent = 'Спасибо, вы уже подтвердили, что вы реферал';
+          if (checkHint) checkHint.style.display = 'none';
+          if (uidInput) { uidInput.value = storedUid; uidInput.readOnly = true; }
+          if (checkBtn) {
+            checkBtn.disabled = true;
+            checkBtn.classList.add('btn-check--disabled');
+          }
+        }
+      })();
+
+      function escapeHtml(s) {
+        const div = document.createElement('div');
+        div.textContent = String(s);
+        return div.innerHTML;
+      }
+
+      function showResult(type, title, message, details, extraHtml) {
+        resultEl.className = 'referral-result referral-result-' + type;
+        resultEl.innerHTML = '<div class="referral-result-title">' + escapeHtml(title) + '</div>' +
+          '<p class="referral-result-desc">' + escapeHtml(message) + '</p>' +
+          (details ? '<dl class="referral-result-details">' + details + '</dl>' : '') +
+          (extraHtml || '');
+      }
+
+      form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        if (localStorage.getItem('referral_confirmed') === 'true' && localStorage.getItem('referral_uid')) return;
+        const uid = uidInput.value.trim();
+        if (!uid) return;
+
+        checkBtn.disabled = true;
+        checkBtn.classList.add('btn-loading');
+        checkBtn.textContent = 'Проверка...';
+        resultEl.className = 'referral-result';
+        resultEl.innerHTML = '';
+
+        try {
+          const res = await fetch(apiBase + '/check-referral', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ uid }),
+          });
+          const data = await res.json();
+
+          if (!res.ok) {
+            showResult('error', 'Ошибка', data.error || 'Не удалось выполнить проверку');
+            return;
+          }
+
+          if (data.success && data.isReferral) {
+            try {
+              localStorage.setItem('referral_confirmed', 'true');
+              localStorage.setItem('referral_uid', uid);
+            } catch (e) {}
+            openReferralAccessModal(uid);
+          } else if (data.success && !data.isReferral) {
+            var arrowHtml = '<a href="#not-referral-block" class="referral-result-arrow">↓</a>';
+            showResult('neutral', 'Нет', data.message, null, arrowHtml);
+          } else {
+            showResult('error', 'Ошибка', data.error || data.message || 'Неизвестная ошибка');
+          }
+        } catch (err) {
+          showResult('error', 'Ошибка', 'Не удалось подключиться к серверу. Попробуйте позже или напишите в поддержку.', null, '<p><a href="https://t.me/pifagor_admin" target="_blank" rel="noopener noreferrer" class="referral-result-link">t.me/pifagor_admin</a></p>');
+        } finally {
+          checkBtn.disabled = false;
+          checkBtn.classList.remove('btn-loading');
+          checkBtn.textContent = 'Проверить';
+        }
+      });
+
+      document.querySelectorAll('a[href^="#faq-"]').forEach(function(link) {
+        link.addEventListener('click', function(e) {
+          e.preventDefault();
+          const id = this.getAttribute('href').slice(1);
+          const details = document.getElementById(id);
+          if (details) {
+            details.open = true;
+            details.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          }
+        });
+      });
+
+      var accountReferralModal = document.getElementById('account-referral-modal');
+      var openAccountReferralBtn = document.getElementById('open-account-referral-modal');
+      var accountReferralClose = document.getElementById('account-referral-modal-close');
+      var accountReferralBackdrop = document.getElementById('account-referral-modal-backdrop');
+      if (openAccountReferralBtn && accountReferralModal) {
+        openAccountReferralBtn.addEventListener('click', function() {
+          accountReferralModal.hidden = false;
+          document.body.style.overflow = 'hidden';
+        });
+      }
+      if (accountReferralClose) accountReferralClose.addEventListener('click', function() {
+        accountReferralModal.hidden = true;
+        document.body.style.overflow = '';
+      });
+      if (accountReferralBackdrop) accountReferralBackdrop.addEventListener('click', function() {
+        accountReferralModal.hidden = true;
+        document.body.style.overflow = '';
+      });
+
+      var uidHelpModal = document.getElementById('uid-help-modal');
+      var openUidHelpBtn = document.getElementById('open-uid-help-btn');
+      var uidHelpClose = document.getElementById('uid-help-modal-close');
+      var uidHelpBackdrop = document.getElementById('uid-help-modal-backdrop');
+      if (openUidHelpBtn && uidHelpModal) {
+        openUidHelpBtn.addEventListener('click', function() {
+          uidHelpModal.hidden = false;
+          document.body.style.overflow = 'hidden';
+        });
+      }
+      if (uidHelpClose) uidHelpClose.addEventListener('click', function() {
+        uidHelpModal.hidden = true;
+        document.body.style.overflow = '';
+      });
+      if (uidHelpBackdrop) uidHelpBackdrop.addEventListener('click', function() {
+        uidHelpModal.hidden = true;
+        document.body.style.overflow = '';
+      });
+
+      document.addEventListener('click', function(e) {
+        if (e.target && e.target.classList && e.target.classList.contains('btn-copy-link')) {
+          var btn = e.target;
+          var link = btn.previousElementSibling;
+          if (link && link.tagName === 'A' && link.href) {
+            navigator.clipboard.writeText(link.href).then(function() {
+              var orig = btn.textContent;
+              btn.textContent = '✓';
+              btn.title = 'Скопировано!';
+              setTimeout(function() {
+                btn.textContent = orig;
+                btn.title = 'Скопировать';
+              }, 1500);
+            });
+          }
+        }
+      });
+
+      var referralAccessModal = document.getElementById('referral-access-modal');
+      var referralAccessForm = document.getElementById('referral-access-form');
+      var referralAccessResult = document.getElementById('referral-access-result');
+      var referralAccessBtn = document.getElementById('referral-access-btn');
+      var referralAccessClose = document.getElementById('referral-access-close');
+      var referralAccessBackdrop = document.getElementById('referral-access-backdrop');
+      var currentReferralUid = '';
+
+      function getTelegramFromWebApp() {
+        try {
+          var tg = window.Telegram && window.Telegram.WebApp;
+          var user = tg && tg.initDataUnsafe && tg.initDataUnsafe.user;
+          if (user && user.username) return '@' + user.username;
+          if (user && (user.first_name || user.last_name)) return (user.first_name || '') + ' ' + (user.last_name || '').trim();
+          if (user && user.id) return 'id' + user.id;
+        } catch (e) {}
+        return '';
+      }
+
+      function openReferralAccessModal(uid) {
+        currentReferralUid = uid;
+        referralAccessForm.reset();
+        referralAccessResult.className = 'referral-result';
+        referralAccessResult.innerHTML = '';
+        var telegramInput = document.getElementById('referral-access-telegram');
+        if (telegramInput) {
+          var tg = getTelegramFromWebApp();
+          telegramInput.value = tg || '';
+          telegramInput.placeholder = tg ? '' : '@username или id123456';
+        }
+        referralAccessModal.hidden = false;
+        document.body.style.overflow = 'hidden';
+      }
+
+      function closeReferralAccessModal() {
+        referralAccessModal.hidden = true;
+        document.body.style.overflow = '';
+      }
+
+      referralAccessClose.addEventListener('click', closeReferralAccessModal);
+      referralAccessBackdrop.addEventListener('click', closeReferralAccessModal);
+
+      referralAccessForm.addEventListener('submit', async function(e) {
+        e.preventDefault();
+        var tradingview = (document.getElementById('referral-access-tradingview').value || '').trim();
+        var email = (document.getElementById('referral-access-email').value || '').trim().toLowerCase();
+        var telegramInput = document.getElementById('referral-access-telegram');
+        var telegram = (telegramInput && telegramInput.value || '').trim() || getTelegramFromWebApp();
+        if (!tradingview || !email || !currentReferralUid) return;
+
+        var payload = { uid: currentReferralUid, tradingview: tradingview, telegram: telegram, email: email };
+        if (typeof console !== 'undefined' && console.log) console.log('[referral] sending:', payload);
+
+        referralAccessBtn.disabled = true;
+        referralAccessBtn.classList.add('btn-loading');
+        referralAccessResult.className = 'referral-result';
+        referralAccessResult.innerHTML = '';
+
+        try {
+          var res = await fetch(apiBase + '/referral-access', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ uid: currentReferralUid, tradingview: tradingview, telegram: telegram, email: email }),
+          });
+          var data = await res.json();
+
+          if (!res.ok) {
+            referralAccessResult.className = 'referral-result referral-result-error';
+            referralAccessResult.innerHTML = '<div class="referral-result-title">Ошибка</div><p class="referral-result-desc">' + escapeHtml(data.error || 'Не удалось отправить') + '</p>';
+            return;
+          }
+
+          var msg = data.message || 'Данные приняты. Индикаторы откроются в течение 3 дней. Письмо раз в неделю будет приходить на почту. Ниже ссылка на сигнальный канал.';
+          var linkHtml = '';
+          if (data.inviteLink) {
+            linkHtml = '<div class="referral-invite-link"><a href="' + escapeHtml(data.inviteLink) + '" target="_blank" rel="noopener noreferrer" class="btn btn-invite">Telegram-канал →</a></div>';
+          } else {
+            var hint = data.telegramError || 'В Render → Environment добавьте TELEGRAM_BOT_TOKEN и TELEGRAM_CHAT_ID (или TELEGRAM_SIGNAL_LINK для постоянной ссылки).';
+            linkHtml = '<div class="referral-invite-link referral-invite-missing"><p class="referral-result-desc">Ссылка не сгенерирована. ' + escapeHtml(hint) + '</p></div>';
+          }
+          try { localStorage.setItem('referral_uid', currentReferralUid); } catch (e) {}
+          referralAccessResult.className = 'referral-result referral-result-success';
+          referralAccessResult.innerHTML = '<div class="referral-result-title">Готово!</div><p class="referral-result-desc">' + msg + '</p>' + linkHtml;
+          if (data.inviteLink) {
+            var linkEl = referralAccessResult.querySelector('.btn-invite');
+            if (linkEl) linkEl.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+          }
+        } catch (err) {
+          referralAccessResult.className = 'referral-result referral-result-error';
+          referralAccessResult.innerHTML = '<div class="referral-result-title">Ошибка</div><p class="referral-result-desc">Не удалось подключиться к серверу. Попробуйте позже или напишите в <a href="https://t.me/pifagor_admin" target="_blank" rel="noopener noreferrer" class="referral-result-link">поддержку</a>.</p>';
+        } finally {
+          referralAccessBtn.disabled = false;
+          referralAccessBtn.classList.remove('btn-loading');
+        }
+      });
+
+      var modal = document.getElementById('register-modal');
+      var openBtns = document.querySelectorAll('#open-register-modal-2');
+      var closeBtn = document.getElementById('modal-close');
+      var backdrop = document.getElementById('modal-backdrop');
+      function openModal() {
+        modal.hidden = false;
+        document.body.style.overflow = 'hidden';
+      }
+
+      function closeModal() {
+        modal.hidden = true;
+        document.body.style.overflow = '';
+      }
+
+      openBtns.forEach(function(btn) { btn.addEventListener('click', openModal); });
+      closeBtn.addEventListener('click', closeModal);
+      backdrop.addEventListener('click', closeModal);
+
+      var checkModal = document.getElementById('check-modal');
+      var checkModalClose = document.getElementById('check-modal-close');
+      var checkModalBackdrop = document.getElementById('check-modal-backdrop');
+      var checkModalForm = document.getElementById('check-modal-form');
+      var checkModalUid = document.getElementById('check-modal-uid');
+      var checkModalBtn = document.getElementById('check-modal-btn');
+      var checkModalResult = document.getElementById('check-modal-result');
+
+      function openCheckModal() {
+        checkModal.hidden = false;
+        document.body.style.overflow = 'hidden';
+        checkModalResult.className = 'referral-result';
+        checkModalResult.innerHTML = '';
+      }
+
+      function closeCheckModal() {
+        checkModal.hidden = true;
+        document.body.style.overflow = '';
+      }
+
+      checkModalClose.addEventListener('click', closeCheckModal);
+      checkModalBackdrop.addEventListener('click', closeCheckModal);
+
+      checkModalForm.addEventListener('submit', async function(e) {
+        e.preventDefault();
+        var uid = checkModalUid.value.trim();
+        if (!uid) return;
+
+        checkModalBtn.disabled = true;
+        checkModalBtn.classList.add('btn-loading');
+        checkModalBtn.textContent = 'Проверка...';
+        checkModalResult.className = 'referral-result';
+        checkModalResult.innerHTML = '';
+
+        try {
+          var res = await fetch(apiBase + '/check-referral', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ uid: uid }),
+          });
+          var data = await res.json();
+
+          if (!res.ok) {
+            showResultInModal('error', 'Ошибка', data.error || 'Не удалось выполнить проверку');
+            return;
+          }
+
+          if (data.success && data.isReferral) {
+            try {
+              localStorage.setItem('referral_confirmed', 'true');
+              localStorage.setItem('referral_uid', uid);
+            } catch (e) {}
+            closeCheckModal();
+            openReferralAccessModal(uid);
+          } else if (data.success && !data.isReferral) {
+            var arrowHtml = '<a href="#not-referral-block" class="referral-result-arrow">↓</a>';
+            showResultInModal('neutral', 'Нет', data.message, null, arrowHtml);
+          } else {
+            showResultInModal('error', 'Ошибка', data.error || data.message || 'Неизвестная ошибка');
+          }
+        } catch (err) {
+          showResultInModal('error', 'Ошибка', 'Не удалось подключиться к серверу. Попробуйте позже или напишите в поддержку.');
+        } finally {
+          checkModalBtn.disabled = false;
+          checkModalBtn.classList.remove('btn-loading');
+          checkModalBtn.textContent = 'Проверить';
+        }
+      });
+
+      function showResultInModal(type, title, message, details, extraHtml) {
+        checkModalResult.className = 'referral-result referral-result-' + type;
+        checkModalResult.innerHTML = '<div class="referral-result-title">' + escapeHtml(title) + '</div>' +
+          '<p class="referral-result-desc">' + escapeHtml(message) + '</p>' +
+          (details ? '<dl class="referral-result-details">' + details + '</dl>' : '') +
+          (extraHtml || '');
+      }
+
+      document.addEventListener('click', function(e) {
+        if (e.target.classList.contains('referral-result-arrow')) {
+          e.preventDefault();
+          closeCheckModal();
+          accountReferralModal.hidden = false;
+          document.body.style.overflow = 'hidden';
+        }
+      });
+    })();
+    </script>
+    <script src="api-config.js"></script>
+    <script src="js/analytics.js"></script>
+    <script src="js/page-loading.js"></script>
+</body>
+</html>

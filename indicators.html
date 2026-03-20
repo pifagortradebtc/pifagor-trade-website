@@ -1,0 +1,664 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="referrer" content="strict-origin-when-cross-origin">
+    <title>Индикаторы — Pifagor Trade</title>
+    <link rel="icon" href="images/logo.png" type="image/png">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="page page-indicators">
+        <header class="header">
+            <a href="index.html" class="logo">
+                <img src="images/logo.png" alt="Pifagor Trade" class="logo-icon">
+                <span class="logo-text">Pifagor Trade</span>
+            </a>
+            <p class="tagline">Рыночная аналитика, торговые сигналы и индикаторы</p>
+            <div class="header-line-row">
+                <a href="index.html" class="back-link">← Назад</a>
+                <span class="header-line"></span>
+            </div>
+        </header>
+
+        <main class="main">
+            <h1 class="page-title">Индикаторы</h1>
+            <p class="disclaimer">
+                Это математические модели и паттерны поведения цены, которые я нашёл на графике и зафиксировал в коде. Ни один из них не обещает точной прибыли. Но все они при этом очень полезны, чтобы относиться к рынку хладнокровно, опираясь только на данные и статистику.
+            </p>
+
+            <section class="indicators-video-section">
+                <h2 class="indicators-video-title">Видеообзор индикаторов</h2>
+                <div class="indicators-video-wrap">
+                    <div class="indicators-video-inner">
+                        <iframe
+                            src="https://www.youtube-nocookie.com/embed/fkFu8h00rDM?rel=0"
+                            title="Обзор индикаторов Pifagor Trade"
+                            frameborder="0"
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                            allowfullscreen
+                            referrerpolicy="strict-origin-when-cross-origin"
+                            loading="lazy"
+                        ></iframe>
+                    </div>
+                    <a href="https://youtu.be/fkFu8h00rDM" target="_blank" rel="noopener noreferrer" class="indicators-video-link">Смотреть на YouTube</a>
+                </div>
+            </section>
+
+            <div class="indicators-block">
+                <h2 class="indicators-subtitle">Индикаторы для рефералов</h2>
+                <p class="indicators-hint">Нажмите на индикатор, чтобы узнать о нём больше</p>
+                <div class="indicators-grid">
+                    <button type="button" class="indicator-pill" data-indicator="dno-atr">Дно по ATR</button>
+                    <button type="button" class="indicator-pill" data-indicator="radar">Radar (4h)</button>
+                    <button type="button" class="indicator-pill" data-indicator="btc-mood">BTC MOOD</button>
+                    <button type="button" class="indicator-pill" data-indicator="dca-pifagor">DCA Pifagor 4.0</button>
+                    <button type="button" class="indicator-pill" data-indicator="div-btc-usdt">Div btc/usdt 4h, 12h, 1d</button>
+                    <button type="button" class="indicator-pill" data-indicator="trader-01">Trader 01</button>
+                    <button type="button" class="indicator-pill" data-indicator="buy-more">BUY MORE Safety Trade</button>
+                    <button type="button" class="indicator-pill" data-indicator="mfi-pifagor">MFI Pifagor</button>
+                    <button type="button" class="indicator-pill" data-indicator="money-waterfall">Money waterfall</button>
+                    <button type="button" class="indicator-pill" data-indicator="forever-sma">Forever SMA</button>
+                    <button type="button" class="indicator-pill" data-indicator="hero-eth-btc">Hero eth/btc 12h, 1d</button>
+                    <button type="button" class="indicator-pill" data-indicator="alts-strategy">Alts strategy (Alts 3.6)</button>
+                    <button type="button" class="indicator-pill" data-indicator="opportunity">Opportunity</button>
+                    <button type="button" class="indicator-pill" data-indicator="big-guy">BIG GUY</button>
+                    <button type="button" class="indicator-pill" data-indicator="warm-buy">Warm buy</button>
+                    <button type="button" class="indicator-pill" data-indicator="best-eth-btc">Best eth/btc 12h, 4h</button>
+                    <button type="button" class="indicator-pill" data-indicator="alts-mood">ALTS_Mood – Настроение толпы к этому активу</button>
+                    <button type="button" class="indicator-pill" data-indicator="pifagor-histogram">Pifagor histogram btc/usd Bitstamp 4h, 12h, 1d</button>
+                    <button type="button" class="indicator-pill" data-indicator="bottom-line">Bottom Line</button>
+                </div>
+            </div>
+
+            <a href="get-free.html" class="btn btn-cta-large">Забрать бесплатно</a>
+
+            <section class="faq">
+                <h2 class="faq-title">Вопрос-ответ</h2>
+                <div class="faq-list">
+                    <details class="faq-item">
+                        <summary class="faq-question">Закрыли / Пропал индикатор / Горит красный замок.</summary>
+                        <div class="faq-answer"><p>Необходимо повторно подать данные для открытия индикаторов. Кнопка — «Получить все индикаторы».</p></div>
+                    </details>
+                    <details class="faq-item" id="faq-tradingview-indicators">
+                        <summary class="faq-question">Где найти индикаторы в TradingView?</summary>
+                        <div class="faq-answer">
+                            <p>Индикаторы с ограниченным доступом находятся в TradingView.</p>
+                            <h4>Веб-версия</h4>
+                            <p>Открываем любой график. На верхней панели, над графиком, кнопка Индикаторы. Вкладка «Доступ ограничен».</p>
+                            <h4>Приложение</h4>
+                            <p>Открываем любой график. Снизу графика, рядом с карандашом есть опции. Нажимаем и ищем кнопку Индикаторы, далее «Доступ ограничен».</p>
+                            <div class="faq-images-grid">
+                                <img src="images/tradingview-options.png" alt="Опции рядом с карандашом в TradingView" class="uid-help-img">
+                                <img src="images/tradingview-indicators.png" alt="Кнопка Индикаторы в TradingView" class="uid-help-img">
+                                <img src="images/tradingview-limited-access.png" alt="Вкладка Доступ ограничен в TradingView" class="uid-help-img">
+                            </div>
+                            <p>Если такой вкладки нет, то необходимо выйти из профиля и зайти снова.</p>
+                            <p>Если не помогло, то сбросить Cookies в браузере.</p>
+                            <p>Вкладка появляется ТОЛЬКО после открытия индикаторов.</p>
+                            <p>Индикаторы открываем в течение 3 дней.</p>
+                        </div>
+                    </details>
+                    <details class="faq-item">
+                        <summary class="faq-question">Мне не открыли индикаторы</summary>
+                        <div class="faq-answer"><p>Если с момента вашей подачи не прошел хотя бы 1 день, то пожалуйста ожидайте. В периоды загруженности может уйти до 3 дней на открытие доступов. Еще возможно, что Вы не там искали. Подробнее об этом по кнопке выше: «Где найти индикаторы в TradingView?». Если у Вас прошло уже больше 3 дней, а индикаторов нет, тогда необходимо повторное прохождение процедуры получения индикаторов (даже если Вы уже так делали).</p></div>
+                    </details>
+                    <details class="faq-item">
+                        <summary class="faq-question">Надо покупать подписку на TradingView?</summary>
+                        <div class="faq-answer"><p>Нет. В бесплатной подписке на график одновременно помещается только пара индикаторов, поэтому чтобы смотреть показатели других индикаторов, вам нужно будет удалять предыдущие с графика, менять их местами. Поэтому подписка — это только про удобство использования. На выдачу индикаторов тариф не влияет. Вы в любом случае получите доступ ко всем индикаторам.</p></div>
+                    </details>
+                    <details class="faq-item">
+                        <summary class="faq-question">Как пользоваться индикаторами?</summary>
+                        <div class="faq-answer"><p>Если нажать на наименование индикатора на этой странице, то откроется окно со всей необходимой информацией.</p></div>
+                    </details>
+                </div>
+            </section>
+        </main>
+
+        <nav class="bottom-nav" role="navigation">
+            <button type="button" class="bottom-nav-item bottom-nav-back" id="bottom-nav-back" aria-label="Назад">
+                <span class="bottom-nav-icon"><svg viewBox="0 0 24 24"><path d="M19 12H5M12 19l-7-7 7-7"/></svg></span>
+                <span class="bottom-nav-label">Назад</span>
+            </button>
+            <span class="bottom-nav-divider"></span>
+            <a href="index.html" class="bottom-nav-item">
+                <span class="bottom-nav-icon"><svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></span>
+                <span class="bottom-nav-label">Главная</span>
+            </a>
+            <a href="profile.html" class="bottom-nav-item">
+                <span class="bottom-nav-icon"><svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></span>
+                <span class="bottom-nav-label">Профиль</span>
+            </a>
+            <a href="support.html" class="bottom-nav-item">
+                <span class="bottom-nav-icon"><svg viewBox="0 0 24 24"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg></span>
+                <span class="bottom-nav-label">Поддержка</span>
+            </a>
+        </nav>
+    </div>
+
+    <div class="modal indicator-modal" id="indicator-modal-btc-mood" hidden>
+        <div class="modal-backdrop" data-close-modal></div>
+        <div class="modal-content indicator-modal-content">
+            <button type="button" class="modal-close" data-close-modal aria-label="Закрыть">&times;</button>
+            <h2 class="indicator-modal-title">BTC MOOD</h2>
+            <p class="indicator-modal-desc">Показывает настроение толпы в BTC цветом на графике. Применять только к BLX 1 день!</p>
+            <p class="indicator-modal-video-label">Видеоинструкция 👇</p>
+            <div class="indicator-modal-video-wrap">
+                <iframe
+                    src="https://www.youtube-nocookie.com/embed/Q2XF1Ihcyo4?rel=0"
+                    title="Инструкция BTC MOOD"
+                    frameborder="0"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowfullscreen
+                    referrerpolicy="strict-origin-when-cross-origin"
+                    loading="lazy"
+                ></iframe>
+                <a href="https://www.youtube.com/watch?v=Q2XF1Ihcyo4" target="_blank" rel="noopener noreferrer" class="video-fallback-link">Посмотреть на YouTube</a>
+            </div>
+            <a href="get-free.html" class="btn btn-indicator-get">Получить</a>
+        </div>
+    </div>
+
+    <div class="modal indicator-modal" id="indicator-modal-radar" hidden>
+        <div class="modal-backdrop" data-close-modal></div>
+        <div class="modal-content indicator-modal-content">
+            <button type="button" class="modal-close" data-close-modal aria-label="Закрыть">&times;</button>
+            <h2 class="indicator-modal-title">Radar (4h)</h2>
+            <p class="indicator-modal-desc">Работает с альткоинами на разных таймфреймах. Хорошо комбинируется с Alts / Big Guy / MFI.</p>
+            <p class="indicator-modal-video-label">Видеоинструкция 👇</p>
+            <div class="indicator-modal-video-wrap">
+                <iframe
+                    src="https://www.youtube-nocookie.com/embed/3EgP9n_BtVc?rel=0"
+                    title="Инструкция Radar (4h)"
+                    frameborder="0"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowfullscreen
+                    referrerpolicy="strict-origin-when-cross-origin"
+                    loading="lazy"
+                ></iframe>
+                <a href="https://www.youtube.com/watch?v=3EgP9n_BtVc" target="_blank" rel="noopener noreferrer" class="video-fallback-link">Посмотреть на YouTube</a>
+            </div>
+            <a href="get-free.html" class="btn btn-indicator-get">Получить</a>
+        </div>
+    </div>
+
+    <div class="modal indicator-modal" id="indicator-modal-div-btc-usdt" hidden>
+        <div class="modal-backdrop" data-close-modal></div>
+        <div class="modal-content indicator-modal-content">
+            <button type="button" class="modal-close" data-close-modal aria-label="Закрыть">&times;</button>
+            <h2 class="indicator-modal-title">Div btc/usdt 4h, 12h, 1d</h2>
+            <p class="indicator-modal-desc">Ограниченный доступ. Нажми «Получить» и следуй инструкции на сайте.</p>
+            <p class="indicator-modal-video-label">Видеоинструкция 👇</p>
+            <div class="indicator-modal-video-wrap">
+                <iframe
+                    src="https://www.youtube-nocookie.com/embed/CqDH1ZQVoZI?rel=0"
+                    title="Инструкция Div btc/usdt 4h, 12h, 1d"
+                    frameborder="0"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowfullscreen
+                    referrerpolicy="strict-origin-when-cross-origin"
+                    loading="lazy"
+                ></iframe>
+                <a href="https://www.youtube.com/watch?v=CqDH1ZQVoZI" target="_blank" rel="noopener noreferrer" class="video-fallback-link">Посмотреть на YouTube</a>
+            </div>
+            <a href="get-free.html" class="btn btn-indicator-get">Получить</a>
+        </div>
+    </div>
+
+    <div class="modal indicator-modal" id="indicator-modal" hidden>
+        <div class="modal-backdrop" data-close-modal></div>
+        <div class="modal-content indicator-modal-content">
+            <button type="button" class="modal-close" data-close-modal aria-label="Закрыть">&times;</button>
+            <h2 class="indicator-modal-title">Дно по ATR</h2>
+            <p class="indicator-modal-desc"><em>Индикатор для поиска потенциального дна в средне- и долгосрочной перспективе.</em></p>
+            <div class="indicator-modal-chart">
+                <img src="images/indicator-dno-atr.png" alt="График индикатора Дно по ATR">
+            </div>
+            <p class="indicator-modal-video-label">Видеоинструкция 👇</p>
+            <div class="indicator-modal-video-wrap">
+                <iframe
+                    src="https://www.youtube-nocookie.com/embed/eYO-1A6FZrs?rel=0"
+                    title="Инструкция к индикатору Дно по ATR"
+                    frameborder="0"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowfullscreen
+                    referrerpolicy="strict-origin-when-cross-origin"
+                    loading="lazy"
+                ></iframe>
+                <a href="https://www.youtube.com/watch?v=eYO-1A6FZrs" target="_blank" rel="noopener noreferrer" class="video-fallback-link">Посмотреть на YouTube</a>
+            </div>
+            <a href="get-free.html" class="btn btn-indicator-get">Получить</a>
+        </div>
+    </div>
+
+    <div class="modal indicator-modal" id="indicator-modal-mfi-pifagor" hidden>
+        <div class="modal-backdrop" data-close-modal></div>
+        <div class="modal-content indicator-modal-content">
+            <button type="button" class="modal-close" data-close-modal aria-label="Закрыть">&times;</button>
+            <h2 class="indicator-modal-title">MFI Pifagor</h2>
+            <p class="indicator-modal-desc">Версия MFI с авторскими доработками команды Pifagor: подходит для любого актива и таймфрейма.</p>
+            <p class="indicator-modal-video-label">Видеоинструкция 👇</p>
+            <div class="indicator-modal-video-wrap">
+                <iframe
+                    src="https://www.youtube-nocookie.com/embed/7jUtozyd3pE?rel=0"
+                    title="Инструкция MFI Pifagor"
+                    frameborder="0"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowfullscreen
+                    referrerpolicy="strict-origin-when-cross-origin"
+                    loading="lazy"
+                ></iframe>
+                <a href="https://www.youtube.com/watch?v=7jUtozyd3pE" target="_blank" rel="noopener noreferrer" class="video-fallback-link">Посмотреть на YouTube</a>
+            </div>
+            <a href="get-free.html" class="btn btn-indicator-get">Получить</a>
+        </div>
+    </div>
+
+    <div class="modal indicator-modal" id="indicator-modal-trader-01" hidden>
+        <div class="modal-backdrop" data-close-modal></div>
+        <div class="modal-content indicator-modal-content">
+            <button type="button" class="modal-close" data-close-modal aria-label="Закрыть">&times;</button>
+            <h2 class="indicator-modal-title">Trader 01</h2>
+            <p class="indicator-modal-desc">Легендарный индикатор! 1) Зеленые волны = зона покупки и накопления позиции. 2) Красные волны = зона выхода.</p>
+            <p class="indicator-modal-video-label">Видеоинструкция 👇</p>
+            <div class="indicator-modal-video-wrap">
+                <iframe
+                    src="https://www.youtube-nocookie.com/embed/WXArnaGJAKc?rel=0"
+                    title="Инструкция Trader 01"
+                    frameborder="0"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowfullscreen
+                    referrerpolicy="strict-origin-when-cross-origin"
+                    loading="lazy"
+                ></iframe>
+                <a href="https://www.youtube.com/watch?v=WXArnaGJAKc" target="_blank" rel="noopener noreferrer" class="video-fallback-link">Посмотреть на YouTube</a>
+            </div>
+            <a href="get-free.html" class="btn btn-indicator-get">Получить</a>
+        </div>
+    </div>
+
+    <div class="modal indicator-modal" id="indicator-modal-dca" hidden>
+        <div class="modal-backdrop" data-close-modal></div>
+        <div class="modal-content indicator-modal-content">
+            <button type="button" class="modal-close" data-close-modal aria-label="Закрыть">&times;</button>
+            <h2 class="indicator-modal-title">DCA Pifagor 3.1</h2>
+            <p class="indicator-modal-desc">15 on-chain индикаторов. Позволяет покупать актив к максимально близкой ко дну цене. Для bitcoin, ethereum и альткоинов.</p>
+            <p class="indicator-modal-note">Требуется самостоятельный бектест и риск-менеджмент.</p>
+            <p class="indicator-modal-video-label">Видеоинструкция 👇</p>
+            <div class="indicator-modal-video-wrap">
+                <iframe
+                    src="https://www.youtube-nocookie.com/embed/LyYoyJ7GgMQ?rel=0"
+                    title="Инструкция к индикатору DCA Pifagor 3.1"
+                    frameborder="0"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowfullscreen
+                    referrerpolicy="strict-origin-when-cross-origin"
+                    loading="lazy"
+                ></iframe>
+                <a href="https://www.youtube.com/watch?v=LyYoyJ7GgMQ" target="_blank" rel="noopener noreferrer" class="video-fallback-link">Посмотреть на YouTube</a>
+            </div>
+            <a href="get-free.html" class="btn btn-indicator-get">Получить</a>
+        </div>
+    </div>
+
+    <div class="modal indicator-modal" id="indicator-modal-money-waterfall" hidden>
+        <div class="modal-backdrop" data-close-modal></div>
+        <div class="modal-content indicator-modal-content">
+            <button type="button" class="modal-close" data-close-modal aria-label="Закрыть">&times;</button>
+            <h2 class="indicator-modal-title">Money waterfall</h2>
+            <p class="indicator-modal-desc">On-chain: покупки/продажи крупных игроков. Кульминации часто совпадают с дном/пиком.</p>
+            <div class="indicator-modal-chart">
+                <img src="images/indicator-money-waterfall.png" alt="График индикатора Money waterfall">
+            </div>
+            <p class="indicator-modal-video-label">Видеоинструкция 👇</p>
+            <div class="indicator-modal-video-wrap">
+                <iframe
+                    src="https://www.youtube-nocookie.com/embed/r6OuZVE-OHc?rel=0"
+                    title="Инструкция Money waterfall"
+                    frameborder="0"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowfullscreen
+                    referrerpolicy="strict-origin-when-cross-origin"
+                    loading="lazy"
+                ></iframe>
+                <a href="https://www.youtube.com/watch?v=r6OuZVE-OHc" target="_blank" rel="noopener noreferrer" class="video-fallback-link">Посмотреть на YouTube</a>
+            </div>
+            <a href="get-free.html" class="btn btn-indicator-get">Получить</a>
+        </div>
+    </div>
+
+    <div class="modal indicator-modal" id="indicator-modal-hero-eth-btc" hidden>
+        <div class="modal-backdrop" data-close-modal></div>
+        <div class="modal-content indicator-modal-content">
+            <button type="button" class="modal-close" data-close-modal aria-label="Закрыть">&times;</button>
+            <h2 class="indicator-modal-title">Hero eth/btc 12h, 1d</h2>
+            <p class="indicator-modal-desc">Ограниченный доступ. Нажми «Получить» и следуй инструкции на сайте.</p>
+            <p class="indicator-modal-video-label">Видеоинструкция 👇</p>
+            <div class="indicator-modal-video-wrap">
+                <iframe
+                    src="https://www.youtube-nocookie.com/embed/Y-YHUrqhT6Y?rel=0"
+                    title="Инструкция Hero eth/btc 12h, 1d"
+                    frameborder="0"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowfullscreen
+                    referrerpolicy="strict-origin-when-cross-origin"
+                    loading="lazy"
+                ></iframe>
+                <a href="https://www.youtube.com/watch?v=Y-YHUrqhT6Y" target="_blank" rel="noopener noreferrer" class="video-fallback-link">Посмотреть на YouTube</a>
+            </div>
+            <a href="get-free.html" class="btn btn-indicator-get">Получить</a>
+        </div>
+    </div>
+
+    <div class="modal indicator-modal" id="indicator-modal-buy-more" hidden>
+        <div class="modal-backdrop" data-close-modal></div>
+        <div class="modal-content indicator-modal-content">
+            <button type="button" class="modal-close" data-close-modal aria-label="Закрыть">&times;</button>
+            <h2 class="indicator-modal-title">BUY MORE Safety Trade</h2>
+            <p class="indicator-modal-desc"><em>Индикатор идеален для торговли в рамках тренда.</em></p>
+            <p class="indicator-modal-video-label">Видеоинструкция 👇</p>
+            <div class="indicator-modal-video-wrap">
+                <iframe
+                    src="https://www.youtube-nocookie.com/embed/Bk53lqbDci8?rel=0"
+                    title="Инструкция BUY MORE Safety Trade"
+                    frameborder="0"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowfullscreen
+                    referrerpolicy="strict-origin-when-cross-origin"
+                    loading="lazy"
+                ></iframe>
+                <a href="https://www.youtube.com/watch?v=Bk53lqbDci8" target="_blank" rel="noopener noreferrer" class="video-fallback-link">Посмотреть на YouTube</a>
+            </div>
+            <a href="get-free.html" class="btn btn-indicator-get">Получить</a>
+        </div>
+    </div>
+
+    <div class="modal indicator-modal" id="indicator-modal-forever-sma" hidden>
+        <div class="modal-backdrop" data-close-modal></div>
+        <div class="modal-content indicator-modal-content">
+            <button type="button" class="modal-close" data-close-modal aria-label="Закрыть">&times;</button>
+            <h2 class="indicator-modal-title">Forever SMA</h2>
+            <p class="indicator-modal-desc"><em>Глобальный индикатор для торговли биткоином.</em></p>
+            <p class="indicator-modal-video-label">Видеоинструкция 👇</p>
+            <div class="indicator-modal-video-wrap">
+                <iframe
+                    src="https://www.youtube-nocookie.com/embed/bESbdnP422s?rel=0"
+                    title="Инструкция Forever SMA Revosma"
+                    frameborder="0"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowfullscreen
+                    referrerpolicy="strict-origin-when-cross-origin"
+                    loading="lazy"
+                ></iframe>
+                <a href="https://www.youtube.com/watch?v=bESbdnP422s" target="_blank" rel="noopener noreferrer" class="video-fallback-link">Посмотреть на YouTube</a>
+            </div>
+            <a href="get-free.html" class="btn btn-indicator-get">Получить</a>
+        </div>
+    </div>
+
+    <div class="modal indicator-modal" id="indicator-modal-opportunity" hidden>
+        <div class="modal-backdrop" data-close-modal></div>
+        <div class="modal-content indicator-modal-content">
+            <button type="button" class="modal-close" data-close-modal aria-label="Закрыть">&times;</button>
+            <h2 class="indicator-modal-title">Opportunity</h2>
+            <p class="indicator-modal-desc">Показывает «справедливую стоимость» и зоны, где крупный игрок покупает (зелёный фон) или продаёт (красный фон).</p>
+            <p class="indicator-modal-video-label">Видеоинструкция 👇</p>
+            <div class="indicator-modal-video-wrap">
+                <iframe
+                    src="https://www.youtube-nocookie.com/embed/zB_Hxyan5LA?rel=0"
+                    title="Инструкция Opportunity"
+                    frameborder="0"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowfullscreen
+                    referrerpolicy="strict-origin-when-cross-origin"
+                    loading="lazy"
+                ></iframe>
+                <a href="https://www.youtube.com/watch?v=zB_Hxyan5LA" target="_blank" rel="noopener noreferrer" class="video-fallback-link">Посмотреть на YouTube</a>
+            </div>
+            <a href="get-free.html" class="btn btn-indicator-get">Получить</a>
+        </div>
+    </div>
+
+    <div class="modal indicator-modal" id="indicator-modal-best-eth-btc" hidden>
+        <div class="modal-backdrop" data-close-modal></div>
+        <div class="modal-content indicator-modal-content">
+            <button type="button" class="modal-close" data-close-modal aria-label="Закрыть">&times;</button>
+            <h2 class="indicator-modal-title">Best eth/btc 12h, 4h</h2>
+            <p class="indicator-modal-desc">Ограниченный доступ. Нажми «Получить» и следуй инструкции на сайте.</p>
+            <p class="indicator-modal-video-label">Видеоинструкция 👇</p>
+            <div class="indicator-modal-video-wrap">
+                <iframe
+                    src="https://www.youtube-nocookie.com/embed/Y-YHUrqhT6Y?rel=0"
+                    title="Инструкция Best eth/btc 12h, 4h"
+                    frameborder="0"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowfullscreen
+                    referrerpolicy="strict-origin-when-cross-origin"
+                    loading="lazy"
+                ></iframe>
+                <a href="https://www.youtube.com/watch?v=Y-YHUrqhT6Y" target="_blank" rel="noopener noreferrer" class="video-fallback-link">Посмотреть на YouTube</a>
+            </div>
+            <a href="get-free.html" class="btn btn-indicator-get">Получить</a>
+        </div>
+    </div>
+
+    <div class="modal indicator-modal" id="indicator-modal-alts-strategy" hidden>
+        <div class="modal-backdrop" data-close-modal></div>
+        <div class="modal-content indicator-modal-content">
+            <button type="button" class="modal-close" data-close-modal aria-label="Закрыть">&times;</button>
+            <h2 class="indicator-modal-title">Alts strategy (Alts 3.6)</h2>
+            <p class="indicator-modal-desc">Лучший индикатор для альтов из всех, что я делал.</p>
+            <p class="indicator-modal-video-label">Видеоинструкция 👇</p>
+            <div class="indicator-modal-video-wrap">
+                <iframe
+                    src="https://www.youtube-nocookie.com/embed/yvq8jIiYHTs?rel=0"
+                    title="Инструкция Alts strategy"
+                    frameborder="0"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowfullscreen
+                    referrerpolicy="strict-origin-when-cross-origin"
+                    loading="lazy"
+                ></iframe>
+                <a href="https://www.youtube.com/watch?v=yvq8jIiYHTs" target="_blank" rel="noopener noreferrer" class="video-fallback-link">Посмотреть на YouTube</a>
+            </div>
+            <a href="get-free.html" class="btn btn-indicator-get">Получить</a>
+        </div>
+    </div>
+
+    <div class="modal indicator-modal" id="indicator-modal-bottom-line" hidden>
+        <div class="modal-backdrop" data-close-modal></div>
+        <div class="modal-content indicator-modal-content">
+            <button type="button" class="modal-close" data-close-modal aria-label="Закрыть">&times;</button>
+            <h2 class="indicator-modal-title">Bottom Line</h2>
+            <p class="indicator-modal-desc">Индикатор для поиска конца медвежьего рынка на биткоине.</p>
+            <div class="indicator-modal-chart">
+                <img src="images/indicator-bottom-line.png" alt="График индикатора Bottom Line">
+            </div>
+            <a href="get-free.html" class="btn btn-indicator-get">Получить</a>
+        </div>
+    </div>
+
+    <div class="modal indicator-modal" id="indicator-modal-pifagor-histogram" hidden>
+        <div class="modal-backdrop" data-close-modal></div>
+        <div class="modal-content indicator-modal-content">
+            <button type="button" class="modal-close" data-close-modal aria-label="Закрыть">&times;</button>
+            <h2 class="indicator-modal-title">Pifagor histogram btc/usd Bitstamp 4h, 12h, 1d</h2>
+            <p class="indicator-modal-desc">Теперь можно применять также к альткоинам.</p>
+            <p class="indicator-modal-video-label">Видеоинструкция 👇</p>
+            <div class="indicator-modal-video-wrap">
+                <iframe
+                    src="https://www.youtube-nocookie.com/embed/raC9agjC52c?rel=0"
+                    title="Инструкция Pifagor histogram btc/usd Bitstamp"
+                    frameborder="0"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowfullscreen
+                    referrerpolicy="strict-origin-when-cross-origin"
+                    loading="lazy"
+                ></iframe>
+                <a href="https://www.youtube.com/watch?v=raC9agjC52c" target="_blank" rel="noopener noreferrer" class="video-fallback-link">Посмотреть на YouTube</a>
+            </div>
+            <a href="get-free.html" class="btn btn-indicator-get">Получить</a>
+        </div>
+    </div>
+
+    <div class="modal indicator-modal" id="indicator-modal-alts-mood" hidden>
+        <div class="modal-backdrop" data-close-modal></div>
+        <div class="modal-content indicator-modal-content">
+            <button type="button" class="modal-close" data-close-modal aria-label="Закрыть">&times;</button>
+            <h2 class="indicator-modal-title">ALTS_Mood – Настроение толпы к этому активу</h2>
+            <p class="indicator-modal-desc">Ограниченный доступ. Нажми «Получить» и следуй инструкции на сайте.</p>
+            <p class="indicator-modal-video-label">Видеоинструкция 👇</p>
+            <div class="indicator-modal-video-wrap">
+                <iframe
+                    src="https://www.youtube-nocookie.com/embed/94Ge_mXMc6c?rel=0"
+                    title="Инструкция ALTS_Mood"
+                    frameborder="0"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowfullscreen
+                    referrerpolicy="strict-origin-when-cross-origin"
+                    loading="lazy"
+                ></iframe>
+                <a href="https://www.youtube.com/watch?v=94Ge_mXMc6c" target="_blank" rel="noopener noreferrer" class="video-fallback-link">Посмотреть на YouTube</a>
+            </div>
+            <a href="get-free.html" class="btn btn-indicator-get">Получить</a>
+        </div>
+    </div>
+
+    <div class="modal indicator-modal" id="indicator-modal-warm-buy" hidden>
+        <div class="modal-backdrop" data-close-modal></div>
+        <div class="modal-content indicator-modal-content">
+            <button type="button" class="modal-close" data-close-modal aria-label="Закрыть">&times;</button>
+            <h2 class="indicator-modal-title">Warm buy</h2>
+            <p class="indicator-modal-desc">Ограниченный доступ. Нажми «Получить» и следуй инструкции на сайте.</p>
+            <p class="indicator-modal-video-label">Видеоинструкция 👇</p>
+            <div class="indicator-modal-video-wrap">
+                <iframe
+                    src="https://www.youtube-nocookie.com/embed/zJaI7WO9KyM?rel=0"
+                    title="Инструкция Warm buy"
+                    frameborder="0"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowfullscreen
+                    referrerpolicy="strict-origin-when-cross-origin"
+                    loading="lazy"
+                ></iframe>
+                <a href="https://www.youtube.com/watch?v=zJaI7WO9KyM" target="_blank" rel="noopener noreferrer" class="video-fallback-link">Посмотреть на YouTube</a>
+            </div>
+            <a href="get-free.html" class="btn btn-indicator-get">Получить</a>
+        </div>
+    </div>
+
+    <div class="modal indicator-modal" id="indicator-modal-big-guy" hidden>
+        <div class="modal-backdrop" data-close-modal></div>
+        <div class="modal-content indicator-modal-content">
+            <button type="button" class="modal-close" data-close-modal aria-label="Закрыть">&times;</button>
+            <h2 class="indicator-modal-title">BIG GUY</h2>
+            <p class="indicator-modal-desc">Ограниченный доступ. Нажми «Получить» и следуй инструкции на сайте.</p>
+            <p class="indicator-modal-video-label">Видеоинструкция 👇</p>
+            <div class="indicator-modal-video-wrap">
+                <iframe
+                    src="https://www.youtube-nocookie.com/embed/MZzD8MVp-_0?rel=0"
+                    title="Инструкция BIG GUY"
+                    frameborder="0"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowfullscreen
+                    referrerpolicy="strict-origin-when-cross-origin"
+                    loading="lazy"
+                ></iframe>
+                <a href="https://www.youtube.com/watch?v=MZzD8MVp-_0" target="_blank" rel="noopener noreferrer" class="video-fallback-link">Посмотреть на YouTube</a>
+            </div>
+            <a href="get-free.html" class="btn btn-indicator-get">Получить</a>
+        </div>
+    </div>
+
+    <script>
+      (function () {
+        var modals = {
+          'dno-atr': document.getElementById('indicator-modal'),
+          'btc-mood': document.getElementById('indicator-modal-btc-mood'),
+          'radar': document.getElementById('indicator-modal-radar'),
+          'div-btc-usdt': document.getElementById('indicator-modal-div-btc-usdt'),
+          'trader-01': document.getElementById('indicator-modal-trader-01'),
+          'dca-pifagor': document.getElementById('indicator-modal-dca'),
+          'mfi-pifagor': document.getElementById('indicator-modal-mfi-pifagor'),
+          'money-waterfall': document.getElementById('indicator-modal-money-waterfall'),
+          'hero-eth-btc': document.getElementById('indicator-modal-hero-eth-btc'),
+          'buy-more': document.getElementById('indicator-modal-buy-more'),
+          'forever-sma': document.getElementById('indicator-modal-forever-sma'),
+          'opportunity': document.getElementById('indicator-modal-opportunity'),
+          'big-guy': document.getElementById('indicator-modal-big-guy'),
+          'warm-buy': document.getElementById('indicator-modal-warm-buy'),
+          'best-eth-btc': document.getElementById('indicator-modal-best-eth-btc'),
+          'alts-mood': document.getElementById('indicator-modal-alts-mood'),
+          'alts-strategy': document.getElementById('indicator-modal-alts-strategy'),
+          'pifagor-histogram': document.getElementById('indicator-modal-pifagor-histogram'),
+          'bottom-line': document.getElementById('indicator-modal-bottom-line')
+        };
+        var closeBtns = document.querySelectorAll('[data-close-modal]');
+
+        document.querySelectorAll('[data-indicator]').forEach(function (btn) {
+          var id = btn.getAttribute('data-indicator');
+          var modal = modals[id];
+          if (modal) {
+            btn.addEventListener('click', function () {
+              restoreVideosInModal(modal);
+              modal.hidden = false;
+              document.body.style.overflow = 'hidden';
+            });
+          }
+        });
+
+        function stopVideosInModal(modal) {
+          if (!modal) return;
+          modal.querySelectorAll('iframe').forEach(function (iframe) {
+            if (iframe.src && iframe.src !== 'about:blank') {
+              iframe.dataset.videoSrc = iframe.src;
+            }
+            iframe.src = 'about:blank';
+          });
+        }
+
+        function restoreVideosInModal(modal) {
+          if (!modal) return;
+          modal.querySelectorAll('iframe').forEach(function (iframe) {
+            if (iframe.dataset.videoSrc) {
+              iframe.src = iframe.dataset.videoSrc;
+            }
+          });
+        }
+
+        function closeAllModals() {
+          Object.values(modals).forEach(function (m) {
+            if (m) {
+              stopVideosInModal(m);
+              m.hidden = true;
+            }
+          });
+          document.body.style.overflow = '';
+        }
+
+        closeBtns.forEach(function (btn) {
+          btn.addEventListener('click', closeAllModals);
+        });
+
+        Object.values(modals).forEach(function (modal) {
+          if (modal) {
+            modal.addEventListener('click', function (e) {
+              if (e.target === modal) closeAllModals();
+            });
+          }
+        });
+
+        document.addEventListener('keydown', function (e) {
+          if (e.key === 'Escape') closeAllModals();
+        });
+      })();
+    </script>
+    <script src="api-config.js"></script>
+    <script src="js/analytics.js"></script>
+    <script src="js/page-loading.js"></script>
+</body>
+</html>

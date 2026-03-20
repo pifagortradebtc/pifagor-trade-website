@@ -1,0 +1,15 @@
+services:
+  - type: web
+    name: pifagor-trade-website
+    runtime: node
+    buildCommand: npm install
+    startCommand: npm start
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: BYBIT_API_KEY
+        sync: false
+      - key: BYBIT_API_SECRET
+        sync: false
+      - key: ADMIN_KEY
+        sync: false
