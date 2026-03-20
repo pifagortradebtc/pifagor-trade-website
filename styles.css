@@ -307,7 +307,7 @@ body {
 .hero-home-bg {
     position: absolute;
     inset: 0;
-    background-image: url('images/indicators-bg.png');
+    background-image: url('/images/indicators-bg.png');
     background-size: cover;
     background-position: center;
 }
