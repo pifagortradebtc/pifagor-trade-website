@@ -4,6 +4,28 @@
 
 ---
 
+## Вход через Telegram (Login Widget)
+
+Чтобы кнопка «Войти» показывала виджет «Войти с помощью Telegram»:
+
+1. **В BotFather** (для бота @testminiappifbot или вашего основного бота):
+   - Bot Settings → **Domain** (или Web Login)
+   - Укажите домен: `www.pifagor.trade` ✓ (у вас уже настроено)
+
+2. **Локально** — добавьте в файл `.env`:
+   ```
+   TELEGRAM_LOGIN_BOT=testminiappifbot
+   ```
+   (имя бота **без** символа @)
+
+3. **На Render** — добавьте переменную окружения:
+   - Dashboard → сервис pifagor.trade → **Environment**
+   - Key: `TELEGRAM_LOGIN_BOT`
+   - Value: `testminiappifbot`
+   - Сохраните и дождитесь нового деплоя
+
+---
+
 ## Способ 1: Кнопка меню (рекомендуется)
 
 При нажатии на кнопку слева от поля ввода в чате с ботом откроется сайт.

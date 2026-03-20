@@ -87,6 +87,7 @@ const API_PUBLIC_URL = (process.env.API_PUBLIC_URL || '').trim();
 const TELEGRAM_LOGIN_BOT = (process.env.TELEGRAM_LOGIN_BOT || '').trim();
 
 app.get('/api-config.js', (req, res) => {
+  res.set('Cache-Control', 'no-store, no-cache, must-revalidate');
   const base = API_PUBLIC_URL || `${req.protocol}://${req.get('host')}`;
   const apiBase = base.replace(/\/$/, '') + '/api';
   const vars = [
