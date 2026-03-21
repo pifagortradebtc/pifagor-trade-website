@@ -1267,6 +1267,30 @@ button.section-nav-item {
     overflow: hidden;
 }
 
+.faq-item-link {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.5rem;
+    padding: 0.5rem 0.625rem;
+    font-size: 0.75rem;
+    font-weight: 500;
+    color: var(--text);
+    text-decoration: none;
+    transition: background 0.2s;
+}
+
+.faq-item-link:hover {
+    background: rgba(255, 255, 255, 0.06);
+}
+
+.faq-item-link::after {
+    content: '→';
+    font-size: 0.6rem;
+    color: var(--accent);
+    flex-shrink: 0;
+}
+
 .faq-question {
     padding: 0.5rem 0.625rem;
     font-size: 0.75rem;
@@ -2034,9 +2058,45 @@ details[open] .faq-question::after {
 /* ========== Страница «Получить доступ» ========== */
 /* Получить всё — как индикаторы, единая ширина 720px */
 
-.page-title-get-free {
+.get-free-hero {
     margin-top: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+.page-title-get-free {
+    font-family: 'DM Sans', -apple-system, sans-serif;
+    font-size: 1.25rem;
+    font-weight: 500;
+    line-height: 1.5;
+    margin-top: 0;
     margin-bottom: 0;
+}
+
+.get-free-arrow {
+    display: block;
+    text-align: center;
+    font-size: 1.5rem;
+    line-height: 1.2;
+    margin: 0.35rem 0 0.2rem;
+    color: var(--accent);
+}
+
+.get-free-price {
+    display: inline-block;
+    font-size: 1.6rem;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    margin-top: 0.5rem;
+}
+
+.get-free-price u {
+    text-decoration: underline;
+    text-underline-offset: 2px;
+}
+
+.access-note-why {
+    margin-top: 1.5rem;
+    margin-bottom: 2rem;
 }
 
 .access-card {
@@ -2069,17 +2129,17 @@ details[open] .faq-question::after {
 }
 
 .access-options {
-    margin-top: 1.25rem;
-    padding: 1.25rem;
-    background: rgba(0, 0, 0, 0.3);
-    border: 1px solid var(--border);
-    border-radius: 12px;
+    margin-top: 1rem;
+    padding: 0;
+    background: transparent;
+    border: none;
+    border-radius: 0;
 }
 
 .btn-option {
     display: block;
     width: 100%;
-    padding: 0.9rem 1.25rem;
+    padding: 0.75rem 1rem;
     margin-bottom: 0.5rem;
     background: rgba(255, 255, 255, 0.06);
     border: 1px solid var(--border);
@@ -2109,6 +2169,44 @@ details[open] .faq-question::after {
 
 .btn-option-primary:hover {
     background: rgba(124, 154, 184, 0.55);
+}
+
+.modal-buttons-with-timer {
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 1rem;
+}
+
+.modal-buttons-with-timer .btn-modal {
+    width: auto;
+    flex: 1;
+    min-width: 0;
+}
+
+.register-modal-timer {
+    font-family: 'JetBrains Mono', 'Consolas', monospace;
+    font-size: 0.875rem;
+    font-weight: 400;
+    color: var(--text-muted);
+    min-width: 1.5ch;
+    text-align: center;
+}
+
+.btn-modal {
+    font-family: inherit;
+    cursor: pointer;
+    text-align: center;
+}
+
+.btn-modal:disabled {
+    cursor: default;
+    opacity: 1;
+}
+
+.btn-copy-link-lg {
+    padding: 0.4rem 0.5rem;
+    font-size: 1.1rem;
 }
 
 /* ========== Модальное окно регистрации ========== */
@@ -2607,14 +2705,39 @@ details[open] .faq-question::after {
     min-width: 24px;
 }
 
-.referral-check-block {
+/* Главный блок — Один шаг (регистрация) */
+.not-referral-block-visual {
     padding: 1.5rem;
-    background: rgba(255, 255, 255, 0.02);
+    background: rgba(255, 255, 255, 0.06);
     border: 1px solid var(--border);
+    border-radius: 12px;
+    border-left: 3px solid var(--accent);
+}
+
+.not-referral-block-visual .section-title {
+    font-size: 1.15rem;
+    font-weight: 600;
+    color: var(--text);
+    margin-bottom: 1rem;
+}
+
+.not-referral-block-visual .btn-option {
+    padding: 1rem 1.25rem;
+    font-size: 1rem;
+}
+
+/* Второстепенный блок — «Введите свой UID» */
+.referral-check-block {
+    padding: 1.25rem;
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px dashed var(--border);
     border-radius: 12px;
 }
 
 .referral-check-block .section-title {
+    font-size: 0.95rem;
+    font-weight: 500;
+    color: var(--text-muted);
     margin-bottom: 0.75rem;
 }
 
@@ -2622,15 +2745,9 @@ details[open] .faq-question::after {
     margin-top: 0.25rem;
 }
 
-.not-referral-block-visual {
-    padding: 1.5rem;
-    background: rgba(0, 0, 0, 0.2);
-    border: 1px solid var(--border);
-    border-radius: 12px;
-}
-
-.not-referral-block-visual .section-title {
-    margin-bottom: 0.75rem;
+.referral-check-block .referral-input,
+.referral-check-block .btn-check {
+    opacity: 0.9;
 }
 
 .referral-check-form .btn-check {
@@ -2652,6 +2769,42 @@ details[open] .faq-question::after {
 .account-referral-content p {
     font-size: 1.1rem !important;
     margin-bottom: 0.5rem;
+}
+
+.account-referral-content p.account-referral-hint-small {
+    font-size: 0.75rem !important;
+}
+
+.account-referral-check {
+    color: #22c55e;
+    margin-right: 0.35rem;
+}
+
+.account-referral-num {
+    font-size: 1.1rem;
+    font-weight: 700;
+}
+
+.account-referral-step-row {
+    margin-bottom: 0.5rem;
+}
+
+.account-referral-hint-row {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    flex-wrap: wrap;
+}
+
+.account-referral-hint-small {
+    font-size: 0.75rem;
+    font-family: 'JetBrains Mono', 'Consolas', monospace;
+    color: var(--text-muted);
+    margin-top: 0.15rem;
+}
+
+.account-referral-hint-line2 {
+    margin-bottom: 1rem;
 }
 
 .account-referral-content .faq-link {
