@@ -163,57 +163,6 @@ body {
 }
 
 /* ========== Шапка ========== */
-.header-line-row {
-    display: flex;
-    align-items: center;
-    gap: 0.75rem;
-    margin-top: 1.25rem;
-    margin-bottom: 0;
-    padding-bottom: 1.5rem;
-}
-
-.back-link {
-    flex-shrink: 0;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    padding: 0.875rem 1.5rem;
-    border-radius: 24px;
-    font-size: 1rem;
-    font-weight: 700;
-    color: #fff;
-    text-decoration: none;
-    text-transform: uppercase;
-    letter-spacing: 0.03em;
-    text-shadow: 0 0 12px rgba(0, 0, 0, 0.8), 0 1px 3px rgba(0, 0, 0, 0.9);
-    background: linear-gradient(135deg, rgba(30, 50, 70, 0.98) 0%, rgba(15, 25, 40, 0.98) 100%);
-    border: 1px solid rgba(124, 154, 184, 0.3);
-    transition: all 0.2s ease;
-}
-
-.back-link:hover {
-    background-color: rgba(30, 45, 65, 0.95);
-    border-color: rgba(124, 154, 184, 0.4);
-    transform: scale(1.02);
-}
-
-.back-link:active {
-    transform: scale(0.98);
-}
-
-.header-line {
-    flex: 1;
-    height: 1px;
-    min-width: 0;
-    background: var(--border);
-}
-
-.admin-page .header-line-row {
-    margin-top: 0;
-    margin-bottom: 1.5rem;
-}
-
-
 .header-top-row {
     display: flex;
     align-items: center;
@@ -246,22 +195,6 @@ body {
 .header {
     padding-bottom: 2rem;
     border-bottom: 1px solid var(--border);
-}
-
-/* Страницы с кнопкой «Назад»: одна линия справа от кнопки, без второй линии снизу */
-.header:has(.header-line-row) {
-    padding-bottom: 0;
-    border-bottom: none;
-}
-
-.header:has(.header-line-row) .header-line-row {
-    margin-top: 2.25rem;
-    padding-bottom: 1.125rem;
-}
-
-/* Центрируем блок «Назад» между слоганом и заголовком */
-.header:has(.header-line-row) + .main {
-    padding-top: 1.125rem;
 }
 
 .logo {
@@ -1183,7 +1116,8 @@ details[open] .faq-question::after {
     margin-top: 0.75rem;
     font-size: 0.9rem;
     color: var(--accent);
-    text-decoration: none;
+    text-decoration: underline;
+    text-underline-offset: 3px;
     transition: opacity 0.2s;
 }
 
@@ -1934,7 +1868,8 @@ details[open] .faq-question::after {
     height: 72px;
     margin: 0 auto 1.25rem;
     border-radius: 50%;
-    background: var(--accent);
+    background: #000;
+    border: 1px solid rgba(198, 152, 79, 0.5);
     display: flex;
     align-items: center;
     justify-content: center;
