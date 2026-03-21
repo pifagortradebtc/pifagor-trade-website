@@ -774,6 +774,10 @@ body {
     flex: 1;
 }
 
+.section-nav-auth {
+    display: none;
+}
+
 .section-nav-footer {
     margin-top: auto;
     padding-top: 2rem;
@@ -896,41 +900,38 @@ button.section-nav-item {
 }
 
 @media (max-width: 767px) {
-    /* Мобильный top-bar: логотип + hamburger + Войти */
+    /* Мобильный fixed header — баннер крупнее */
     body.has-sidebar .site-top-bar {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
+        display: block;
         position: fixed;
         top: 0;
         left: 0;
         right: 0;
-        height: 56px;
-        padding: 0 calc(1rem + env(safe-area-inset-right)) 0 calc(1rem + env(safe-area-inset-left));
-        padding-top: env(safe-area-inset-top);
-        background: rgba(15, 23, 42, 0.98);
-        border-bottom: 1px solid var(--border);
+        height: 100px;
+        padding: env(safe-area-inset-top) 0 0;
         z-index: 1102;
         -webkit-tap-highlight-color: transparent;
+        overflow: hidden;
     }
 
     body.has-sidebar .mobile-logo {
-        display: flex;
-        flex: 1;
-        min-width: 0;
-        align-items: center;
-        justify-content: flex-start;
+        display: block;
+        width: 100%;
+        height: 100%;
+        position: relative;
     }
 
     body.has-sidebar .mobile-logo-banner {
-        height: 36px;
-        width: auto;
-        max-width: 100%;
-        object-fit: contain;
-        object-position: left center;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        object-position: center top;
     }
 
     body.has-sidebar .mobile-menu-btn {
+        position: absolute;
+        top: env(safe-area-inset-top);
+        right: 0.75rem;
         display: flex;
         flex-direction: column;
         justify-content: center;
@@ -938,8 +939,9 @@ button.section-nav-item {
         width: 44px;
         height: 44px;
         padding: 0;
-        background: none;
+        background: rgba(0, 0, 0, 0.4);
         border: none;
+        border-radius: 8px;
         cursor: pointer;
         color: var(--text);
         -webkit-tap-highlight-color: transparent;
@@ -967,23 +969,20 @@ button.section-nav-item {
     }
 
     body.has-sidebar .site-top-bar .header-auth-bar {
-        position: static;
-        padding: 0;
-        flex-direction: row;
-        align-items: center;
-        margin-left: auto;
-    }
-
-    body.has-sidebar .header-auth-bar {
         display: none;
     }
 
-    body.has-sidebar .site-top-bar .header-auth-bar {
+    body.has-sidebar .section-nav-auth {
         display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+        padding-top: 0.5rem;
+        border-top: 1px solid rgba(255, 255, 255, 0.08);
+        margin-top: 0.5rem;
     }
 
-    body.has-sidebar .site-top-bar .header-auth-reset {
-        display: none;
+    body.has-sidebar .section-nav-auth .section-nav-item {
+        width: 100%;
     }
 
     /* Backdrop при открытом меню — не перекрывает панель навигации */
@@ -1009,7 +1008,7 @@ button.section-nav-item {
     /* Сайдбар — выдвижная панель слева, ниже шапки */
     body.has-sidebar .section-nav {
         position: fixed;
-        top: calc(56px + env(safe-area-inset-top));
+        top: calc(100px + env(safe-area-inset-top));
         left: 0;
         bottom: 0;
         width: min(300px, 85vw);
@@ -1103,7 +1102,18 @@ button.section-nav-item {
     }
 
     body.has-sidebar .page-content-wrap {
-        padding-top: calc(56px + env(safe-area-inset-top) + 1.5rem);
+        padding-top: calc(100px + env(safe-area-inset-top) + 1.5rem);
+    }
+
+    /* Скрыть баннер в контенте — он в fixed header */
+    .header-banner .header-banner-link,
+    .header-banner .tagline {
+        display: none;
+    }
+
+    .header-banner {
+        padding-bottom: 1rem;
+        border-bottom: none;
     }
 
     .header-auth-bar {
