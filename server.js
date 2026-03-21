@@ -84,7 +84,6 @@ app.use(express.urlencoded({ extended: true }));
 
 // Динамический конфиг API — страницы получают правильный URL бэкенда
 const API_PUBLIC_URL = (process.env.API_PUBLIC_URL || '').trim();
-const ANALYTICS_API_URL = (process.env.ANALYTICS_API_URL || '').trim(); // URL для отправки аналитики (напр. мини-апп)
 const TELEGRAM_LOGIN_BOT = (process.env.TELEGRAM_LOGIN_BOT || '').trim();
 const TELEGRAM_LOGIN_BOT_FALLBACK = 'testminiappifbot';
 
@@ -92,13 +91,11 @@ app.get('/api-config.js', (req, res) => {
   res.set('Cache-Control', 'no-store, no-cache, must-revalidate');
   const base = API_PUBLIC_URL || `${req.protocol}://${req.get('host')}`;
   const apiBase = base.replace(/\/$/, '') + '/api';
-  const analyticsBase = ANALYTICS_API_URL ? ANALYTICS_API_URL.replace(/\/$/, '') : apiBase;
   const host = (req.get('host') || '').toLowerCase();
   const isLocalhost = host.startsWith('localhost') || host.startsWith('127.0.0.1');
   const botForClient = TELEGRAM_LOGIN_BOT || (isLocalhost ? TELEGRAM_LOGIN_BOT_FALLBACK : '');
   const vars = [
     `window.API_BASE = ${JSON.stringify(apiBase)}`,
-    `window.ANALYTICS_API_URL = ${JSON.stringify(analyticsBase)}`,
     `window.TELEGRAM_LOGIN_BOT = ${JSON.stringify(botForClient)}`,
   ];
   res.type('application/javascript').send(vars.join(';\n') + ';');
@@ -117,11 +114,9 @@ app.post('/api/analytics', (req, res) => {
   const tgId = body.tg && body.tg.id ? String(body.tg.id) : '';
   const tgUsername = body.tg && body.tg.username ? String(body.tg.username).slice(0, 100) : '';
   const extra = {};
-  ['element', 'href', 'durationSec', 'title', 'lessonIndex', 'progress', 'sessionDurationSec', 'startParam', 'modalId', 'inputId', 'valueLength', 'result', 'source', 'error', 'externalUrl', 'uid', 'client', 'device', 'hostname'].forEach((k) => {
+  ['element', 'href', 'durationSec', 'title', 'lessonIndex', 'progress'].forEach((k) => {
     if (body[k] !== undefined) extra[k] = String(body[k]).slice(0, 500);
   });
-  const client = (body.client || 'website').toString().slice(0, 20);
-  const device = (body.device || 'desktop').toString().slice(0, 20);
   const line = JSON.stringify({
     ts,
     page,
@@ -129,8 +124,6 @@ app.post('/api/analytics', (req, res) => {
     sessionId,
     tgId,
     tgUsername,
-    client,
-    device,
     ...extra,
   }) + '\n';
   try {
