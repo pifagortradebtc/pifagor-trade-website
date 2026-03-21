@@ -31,6 +31,36 @@
   if (loginClose) loginClose.addEventListener('click', closeLoginModal);
   if (loginBackdrop) loginBackdrop.addEventListener('click', closeLoginModal);
 
+  var infoHtml = '<div class="login-modal-info-wrap">' +
+    '<button type="button" class="login-modal-info-btn" aria-label="Как войти под другим аккаунтом" aria-expanded="false" id="login-info-btn">i</button>' +
+    '<div class="login-modal-info-content" id="login-info-content" hidden role="region" aria-labelledby="login-info-btn">' +
+    '<p class="login-modal-info-title">Войти под другим аккаунтом Telegram</p>' +
+    '<p>Виджет использует аккаунт, под которым вы сейчас открыли Telegram. Чтобы войти с другим аккаунтом:</p>' +
+    '<ol class="login-modal-info-steps">' +
+    '<li><strong>В приложении Telegram:</strong> Настройки → нажмите на номер телефона → «Добавить аккаунт» или «Выйти».</li>' +
+    '<li><strong>В Telegram Web:</strong> Настройки (иконка шестерёнки) → Выйти. Затем войдите под нужным аккаунтом.</li>' +
+    '<li>Вернитесь на сайт и нажмите «Войти» снова.</li>' +
+    '</ol>' +
+    '</div></div>';
+  var contentEl = loginModal && loginModal.querySelector('.login-modal-content');
+  if (contentEl) {
+    var tgEl = document.getElementById('login-telegram-widget');
+    if (tgEl) {
+      tgEl.insertAdjacentHTML('beforebegin', infoHtml);
+    } else {
+      contentEl.insertAdjacentHTML('beforeend', infoHtml);
+    }
+  }
+  var infoBtn = document.getElementById('login-info-btn');
+  var infoContent = document.getElementById('login-info-content');
+  if (infoBtn && infoContent) {
+    infoBtn.addEventListener('click', function () {
+      var isOpen = !infoContent.hidden;
+      infoContent.hidden = isOpen;
+      infoBtn.setAttribute('aria-expanded', isOpen ? 'false' : 'true');
+    });
+  }
+
   document.addEventListener('keydown', function (e) {
     if (e.key === 'Escape' && loginModal && !loginModal.hidden) closeLoginModal();
   });

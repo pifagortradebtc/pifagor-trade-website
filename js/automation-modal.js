@@ -25,6 +25,13 @@
   if (closeBtn) closeBtn.addEventListener('click', closeModal);
   if (backdrop) backdrop.addEventListener('click', closeModal);
 
+  var menuBtn = document.querySelector('.mobile-menu-btn');
+  if (menuBtn) {
+    menuBtn.addEventListener('click', function () {
+      if (!modal.hidden) closeModal();
+    });
+  }
+
   document.addEventListener('keydown', function (e) {
     if (e.key === 'Escape' && !modal.hidden) closeModal();
   });
