@@ -64,11 +64,13 @@
     '<button type="button" class="login-modal-info-btn" aria-label="Как войти под другим аккаунтом" aria-expanded="false" id="login-info-btn">i</button>' +
     '<div class="login-modal-info-content" id="login-info-content" hidden role="region" aria-labelledby="login-info-btn">' +
     '<p class="login-modal-info-title">Войти под другим аккаунтом Telegram</p>' +
-    '<p>Виджет использует аккаунт, под которым вы сейчас открыли Telegram. Чтобы войти с другим аккаунтом:</p>' +
+    '<p>Сайт привязан к текущему аккаунту Telegram. Чтобы войти под другим аккаунтом, сначала отзовите авторизацию:</p>' +
     '<ol class="login-modal-info-steps">' +
-    '<li><strong>В приложении Telegram:</strong> Настройки → нажмите на номер телефона → «Добавить аккаунт» или «Выйти».</li>' +
-    '<li><strong>В Telegram Web:</strong> Настройки (иконка шестерёнки) → Выйти. Затем войдите под нужным аккаунтом.</li>' +
-    '<li>Вернитесь на сайт и нажмите «Войти» снова.</li>' +
+    '<li>Откройте <strong>Настройки</strong> в Telegram.</li>' +
+    '<li>Перейдите в раздел <strong>Конфиденциальность</strong> (Privacy and Security).</li>' +
+    '<li>Выберите <strong>Авторизованные сайты</strong>.</li>' +
+    '<li>Найдите и удалите запись <strong>Pifagor-indicator-bot</strong>.</li>' +
+    '<li>Вернитесь сюда и нажмите «Войти» — появится возможность войти под другим аккаунтом.</li>' +
     '</ol>' +
     '</div></div>';
   var contentEl = loginModal && loginModal.querySelector('.login-modal-content');

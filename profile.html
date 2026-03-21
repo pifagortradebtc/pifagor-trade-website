@@ -152,12 +152,16 @@
             <div class="modal-content modal-content-check">
                 <button type="button" class="modal-close" id="profile-change-modal-close" aria-label="Закрыть">&times;</button>
                 <h2 class="modal-title">Изменить Email и TradingView</h2>
-                <form id="profile-change-form">
-                    <label class="referral-access-label">Email</label>
-                    <input type="email" class="referral-input" id="profile-email-input" placeholder="example@mail.com" required>
-                    <label class="referral-access-label">TradingView</label>
-                    <input type="text" class="referral-input" id="profile-tv-input" placeholder="Например: pifagor trade" required>
-                    <button type="submit" class="btn btn-check">Сохранить</button>
+                <form id="profile-change-form" class="profile-edit-form">
+                    <div class="profile-edit-field">
+                        <label class="profile-edit-label" for="profile-email-input">Email</label>
+                        <input type="email" class="referral-input profile-edit-input" id="profile-email-input" placeholder="example@mail.com" required>
+                    </div>
+                    <div class="profile-edit-field">
+                        <label class="profile-edit-label" for="profile-tv-input">Никнейм в TradingView</label>
+                        <input type="text" class="referral-input profile-edit-input" id="profile-tv-input" placeholder="Например: pifagor trade" required>
+                    </div>
+                    <button type="submit" class="btn btn-check profile-edit-submit">Сохранить</button>
                 </form>
                 <p id="profile-change-result" class="referral-result" role="alert"></p>
             </div>

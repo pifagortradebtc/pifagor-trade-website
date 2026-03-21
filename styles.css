@@ -532,22 +532,21 @@ body.has-sidebar .section-nav-auth .section-nav-item {
 }
 
 .section-nav-reset-btn {
-    width: 100%;
-    margin-top: 0.25rem;
-    padding: 0.35rem 0.5rem;
-    font-size: 0.7rem;
+    width: auto;
+    align-self: flex-start;
+    margin-top: 0.2rem;
+    padding: 0.2rem 0.4rem;
+    font-size: 0.65rem;
     font-family: ui-monospace, "Cascadia Code", "Source Code Pro", monospace;
-    color: var(--text-muted);
+    color: rgba(255, 255, 255, 0.35);
     background: transparent;
-    border: 1px solid rgba(255, 255, 255, 0.06);
-    border-radius: 6px;
+    border: none;
+    border-radius: 4px;
     cursor: pointer;
-    transition: color 0.15s, border-color 0.15s, background 0.15s;
+    transition: color 0.15s;
 }
 .section-nav-reset-btn:hover {
-    color: var(--text-muted);
-    background: rgba(255, 255, 255, 0.03);
-    border-color: rgba(255, 255, 255, 0.1);
+    color: rgba(255, 255, 255, 0.5);
 }
 
 .section-nav-footer {
@@ -2476,6 +2475,31 @@ details[open] .faq-question::after {
     font-weight: 500;
     color: var(--text);
     margin-bottom: 0.5rem;
+}
+
+/* Форма редактирования профиля (Email, TradingView) */
+.profile-edit-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+    margin: 1.25rem 0 0;
+}
+.profile-edit-field {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+.profile-edit-label {
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: var(--text);
+}
+.profile-edit-input {
+    flex: none;
+    width: 100%;
+}
+.profile-edit-submit {
+    margin-top: 0.5rem;
 }
 
 .check-modal-uid-help {
