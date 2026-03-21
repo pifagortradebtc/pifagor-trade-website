@@ -1868,19 +1868,16 @@ details[open] .faq-question::after {
     height: 72px;
     margin: 0 auto 1.25rem;
     border-radius: 50%;
-    background: #000;
+    background-color: #000;
+    background-image: url('/images/logo.png');
+    background-size: 120%;
+    background-position: center;
+    background-repeat: no-repeat;
     border: 1px solid rgba(198, 152, 79, 0.5);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    overflow: hidden;
 }
 
 .login-modal-logo-img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    transform: scale(1.2);
+    display: none;
 }
 
 .login-modal-title {
@@ -1901,8 +1898,9 @@ details[open] .faq-question::after {
     margin-top: 1rem;
     font-size: 0.75rem;
     color: var(--text-muted);
-    line-height: 1.4;
-    max-width: 280px;
+    line-height: 1.5;
+    max-width: 300px;
+    text-align: left;
 }
 
 .login-modal-hint {
