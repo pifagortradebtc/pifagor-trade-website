@@ -23,6 +23,7 @@ body {
     font-family: 'DM Sans', -apple-system, sans-serif;
     color: var(--text);
     min-height: 100vh;
+    min-height: 100dvh;
     line-height: 1.6;
     font-size: 16px;
     position: relative;
@@ -58,8 +59,8 @@ body {
 
 .support-fab {
     position: fixed;
-    bottom: 1.5rem;
-    right: 1.5rem;
+    bottom: max(1.5rem, env(safe-area-inset-bottom));
+    right: max(1.5rem, env(safe-area-inset-right));
     z-index: 1000;
     width: 56px;
     height: 56px;
@@ -91,7 +92,7 @@ body {
     top: 0;
     right: 0;
     z-index: 1001;
-    padding: 1rem 1.5rem;
+    padding: calc(1rem + env(safe-area-inset-top)) calc(1.5rem + env(safe-area-inset-right)) 1rem 1.5rem;
     display: flex;
     flex-direction: column;
     align-items: flex-end;
@@ -821,6 +822,17 @@ button.section-nav-item {
     display: none;
 }
 
+/* Tablet portrait (iPad и др.) */
+@media (max-width: 1024px) {
+    .section-nav {
+        padding-top: calc(3rem + env(safe-area-inset-top));
+    }
+
+    .page-content-wrap {
+        padding: calc(2rem + env(safe-area-inset-top)) 1.25rem 2rem;
+    }
+}
+
 @media (max-width: 767px) {
     .section-nav {
         left: auto;
@@ -831,12 +843,18 @@ button.section-nav-item {
         max-height: none;
         border-right: none;
         border-bottom: 1px solid var(--border);
-        padding: 1rem;
+        padding: 1rem calc(1rem + env(safe-area-inset-left)) 1rem calc(1rem + env(safe-area-inset-right));
         overflow-x: auto;
         overflow-y: hidden;
         flex-direction: row;
         align-items: center;
         gap: 0.75rem;
+        -webkit-overflow-scrolling: touch;
+        scrollbar-width: none;
+    }
+
+    .section-nav::-webkit-scrollbar {
+        display: none;
     }
 
     .section-nav-logo {
@@ -847,6 +865,7 @@ button.section-nav-item {
     .section-nav-logo .logo-icon-wrap {
         width: 52px;
         height: 52px;
+        min-width: 52px;
         padding: 4px;
     }
 
@@ -866,7 +885,7 @@ button.section-nav-item {
 
     .page-footer-mobile {
         display: block;
-        padding: 1.5rem 1.25rem;
+        padding: 1.5rem calc(1.25rem + env(safe-area-inset-left)) calc(1.5rem + env(safe-area-inset-bottom)) calc(1.25rem + env(safe-area-inset-right));
         margin-top: 2rem;
         border-top: 1px solid var(--border);
         font-size: 0.85rem;
@@ -877,13 +896,71 @@ button.section-nav-item {
         white-space: nowrap;
         padding: 0.6rem 1rem;
         font-size: 0.85rem;
+        min-height: 44px;
+        display: flex;
+        align-items: center;
     }
 
     .page-content-wrap {
         margin-left: 0;
         margin-right: 0;
-        padding: 2rem 1.25rem;
+        padding: 1.5rem calc(1.25rem + env(safe-area-inset-left)) 2rem calc(1.25rem + env(safe-area-inset-right));
         max-width: none;
+    }
+
+    .header-auth-bar {
+        padding: calc(0.75rem + env(safe-area-inset-top)) calc(1rem + env(safe-area-inset-right)) 0.5rem 1rem;
+    }
+
+    .header-auth-btn {
+        padding: 0.5rem 0.75rem;
+        font-size: 0.8rem;
+    }
+
+    .logo-text {
+        font-size: 1.75rem;
+    }
+
+    .page-title {
+        font-size: 1.5rem;
+    }
+
+    .indicators-cta-top .btn-cta-large {
+        max-width: 100%;
+    }
+
+    .btn-cta-large {
+        padding: 1rem 1.25rem;
+        font-size: 1rem;
+    }
+
+    .modal {
+        padding: 0.75rem;
+        padding-bottom: max(0.75rem, env(safe-area-inset-bottom));
+        align-items: flex-end;
+    }
+
+    .modal-content {
+        max-height: 85vh;
+        max-height: min(85vh, 85dvh);
+        border-radius: 16px 16px 0 0;
+        padding-bottom: calc(1.25rem + env(safe-area-inset-bottom));
+    }
+
+    .indicator-modal-content {
+        padding: 1.25rem;
+    }
+
+    .faq-images-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .features-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .benefits-with-video {
+        grid-template-columns: 1fr;
     }
 }
 
@@ -2998,6 +3075,65 @@ details[open] .faq-question::after {
 
 .subscribe-message-error {
     color: #f87171;
+}
+
+/* Маленькие телефоны */
+@media (max-width: 480px) {
+    .page {
+        padding: 1.25rem calc(1rem + env(safe-area-inset-left)) 1.5rem calc(1rem + env(safe-area-inset-right));
+    }
+
+    .page-content-wrap {
+        padding: 1.25rem calc(1rem + env(safe-area-inset-left)) 1.5rem calc(1rem + env(safe-area-inset-right));
+    }
+
+    .section-nav {
+        padding: 0.75rem calc(1rem + env(safe-area-inset-left)) 0.75rem calc(1rem + env(safe-area-inset-right));
+        gap: 0.5rem;
+    }
+
+    .section-nav-item {
+        padding: 0.5rem 0.75rem;
+        font-size: 0.8rem;
+    }
+
+    .section-nav-logo .logo-icon-wrap {
+        width: 44px;
+        height: 44px;
+        min-width: 44px;
+    }
+
+    .logo-text {
+        font-size: 1.5rem;
+    }
+
+    .support-fab {
+        width: 48px;
+        height: 48px;
+    }
+
+    .support-fab svg {
+        width: 24px;
+        height: 24px;
+    }
+
+    .indicator-pill {
+        padding: 0.75rem 1rem;
+        font-size: 0.85rem;
+    }
+
+    .referral-check-form {
+        flex-direction: column;
+        gap: 0.75rem;
+    }
+
+    .referral-check-form input {
+        min-height: 48px;
+    }
+
+    .referral-check-form button {
+        min-height: 48px;
+    }
 }
 
 /* ========== Адаптивность ========== */
