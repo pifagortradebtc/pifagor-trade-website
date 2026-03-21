@@ -10,13 +10,16 @@
     --btn-border: rgba(255, 255, 255, 0.2);
     --btn-hover: rgba(255, 255, 255, 0.12);
     --accent: #7c9ab8;
-    --neon-green: rgba(57, 255, 20, 0.08);
 }
 
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+}
+
+html {
+    scrollbar-gutter: stable;
 }
 
 body {
@@ -250,26 +253,6 @@ body.page-profile.user-logged-in .section-nav-auth-exit {
     display: none !important;
 }
 
-/* Аватар пользователя Telegram (справа при открытии из бота) */
-.tg-user-avatar {
-    position: fixed;
-    top: 1rem;
-    right: 1rem;
-    z-index: 1000;
-    width: 44px;
-    height: 44px;
-    border-radius: 50%;
-    overflow: hidden;
-    border: 2px solid var(--accent);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
-}
-
-.tg-user-avatar img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-}
-
 /* ========== Страница ========== */
 .page {
     position: relative;
@@ -289,27 +272,6 @@ body.page-profile.user-logged-in .section-nav-auth-exit {
     justify-content: space-between;
     gap: 1rem;
     flex-wrap: wrap;
-}
-
-.header-reset-btns {
-    display: flex;
-    gap: 0.5rem;
-    flex-shrink: 0;
-}
-
-.header-reset-btn {
-    padding: 0.2rem 0.4rem;
-    font-size: 0.6rem;
-    color: var(--text-muted);
-    background: none;
-    border: none;
-    cursor: pointer;
-    text-decoration: underline;
-    -webkit-tap-highlight-color: transparent;
-}
-
-.header-reset-btn:hover {
-    color: var(--accent);
 }
 
 .header {
@@ -409,295 +371,6 @@ body.page-profile.user-logged-in .section-nav-auth-exit {
     font-size: 0.95rem;
     color: var(--text-muted);
     font-weight: 400;
-}
-
-/* ========== Главная страница — полная переработка ========== */
-.page-home {
-    max-width: 680px;
-}
-
-.header-home {
-    padding-bottom: 0;
-    border-bottom: none;
-}
-
-/* Hero */
-.hero-home {
-    position: relative;
-    margin-top: 2rem;
-    border-radius: 20px;
-    overflow: hidden;
-    min-height: 340px;
-    display: flex;
-    align-items: flex-end;
-}
-
-.hero-home-bg {
-    position: absolute;
-    inset: 0;
-    background-image: url('/images/indicators-bg.png');
-    background-size: cover;
-    background-position: center;
-}
-
-.hero-home-bg::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(to top, rgba(15, 23, 42, 0.98) 0%, rgba(15, 23, 42, 0.5) 50%, rgba(15, 23, 42, 0.2) 100%);
-}
-
-.hero-home-bg::after {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: radial-gradient(ellipse 80% 60% at 70% 20%, rgba(124, 154, 184, 0.15) 0%, transparent 60%);
-}
-
-.hero-home-inner {
-    position: relative;
-    z-index: 1;
-    padding: 2.25rem 1.75rem;
-    width: 100%;
-}
-
-.hero-home-eyebrow {
-    font-size: 0.8rem;
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 0.12em;
-    color: rgba(255, 255, 255, 0.6);
-    margin-bottom: 0.5rem;
-}
-
-.hero-home-title {
-    font-family: 'Instrument Serif', Georgia, serif;
-    font-size: 2.25rem;
-    font-weight: 400;
-    line-height: 1.2;
-    color: #fff;
-    margin-bottom: 0.75rem;
-}
-
-.hero-home-desc {
-    font-size: 1rem;
-    color: rgba(255, 255, 255, 0.85);
-    line-height: 1.5;
-    margin-bottom: 1.5rem;
-    max-width: 420px;
-}
-
-.hero-home-actions {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.75rem;
-}
-
-.hero-home-btn {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    padding: 0.75rem 1.5rem;
-    font-size: 0.9rem;
-    font-weight: 600;
-    border-radius: 999px;
-    text-decoration: none;
-    transition: all 0.2s ease;
-}
-
-.hero-home-btn-primary {
-    background: #fff;
-    color: #0f172a;
-}
-
-.hero-home-btn-primary:hover {
-    background: rgba(255, 255, 255, 0.95);
-    transform: scale(1.02);
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
-}
-
-.hero-home-btn-outline {
-    background: transparent;
-    color: #fff;
-    border: 2px solid rgba(255, 255, 255, 0.5);
-}
-
-.hero-home-btn-outline:hover {
-    border-color: #fff;
-    background: rgba(255, 255, 255, 0.1);
-}
-
-/* Горизонтальные навигационные строки (вместо квадратных карточек) */
-.main.main-home {
-    padding-top: 2rem;
-}
-
-.home-nav {
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
-    margin-top: 2rem;
-}
-
-.home-nav-item {
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-    padding: 0.9rem 1.25rem;
-    background: rgba(255, 255, 255, 0.03);
-    border: 1px solid rgba(255, 255, 255, 0.08);
-    border-radius: 14px;
-    text-decoration: none;
-    color: var(--text);
-    font-size: 1rem;
-    font-weight: 500;
-    transition: all 0.2s ease;
-}
-
-.home-nav-item:hover {
-    background: rgba(255, 255, 255, 0.06);
-    border-color: rgba(124, 154, 184, 0.3);
-    transform: translateX(4px);
-}
-
-.home-nav-item-btn {
-    width: 100%;
-    text-align: left;
-    font-family: inherit;
-    cursor: pointer;
-}
-
-.home-nav-thumb {
-    width: 48px;
-    height: 48px;
-    min-width: 48px;
-    border-radius: 12px;
-    background-color: #1e293b;
-    background-image: var(--nav-bg);
-    background-size: cover;
-    background-position: center;
-}
-
-.home-nav-label {
-    flex: 1;
-}
-
-.home-nav-arrow {
-    font-size: 1.1rem;
-    color: var(--text-muted);
-    transition: transform 0.2s;
-}
-
-.home-nav-item:hover .home-nav-arrow {
-    color: var(--accent);
-    transform: translateX(4px);
-}
-
-/* CTA баннер */
-.home-cta-banner {
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-    margin-top: 2rem;
-    padding: 1.5rem 1.75rem;
-    background: linear-gradient(135deg, rgba(124, 154, 184, 0.25) 0%, rgba(124, 154, 184, 0.1) 100%);
-    border: 1px solid rgba(124, 154, 184, 0.4);
-    border-radius: 16px;
-    text-decoration: none;
-    color: var(--text);
-    transition: all 0.2s ease;
-}
-
-.home-cta-banner:hover {
-    background: linear-gradient(135deg, rgba(124, 154, 184, 0.35) 0%, rgba(124, 154, 184, 0.15) 100%);
-    border-color: var(--accent);
-    box-shadow: 0 8px 32px rgba(124, 154, 184, 0.2);
-}
-
-.home-cta-banner-text {
-    font-size: 1.25rem;
-    font-weight: 700;
-    color: var(--accent);
-}
-
-.home-cta-banner-desc {
-    flex: 1;
-    font-size: 0.9rem;
-    color: var(--text-muted);
-}
-
-.home-cta-banner-arrow {
-    font-size: 1.5rem;
-    color: var(--accent);
-    transition: transform 0.2s;
-}
-
-.home-cta-banner:hover .home-cta-banner-arrow {
-    transform: translateX(6px);
-}
-
-.home-banner {
-    display: flex;
-    align-items: flex-end;
-    margin-top: 1.25rem;
-    padding: 0;
-    min-height: 0;
-    aspect-ratio: 3 / 1;
-    width: 100%;
-    border-radius: 20px;
-    text-decoration: none;
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
-    border: 3px solid rgba(251, 191, 36, 0.6);
-    box-shadow: 0 0 24px rgba(251, 191, 36, 0.2), 0 4px 12px rgba(0, 0, 0, 0.3);
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-    background-color: #1e293b;
-    position: relative;
-    overflow: hidden;
-}
-
-.home-banner::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(to top, rgba(0, 0, 0, 0.85) 0%, rgba(0, 0, 0, 0.2) 50%, transparent 100%);
-    pointer-events: none;
-}
-
-.home-banner::after {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(135deg, rgba(251, 191, 36, 0.12) 0%, transparent 55%);
-    pointer-events: none;
-}
-
-.home-banner:hover {
-    transform: scale(1.01);
-    border-color: rgba(251, 191, 36, 0.9);
-    box-shadow: 0 0 32px rgba(251, 191, 36, 0.3), 0 4px 16px rgba(0, 0, 0, 0.4);
-}
-
-.home-banner:active {
-    transform: scale(0.99);
-}
-
-.home-banner-text {
-    position: relative;
-    z-index: 1;
-    padding: 1.25rem 1.5rem;
-    margin-top: auto;
-    width: 100%;
-    text-align: center;
-    color: #fff;
-    font-size: 1.2rem;
-    font-weight: 700;
-    text-transform: none;
-    letter-spacing: 0.02em;
-    line-height: 1.4;
-    text-shadow: 0 0 24px rgba(0, 0, 0, 1), 0 0 10px rgba(0, 0, 0, 0.95), 0 2px 6px rgba(0, 0, 0, 0.9);
-    background: linear-gradient(to top, rgba(0, 0, 0, 0.7) 0%, rgba(0, 0, 0, 0.15) 70%, transparent 100%);
 }
 
 /* ========== Основной контент ========== */
@@ -983,36 +656,44 @@ button.section-nav-item {
 }
 
 @media (max-width: 767px) {
-    /* Мобильный sticky header — баннер при прокрутке остаётся наверху; контент уходит за чёрную плашку */
+    /* Мобильный sticky header — баннер неподвижен при любых действиях (меню, скролл) */
     body.has-sidebar .site-top-bar {
         display: flex;
         flex-direction: column;
-        position: sticky;
+        position: fixed;
         top: 0;
         left: 0;
         right: 0;
         width: 100%;
         max-width: 100vw;
+        min-height: calc(72px + 0.5rem + 44px);
         padding: 0 env(safe-area-inset-right) 0 env(safe-area-inset-left);
         z-index: 1102;
         -webkit-tap-highlight-color: transparent;
         overflow: hidden;
         box-sizing: border-box;
         background: transparent;
+        pointer-events: none;
+    }
+    body.has-sidebar .site-top-bar .mobile-logo,
+    body.has-sidebar .site-top-bar .mobile-menu-btn {
+        pointer-events: auto;
     }
 
     body.has-sidebar .mobile-logo {
-        background: #000;
+        background: transparent;
         display: block;
         width: 100%;
         max-width: 100%;
         min-width: 0;
-        height: 100px;
+        height: 72px;
         flex-shrink: 0;
         position: relative;
         overflow: hidden;
+        margin: 0;
         padding: 0 max(env(safe-area-inset-right), 0.5rem) 0 max(env(safe-area-inset-left), 0.5rem);
         box-sizing: border-box;
+        border-radius: 0;
     }
 
     body.has-sidebar .mobile-logo-banner {
@@ -1021,7 +702,7 @@ button.section-nav-item {
         max-width: 100%;
         min-width: 0;
         object-fit: contain;
-        object-position: center top;
+        object-position: center center;
     }
 
     body.has-sidebar .mobile-menu-btn {
@@ -1058,9 +739,10 @@ button.section-nav-item {
         opacity: 0.8;
     }
 
-    /* Скрыть кнопку меню при открытой навигации */
+    /* Скрыть кнопку меню при открытой навигации — сохраняем место, чтобы баннер не сдвигался */
     body.nav-open .mobile-menu-btn {
-        display: none !important;
+        visibility: hidden;
+        pointer-events: none;
     }
 
     body.has-sidebar .site-top-bar .header-auth-bar {
@@ -1104,25 +786,31 @@ button.section-nav-item {
         pointer-events: auto;
     }
 
-    /* Сайдбар — выдвижная панель слева, от баннера до низа экрана */
+    /* При открытом меню — баннер под меню, видна только правая часть баннера */
+    body.nav-open .site-top-bar {
+        z-index: 0;
+    }
+
+    /* Сайдбар — выдвижная панель слева, перекрывает левую часть баннера (меню поверх баннера) */
     body.has-sidebar .section-nav {
         position: fixed;
-        top: 100px;
+        top: 0;
         left: 0;
         bottom: 0;
         width: min(300px, 85vw);
         max-width: 300px;
-        z-index: 1099;
+        z-index: 1103;
         flex-direction: column;
         overflow-x: hidden;
-        overflow-y: auto;
-        padding: 1.25rem 1.25rem calc(2rem + env(safe-area-inset-bottom));
+        overflow-y: visible;
+        padding: calc(72px + 0.75rem) 1rem calc(1rem + env(safe-area-inset-bottom));
         transform: translateX(-100%);
         transition: transform 0.25s ease;
         border-right: 1px solid var(--border);
-        -webkit-overflow-scrolling: touch;
         pointer-events: auto;
         touch-action: manipulation;
+        display: flex;
+        max-height: 100vh;
     }
 
     body.nav-open .section-nav {
@@ -1130,40 +818,75 @@ button.section-nav-item {
     }
 
     body.has-sidebar .section-nav-logo {
-        margin-bottom: 1.25rem;
+        margin-bottom: 0.5rem;
+        flex-shrink: 0;
     }
 
     body.has-sidebar .section-nav-logo .logo-icon-wrap {
-        width: 80px;
-        height: 80px;
-        min-width: 80px;
-        padding: 5px;
+        width: 48px;
+        height: 48px;
+        min-width: 48px;
+        padding: 4px;
     }
 
     body.has-sidebar .section-nav-list {
         flex-direction: column;
-        flex-wrap: wrap;
-        padding-top: 0.5rem;
+        flex-wrap: nowrap;
+        padding-top: 0.25rem;
         padding-bottom: 0;
+        gap: 0.2rem;
+        flex: 1;
+        min-height: 0;
     }
 
     body.has-sidebar .section-nav-footer {
         display: block;
         margin-top: auto;
-        padding-top: 1.5rem;
+        padding-top: 0.75rem;
+        flex-shrink: 0;
+    }
+
+    body.has-sidebar .section-nav-projects-title {
+        margin-bottom: 0.4rem;
+        font-size: 0.7rem;
+    }
+
+    body.has-sidebar .section-nav-project {
+        margin-bottom: 0.5rem;
+    }
+
+    body.has-sidebar .section-nav-project:last-child {
+        margin-bottom: 0;
+    }
+
+    body.has-sidebar .section-nav-project-name {
+        font-size: 0.8rem;
+    }
+
+    body.has-sidebar .section-nav-project-links a {
+        width: 24px;
+        height: 24px;
+        min-width: 24px;
+    }
+
+    body.has-sidebar .section-nav-auth {
+        gap: 0.25rem;
+        padding-top: 0.4rem;
     }
 
     body.has-sidebar .section-nav-item {
         flex-shrink: 0;
         white-space: normal;
-        padding: 0.75rem 1.1rem;
-        font-size: 0.95rem;
-        min-height: 48px;
+        padding: 0.45rem 0.75rem;
+        font-size: 0.85rem;
+        min-height: 38px;
         width: 100%;
         cursor: pointer;
         -webkit-tap-highlight-color: transparent;
         position: relative;
         z-index: 1;
+        display: flex;
+        align-items: center;
     }
 
     /* Скрыть сайдбар из потока — место занимает только page-content-wrap */
@@ -1201,7 +924,7 @@ button.section-nav-item {
     }
 
     body.has-sidebar .page-content-wrap {
-        padding-top: 0;
+        padding-top: calc(72px + 0.5rem + 44px);
     }
 
     body.has-sidebar .page-with-sidebar .main {
@@ -1591,91 +1314,6 @@ details[open] .faq-question::after {
 .faq-link:hover {
     filter: brightness(1.2);
 }
-
-/* ========== Нижняя навигация (как в мобильном приложении) ========== */
-.bottom-nav {
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    display: flex;
-    justify-content: flex-start;
-    align-items: center;
-    padding: 0.5rem 0.5rem calc(0.5rem + env(safe-area-inset-bottom));
-    background: rgba(15, 23, 42, 0.98);
-    border-top: 1px solid var(--border);
-    z-index: 500;
-}
-
-.bottom-nav-item {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 0.25rem;
-    padding: 0.5rem 1rem;
-    color: var(--text-muted);
-    flex: 1;
-    min-width: 0;
-    text-decoration: none;
-    font-size: 0.75rem;
-    font-weight: 500;
-    border-radius: 8px;
-    transition: color 0.2s, background 0.2s;
-}
-
-.bottom-nav-item:hover {
-    color: var(--text);
-}
-
-.bottom-nav-active {
-    color: var(--accent);
-}
-
-.bottom-nav-active:hover {
-    color: var(--accent);
-}
-
-.bottom-nav-icon {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 1.5rem;
-    height: 1.5rem;
-}
-
-.bottom-nav-icon svg {
-    width: 100%;
-    height: 100%;
-    fill: none;
-    stroke: currentColor;
-    stroke-width: 2;
-    stroke-linecap: round;
-    stroke-linejoin: round;
-}
-
-.bottom-nav-divider {
-    width: 1px;
-    height: 1.5rem;
-    background: var(--border);
-    margin: 0 0.25rem;
-    flex-shrink: 0;
-}
-
-.bottom-nav-back {
-    flex: 0 0 auto;
-    background: rgba(255, 255, 255, 0.06);
-    border: 1px solid var(--border);
-    border-radius: 8px;
-    cursor: pointer;
-    font-family: inherit;
-    margin-left: 10%;
-    margin-right: 0.5rem;
-}
-
-.bottom-nav-back:hover {
-    background: rgba(255, 255, 255, 0.1);
-}
-
 
 /* ========== Страница торговых сигналов ========== */
 .page-signals {
@@ -2741,12 +2379,6 @@ details[open] .faq-question::after {
     margin-bottom: 0.5rem;
 }
 
-.referral-telegram-hint {
-    font-size: 0.85rem;
-    color: var(--text-muted);
-    margin: 0;
-}
-
 .check-modal-uid-help {
     margin-top: 1rem;
     border: 1px solid var(--border);
@@ -3496,52 +3128,6 @@ details[open] .faq-question::after {
 @media (max-width: 600px) {
     .page {
         padding: 2rem 1.25rem;
-    }
-
-    .hero-home {
-        min-height: 300px;
-        margin-top: 1.25rem;
-    }
-
-    .hero-home-inner {
-        padding: 1.75rem 1.25rem;
-    }
-
-    .hero-home-title {
-        font-size: 1.85rem;
-    }
-
-    .hero-home-desc {
-        font-size: 0.95rem;
-    }
-
-    .hero-home-actions {
-        flex-direction: column;
-    }
-
-    .hero-home-btn {
-        width: 100%;
-    }
-
-    .home-nav-item {
-        padding: 0.75rem 1rem;
-    }
-
-    .home-nav-thumb {
-        width: 40px;
-        height: 40px;
-        min-width: 40px;
-    }
-
-    .home-cta-banner {
-        flex-wrap: wrap;
-        padding: 1.25rem 1.25rem;
-    }
-
-    .home-cta-banner-desc {
-        order: 3;
-        width: 100%;
-        margin-top: 0.25rem;
     }
 
     .mini-course-progress-section {

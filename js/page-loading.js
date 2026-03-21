@@ -21,16 +21,6 @@
   });
 
   document.addEventListener('click', function (e) {
-    var backBtn = e.target.closest('#bottom-nav-back, .bottom-nav-back');
-    if (backBtn) {
-      e.preventDefault();
-      if (window.history.length > 1) {
-        window.history.back();
-      } else {
-        window.location.href = 'indicators.html';
-      }
-      return;
-    }
     var a = e.target.closest('a[href]');
     if (!a || a.target === '_blank' || a.classList.contains('no-loading')) return;
     var href = (a.getAttribute('href') || '').trim();
