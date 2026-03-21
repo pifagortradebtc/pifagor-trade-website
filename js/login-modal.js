@@ -2,6 +2,35 @@
  * Модальное окно входа с кнопкой «Войти с помощью Telegram»
  */
 (function () {
+  window.onTelegramAuth = function (user) {
+    if (!user || !user.id) return;
+    var container = document.getElementById('login-telegram-widget');
+    if (container) {
+      container.innerHTML = '<p class="login-modal-hint" style="margin:1rem 0;color:var(--accent)">Вход выполняется…</p>';
+    }
+    try {
+      var photo = user.photo_url || user.photoUrl || '';
+      var payload = {
+        id: user.id,
+        firstName: user.first_name || user.firstName,
+        lastName: (user.last_name || user.lastName || ''),
+        username: user.username || '',
+        photoUrl: photo,
+        first_name: user.first_name || user.firstName,
+        last_name: user.last_name || user.lastName || '',
+        photo_url: photo
+      };
+      localStorage.setItem('pifagor_telegram_user', JSON.stringify(payload));
+    } catch (err) {
+      if (container) container.innerHTML = '<p class="login-modal-hint" style="color:#e53e3e">Ошибка сохранения. Проверьте настройки браузера (разрешено хранилище).</p>';
+      return;
+    }
+    var loginModal = document.getElementById('login-modal');
+    if (loginModal) { loginModal.hidden = true; document.body.style.overflow = ''; }
+    var targetUrl = new URL('profile.html', window.location.href).href;
+    window.location.replace(targetUrl);
+  };
+
   var loginModal = document.getElementById('login-modal');
   var loginBackdrop = document.getElementById('login-modal-backdrop');
   var loginClose = document.getElementById('login-modal-close');
@@ -64,24 +93,6 @@
   document.addEventListener('keydown', function (e) {
     if (e.key === 'Escape' && loginModal && !loginModal.hidden) closeLoginModal();
   });
-
-  window.onTelegramAuth = function (user) {
-    try {
-      var photo = user.photo_url || '';
-      localStorage.setItem('pifagor_telegram_user', JSON.stringify({
-        id: user.id,
-        firstName: user.first_name,
-        lastName: user.last_name || '',
-        username: user.username || '',
-        photoUrl: photo,
-        first_name: user.first_name,
-        last_name: user.last_name || '',
-        photo_url: photo,
-      }));
-    } catch (err) {}
-    closeLoginModal();
-    window.location.href = 'profile.html';
-  };
 
   var bot = (window.TELEGRAM_LOGIN_BOT || '').trim();
   var hostname = (window.location && window.location.hostname) || '';

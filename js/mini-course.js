@@ -6,7 +6,6 @@
 (function () {
   var STORAGE_KEY = 'pifagor_mini_course_progress';
   var MODULES_STATE_KEY = 'pifagor_mini_course_modules';
-  var AUTO_OPENED_KEY = 'pifagor_mini_course_auto_opened';
   var PLACEHOLDER_VIDEO_ID = 'jNQXAC9IVRw';
 
   var modules = [
@@ -315,22 +314,6 @@
     watchedIds = getWatchedIds();
     renderModules();
     updateProgressUI();
-
-    try {
-      if (!localStorage.getItem(AUTO_OPENED_KEY) && watchedIds.length === 0) {
-        localStorage.setItem(AUTO_OPENED_KEY, '1');
-        var firstBtn = document.querySelector('.mini-course-lesson-btn[data-index="0"]');
-        if (firstBtn) {
-          firstBtn.classList.add('mini-course-lesson-pulse');
-          setTimeout(function () {
-            firstBtn.classList.remove('mini-course-lesson-pulse');
-            openVideo(0);
-          }, 3000);
-        } else {
-          setTimeout(function () { openVideo(0); }, 3000);
-        }
-      }
-    } catch (e) {}
 
     var closeBtn = document.getElementById('video-close');
     var markBtn = document.getElementById('btn-mark-watched');

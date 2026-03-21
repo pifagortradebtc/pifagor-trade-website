@@ -143,6 +143,7 @@
         });
 
         if (targetPage === 'indicators') {
+          if (window.sortIndicatorsGrid) window.sortIndicatorsGrid();
           runIndicatorScript();
         }
 

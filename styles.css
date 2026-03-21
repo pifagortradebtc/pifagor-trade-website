@@ -118,23 +118,9 @@ body {
     display: none;
 }
 
-/* Страницы без site-top-bar — классический header-auth-bar. На мобильных скрыто: вход через левое меню. */
-/* На десктопе (≥768px) header-auth-bar видна в site-top-bar. */
+/* header-auth-bar скрыта: вход только через левое меню (и мобильное, и десктоп) */
 .header-auth-bar {
     display: none !important;
-}
-
-@media (min-width: 768px) {
-    body.has-sidebar .site-top-bar .header-auth-bar {
-        display: flex !important;
-        flex-direction: row;
-        align-items: center;
-        gap: 0.5rem;
-    }
-
-    body.has-sidebar.user-logged-in .site-top-bar .header-auth-bar {
-        display: flex !important;
-    }
 }
 
 .header-auth-main {
@@ -319,6 +305,19 @@ body.page-profile.user-logged-in .section-nav-auth-exit {
 
 .header-banner .tagline {
     margin-top: 1rem;
+}
+
+@media (min-width: 768px) {
+    body.has-sidebar .header-banner,
+    body.has-sidebar .header-banner .header-banner-link {
+        width: calc(100vw - 520px);
+        max-width: none;
+        margin-left: 0;
+        margin-right: 0;
+    }
+    body.has-sidebar .header-banner-img {
+        width: 100%;
+    }
 }
 
 .logo {
@@ -670,12 +669,12 @@ button.section-nav-item {
 }
 
 @media (max-width: 767px) {
-    /* Мобильный sticky header — баннер неподвижен при любых действиях (меню, скролл). Сдвиг на 5% выше. */
+    /* Мобильный sticky header — баннер неподвижен при любых действиях (меню, скролл) */
     body.has-sidebar .site-top-bar {
         display: flex;
         flex-direction: column;
         position: fixed;
-        top: -5vh;
+        top: 0;
         left: 0;
         right: 0;
         width: 100%;
@@ -938,7 +937,7 @@ button.section-nav-item {
     }
 
     body.has-sidebar .page-content-wrap {
-        padding-top: calc(72px + 0.5rem + 44px - 5vh);
+        padding-top: calc(72px + 0.5rem + 44px);
     }
 
     body.has-sidebar .page-with-sidebar .main {
@@ -1124,9 +1123,15 @@ button.section-nav-item {
 }
 
 .indicators-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
-    gap: 0.5rem;
+    column-count: 3;
+    column-gap: 1rem;
+}
+
+.indicators-grid .indicator-pill {
+    break-inside: avoid;
+    margin-bottom: 0.5rem;
+    width: 100%;
+    box-sizing: border-box;
 }
 
 .indicator-pill {
@@ -3244,7 +3249,7 @@ details[open] .faq-question::after {
     }
 
     .indicators-grid {
-        grid-template-columns: 1fr;
+        column-count: 1;
     }
 
     .example-video {
