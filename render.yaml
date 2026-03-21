@@ -2,8 +2,9 @@ services:
   - type: web
     name: pifagor-trade-website
     runtime: node
-    buildCommand: npm install
+    buildCommand: npm ci --omit=dev
     startCommand: npm start
+    healthCheckPath: /api/health
     envVars:
       - key: NODE_ENV
         value: production
