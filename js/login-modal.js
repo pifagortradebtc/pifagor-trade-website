@@ -64,6 +64,10 @@
     script.setAttribute('data-onauth', 'onTelegramAuth(user)');
     script.setAttribute('data-request-access', 'write');
     tgWidgetContainer.appendChild(script);
+    var hint = document.createElement('p');
+    hint.className = 'login-modal-switch-hint';
+    hint.textContent = 'Чтобы войти под другим аккаунтом: Telegram → Настройки → Конфиденциальность → Подключённые сайты → удалите этот сайт.';
+    tgWidgetContainer.parentNode.appendChild(hint);
   } else if (tgWidgetContainer) {
     tgWidgetContainer.innerHTML = '<p class="login-modal-hint">Для входа через Telegram настройте TELEGRAM_LOGIN_BOT в .env и укажите домен бота в @BotFather</p><a href="https://t.me/pifagor_admin" target="_blank" rel="noopener noreferrer" class="btn btn-telegram-fallback">Написать в поддержку</a>';
   }
