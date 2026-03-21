@@ -1,6 +1,6 @@
 /**
- * Левое меню: при входе — кнопка [аватар + имя] → профиль; на странице профиля — «Выйти».
- * Если не вошёл — кнопка «Войти».
+ * Левое меню: при входе — кнопка [аватар + имя] → профиль.
+ * Кнопка «Выйти» только на странице профиля (в карточке). Если не вошёл — «Войти».
  */
 function runAuthSidebar() {
   try {
@@ -16,8 +16,6 @@ function runAuthSidebar() {
       document.querySelectorAll('.section-nav-auth-user').forEach(function (el) {
         el.style.display = 'none';
       });
-      var exitBtn = document.getElementById('section-nav-exit');
-      if (exitBtn) exitBtn.style.display = 'none';
       return;
     }
 
@@ -45,26 +43,15 @@ function runAuthSidebar() {
     document.querySelectorAll('.header-auth-btn-login').forEach(function (btn) { btn.style.display = 'none'; });
 
     var profileLinks = document.querySelectorAll('.section-nav-auth-user');
-    var exitBtn = document.getElementById('section-nav-exit');
-
-    if (isProfilePage) {
-      profileLinks.forEach(function (el) { el.style.display = 'none'; });
-      if (exitBtn) {
-        exitBtn.style.display = '';
-        exitBtn.style.width = '100%';
-      }
-    } else {
-      profileLinks.forEach(function (el) {
-        el.href = 'profile.html';
-        el.title = 'Мой профиль';
-        el.style.display = '';
-        el.style.width = '100%';
-        el.innerHTML = '<span class="section-nav-auth-avatar-wrap">' +
-          (photo ? '<img src="' + photo + '" alt="" class="section-nav-auth-avatar">' : '<span class="section-nav-auth-avatar-placeholder">' + (fn ? fn.charAt(0) : '👤') + '</span>') +
-          '</span><span class="section-nav-auth-name">' + name + '</span>';
-      });
-      if (exitBtn) exitBtn.style.display = 'none';
-    }
+    profileLinks.forEach(function (el) {
+      el.href = 'profile.html';
+      el.title = 'Мой профиль';
+      el.style.display = '';
+      el.style.width = '100%';
+      el.innerHTML = '<span class="section-nav-auth-avatar-wrap">' +
+        (photo ? '<img src="' + photo + '" alt="" class="section-nav-auth-avatar">' : '<span class="section-nav-auth-avatar-placeholder">' + (fn ? fn.charAt(0) : '👤') + '</span>') +
+        '</span><span class="section-nav-auth-name">' + name + '</span>';
+    });
 
     var h = document.getElementById('header-auth-user');
     if (h) {

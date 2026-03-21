@@ -19,8 +19,8 @@
   var resetAll = document.getElementById('reset-all');
   if (resetAll) resetAll.addEventListener('click', doLogout);
 
-  var sectionNavExit = document.getElementById('section-nav-exit');
-  if (sectionNavExit) sectionNavExit.addEventListener('click', doLogout);
+  var sidebarReset = document.getElementById('sidebar-reset');
+  if (sidebarReset) sidebarReset.addEventListener('click', doLogout);
 
   var profileLogoutBtn = document.getElementById('profile-logout-btn');
   if (profileLogoutBtn) profileLogoutBtn.addEventListener('click', doLogout);

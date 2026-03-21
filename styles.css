@@ -243,15 +243,6 @@ body.page-profile .section-nav-auth .section-nav-auth-user {
     display: none !important;
 }
 
-body.page-profile.user-logged-in .section-nav-auth-exit {
-    display: flex !important;
-    align-items: center;
-}
-
-/* Скрыть «Выйти», когда пользователь вышел из аккаунта */
-.section-nav-auth-exit {
-    display: none !important;
-}
 
 /* ========== Страница ========== */
 .page {
@@ -540,6 +531,25 @@ body.has-sidebar .section-nav-auth .section-nav-item {
     width: 100%;
 }
 
+.section-nav-reset-btn {
+    width: 100%;
+    margin-top: 0.25rem;
+    padding: 0.35rem 0.5rem;
+    font-size: 0.7rem;
+    font-family: ui-monospace, "Cascadia Code", "Source Code Pro", monospace;
+    color: var(--text-muted);
+    background: transparent;
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    border-radius: 6px;
+    cursor: pointer;
+    transition: color 0.15s, border-color 0.15s, background 0.15s;
+}
+.section-nav-reset-btn:hover {
+    color: var(--text-muted);
+    background: rgba(255, 255, 255, 0.03);
+    border-color: rgba(255, 255, 255, 0.1);
+}
+
 .section-nav-footer {
     margin-top: auto;
     padding-top: 2rem;
@@ -773,10 +783,6 @@ button.section-nav-item {
 
     body.has-sidebar .section-nav-auth .section-nav-item {
         width: 100%;
-    }
-
-    body.has-sidebar:not(.page-profile) .section-nav-auth-exit {
-        display: none !important;
     }
 
     /* Backdrop при открытом меню — не перекрывает панель навигации */

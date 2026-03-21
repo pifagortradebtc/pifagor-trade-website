@@ -314,6 +314,7 @@
     watchedIds = getWatchedIds();
     renderModules();
     updateProgressUI();
+    // Видео НЕ открывается автоматически при первом заходе — только по клику на урок.
 
     var closeBtn = document.getElementById('video-close');
     var markBtn = document.getElementById('btn-mark-watched');
