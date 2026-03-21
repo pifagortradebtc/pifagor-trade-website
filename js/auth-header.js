@@ -3,21 +3,24 @@
  * Обрабатывает кнопку «Полный сброс» в auth-bar.
  */
 (function () {
-  var resetAll = document.getElementById('reset-all');
-  if (resetAll) {
-    resetAll.addEventListener('click', function () {
-      try {
-        var keys = [];
-        for (var i = 0; i < localStorage.length; i++) {
-          var k = localStorage.key(i);
-          if (k && (k.indexOf('pifagor') === 0 || k === 'referral_confirmed' || k === 'referral_uid')) keys.push(k);
-        }
-        keys.forEach(function (k) { localStorage.removeItem(k); });
-        sessionStorage.clear();
-        window.location.reload();
-      } catch (e) {}
-    });
+  function doLogout() {
+    try {
+      var keys = [];
+      for (var i = 0; i < localStorage.length; i++) {
+        var k = localStorage.key(i);
+        if (k && (k.indexOf('pifagor') === 0 || k === 'referral_confirmed' || k === 'referral_uid')) keys.push(k);
+      }
+      keys.forEach(function (k) { localStorage.removeItem(k); });
+      sessionStorage.clear();
+      window.location.reload();
+    } catch (e) {}
   }
+
+  var resetAll = document.getElementById('reset-all');
+  if (resetAll) resetAll.addEventListener('click', doLogout);
+
+  var sectionNavExit = document.getElementById('section-nav-exit');
+  if (sectionNavExit) sectionNavExit.addEventListener('click', doLogout);
 
   function isLoggedIn() {
     try {
