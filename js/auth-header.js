@@ -50,12 +50,14 @@
         displayName = (fn + (ln ? ' ' + ln : '')).trim() || (un ? '@' + un : '');
       }
     } catch (e) {}
-    userLink.textContent = displayName || 'Профиль';
-    userLink.title = displayName || 'Профиль';
-    userLink.href = 'profile.html';
-    userLink.style.display = '';
-    if (loginBtn) loginBtn.style.display = 'none';
-    if (regBtn) regBtn.style.display = 'none';
+    if (displayName) {
+      userLink.textContent = displayName;
+      userLink.title = displayName;
+      userLink.href = 'profile.html';
+      userLink.style.display = '';
+      if (loginBtn) loginBtn.style.display = 'none';
+      if (regBtn) regBtn.style.display = 'none';
+    }
   } else if (userLink) {
     userLink.style.display = 'none';
   }

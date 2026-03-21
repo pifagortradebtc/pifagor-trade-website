@@ -660,6 +660,8 @@ body {
     justify-content: center;
     width: 28px;
     height: 28px;
+    min-width: 28px;
+    flex-shrink: 0;
     border-radius: 8px;
     color: var(--text-muted);
     transition: background 0.2s, color 0.2s;
@@ -673,6 +675,9 @@ body {
 .section-nav-project-links a svg {
     width: 18px;
     height: 18px;
+    min-width: 18px;
+    max-width: 18px;
+    flex-shrink: 0;
 }
 
 .section-nav-item {
@@ -699,8 +704,8 @@ body {
     border-color: rgba(124, 154, 184, 0.25);
 }
 
-.section-nav-item.section-nav-featured {
-    border-left: 3px solid #f59e0b;
+a.section-nav-item.section-nav-featured {
+    border-left: 3px solid #f59e0b !important;
 }
 
 /* Кнопка в сайдбаре (автоматизация) — визуально как ссылка */
