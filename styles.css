@@ -240,9 +240,14 @@ body.page-profile .section-nav-auth .section-nav-auth-user {
     display: none !important;
 }
 
-body.page-profile .section-nav-auth-exit {
+body.page-profile.user-logged-in .section-nav-auth-exit {
     display: flex !important;
     align-items: center;
+}
+
+/* Скрыть «Выйти», когда пользователь вышел из аккаунта */
+.section-nav-auth-exit {
+    display: none !important;
 }
 
 /* Аватар пользователя Telegram (справа при открытии из бота) */
