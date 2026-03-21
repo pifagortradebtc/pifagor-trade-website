@@ -983,7 +983,7 @@ button.section-nav-item {
 }
 
 @media (max-width: 767px) {
-    /* Мобильный sticky header — баннер при прокрутке остаётся наверху, при возврате возвращается */
+    /* Мобильный sticky header — баннер при прокрутке остаётся наверху; полоска с кнопкой прозрачная */
     body.has-sidebar .site-top-bar {
         display: flex;
         flex-direction: column;
@@ -998,10 +998,11 @@ button.section-nav-item {
         -webkit-tap-highlight-color: transparent;
         overflow: hidden;
         box-sizing: border-box;
-        background: #0f172a;
+        background: transparent;
     }
 
     body.has-sidebar .mobile-logo {
+        background: #0f172a;
         display: block;
         width: 100%;
         max-width: 100%;
