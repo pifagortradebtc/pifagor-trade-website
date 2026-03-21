@@ -983,11 +983,11 @@ button.section-nav-item {
 }
 
 @media (max-width: 767px) {
-    /* Мобильный fixed header — баннер, под ним панель с hamburger слева */
+    /* Мобильный sticky header — баннер при прокрутке остаётся наверху, при возврате возвращается */
     body.has-sidebar .site-top-bar {
         display: flex;
         flex-direction: column;
-        position: fixed;
+        position: sticky;
         top: 0;
         left: 0;
         right: 0;
@@ -998,6 +998,7 @@ button.section-nav-item {
         -webkit-tap-highlight-color: transparent;
         overflow: hidden;
         box-sizing: border-box;
+        background: #0f172a;
     }
 
     body.has-sidebar .mobile-logo {
@@ -1056,6 +1057,11 @@ button.section-nav-item {
         opacity: 0.8;
     }
 
+    /* Скрыть кнопку меню при открытой навигации */
+    body.nav-open .mobile-menu-btn {
+        display: none !important;
+    }
+
     body.has-sidebar .site-top-bar .header-auth-bar {
         display: none;
     }
@@ -1097,10 +1103,10 @@ button.section-nav-item {
         pointer-events: auto;
     }
 
-    /* Сайдбар — выдвижная панель слева, ниже шапки */
+    /* Сайдбар — выдвижная панель слева, от баннера до низа экрана */
     body.has-sidebar .section-nav {
         position: fixed;
-        top: 152px;
+        top: 100px;
         left: 0;
         bottom: 0;
         width: min(300px, 85vw);
@@ -1109,7 +1115,7 @@ button.section-nav-item {
         flex-direction: column;
         overflow-x: hidden;
         overflow-y: auto;
-        padding: 1.25rem 1.25rem 2rem;
+        padding: 1.25rem 1.25rem calc(2rem + env(safe-area-inset-bottom));
         transform: translateX(-100%);
         transition: transform 0.25s ease;
         border-right: 1px solid var(--border);
@@ -1194,7 +1200,7 @@ button.section-nav-item {
     }
 
     body.has-sidebar .page-content-wrap {
-        padding-top: calc(152px + 0.5rem);
+        padding-top: 0.5rem;
     }
 
     body.has-sidebar .page-with-sidebar .main {
