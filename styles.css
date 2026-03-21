@@ -69,8 +69,30 @@ body {
     z-index: 1001;
     padding: 1rem 1.5rem;
     display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 0.25rem;
+}
+
+.header-auth-main {
+    display: flex;
     align-items: center;
     gap: 0.5rem;
+}
+
+.header-auth-reset {
+    padding: 0.2rem 0.4rem;
+    font-size: 0.6rem;
+    color: var(--text-muted);
+    background: none;
+    border: none;
+    cursor: pointer;
+    text-decoration: underline;
+    -webkit-tap-highlight-color: transparent;
+}
+
+.header-auth-reset:hover {
+    color: var(--accent);
 }
 
 .header-auth-btns {
@@ -587,6 +609,8 @@ body {
     border-right: 1px solid var(--border);
     overflow-y: auto;
     z-index: 100;
+    display: flex;
+    flex-direction: column;
 }
 
 .section-nav-list {
@@ -594,6 +618,61 @@ body {
     flex-direction: column;
     gap: 0.5rem;
     padding-top: 1.5rem;
+    flex: 1;
+}
+
+.section-nav-footer {
+    margin-top: auto;
+    padding-top: 2rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.section-nav-projects-title {
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 0.75rem;
+}
+
+.section-nav-project {
+    margin-bottom: 1rem;
+}
+
+.section-nav-project:last-child {
+    margin-bottom: 0;
+}
+
+.section-nav-project-name {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    margin-bottom: 0.35rem;
+}
+
+.section-nav-project-links {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.section-nav-project-links a {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 28px;
+    height: 28px;
+    border-radius: 8px;
+    color: var(--text-muted);
+    transition: background 0.2s, color 0.2s;
+}
+
+.section-nav-project-links a:hover {
+    background: rgba(255, 255, 255, 0.08);
+    color: var(--text);
+}
+
+.section-nav-project-links a svg {
+    width: 18px;
+    height: 18px;
 }
 
 .section-nav-item {
@@ -618,6 +697,10 @@ body {
     color: var(--accent);
     font-weight: 600;
     border-color: rgba(124, 154, 184, 0.25);
+}
+
+.section-nav-item.section-nav-featured {
+    border-left: 3px solid #f59e0b;
 }
 
 /* Кнопка в сайдбаре (автоматизация) — визуально как ссылка */
@@ -660,6 +743,11 @@ button.section-nav-item {
         flex-wrap: nowrap;
         padding-top: 0;
         padding-bottom: 0.25rem;
+        flex: none;
+    }
+
+    .section-nav-footer {
+        display: none;
     }
 
     .section-nav-item {
