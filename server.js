@@ -84,6 +84,7 @@ app.use(express.urlencoded({ extended: true }));
 
 // Динамический конфиг API — страницы получают правильный URL бэкенда
 const API_PUBLIC_URL = (process.env.API_PUBLIC_URL || '').trim();
+const ANALYTICS_API_URL = (process.env.ANALYTICS_API_URL || '').trim();
 const TELEGRAM_LOGIN_BOT = (process.env.TELEGRAM_LOGIN_BOT || '').trim();
 const TELEGRAM_LOGIN_BOT_FALLBACK = 'testminiappifbot';
 
@@ -94,8 +95,10 @@ app.get('/api-config.js', (req, res) => {
   const host = (req.get('host') || '').toLowerCase();
   const isLocalhost = host.startsWith('localhost') || host.startsWith('127.0.0.1');
   const botForClient = TELEGRAM_LOGIN_BOT || (isLocalhost ? TELEGRAM_LOGIN_BOT_FALLBACK : '');
+  const analyticsBase = ANALYTICS_API_URL ? ANALYTICS_API_URL.replace(/\/$/, '') : apiBase;
   const vars = [
     `window.API_BASE = ${JSON.stringify(apiBase)}`,
+    `window.ANALYTICS_API_URL = ${JSON.stringify(analyticsBase)}`,
     `window.TELEGRAM_LOGIN_BOT = ${JSON.stringify(botForClient)}`,
   ];
   res.type('application/javascript').send(vars.join(';\n') + ';');

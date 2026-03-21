@@ -33,19 +33,29 @@
     return p;
   }
 
+  function isMobile() {
+    return (typeof window !== 'undefined' && window.innerWidth < 768) || /Android|webOS|iPhone|iPad|iPod|Mobile/i.test(navigator.userAgent || '');
+  }
+
+  function getAnalyticsUrl() {
+    var base = (window.ANALYTICS_API_URL || window.API_BASE || '/api').toString().replace(/\/$/, '');
+    return base + '/analytics';
+  }
+
   function send(event, data) {
     var payload = {
       ts: new Date().toISOString(),
       page: getPage(),
       event: event,
       sessionId: getSessionId(),
-      tg: getTelegramUser()
+      tg: getTelegramUser(),
+      client: 'website',
+      device: isMobile() ? 'mobile' : 'desktop'
     };
     if (data && typeof data === 'object') {
       for (var k in data) if (data.hasOwnProperty(k)) payload[k] = data[k];
     }
-    var apiBase = window.API_BASE || '/api';
-    var url = apiBase.replace(/\/$/, '') + '/analytics';
+    var url = getAnalyticsUrl();
     try {
       var blob = new Blob([JSON.stringify(payload)], { type: 'application/json' });
       navigator.sendBeacon(url, blob);
