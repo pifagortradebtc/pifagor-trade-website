@@ -37,12 +37,16 @@
 
   window.onTelegramAuth = function (user) {
     try {
+      var photo = user.photo_url || '';
       localStorage.setItem('pifagor_telegram_user', JSON.stringify({
         id: user.id,
         firstName: user.first_name,
         lastName: user.last_name || '',
         username: user.username || '',
-        photoUrl: user.photo_url || '',
+        photoUrl: photo,
+        first_name: user.first_name,
+        last_name: user.last_name || '',
+        photo_url: photo,
       }));
     } catch (err) {}
     closeLoginModal();

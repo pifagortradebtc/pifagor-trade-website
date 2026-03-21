@@ -198,6 +198,45 @@ body.user-logged-in .section-nav-auth .header-auth-btn-login {
 body.user-logged-in .section-nav-auth .section-nav-auth-user {
     display: flex !important;
     align-items: center;
+    gap: 0.5rem;
+}
+
+.section-nav-auth-avatar-wrap {
+    width: 28px;
+    height: 28px;
+    min-width: 28px;
+    border-radius: 50%;
+    overflow: hidden;
+    flex-shrink: 0;
+    background: rgba(255, 255, 255, 0.08);
+}
+
+.section-nav-auth-avatar {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.section-nav-auth-avatar-placeholder {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    font-size: 0.85rem;
+    color: var(--text-muted);
+}
+
+.section-nav-auth-name {
+    flex: 1;
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+body.page-profile .section-nav-auth-exit {
+    display: flex !important;
+    align-items: center;
 }
 
 /* Аватар пользователя Telegram (справа при открытии из бота) */
@@ -820,6 +859,11 @@ body.has-sidebar .section-nav-auth .section-nav-item {
 
 .section-nav-project {
     margin-bottom: 1rem;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 0.5rem;
+    flex-wrap: nowrap;
 }
 
 .section-nav-project:last-child {
@@ -829,12 +873,14 @@ body.has-sidebar .section-nav-auth .section-nav-item {
 .section-nav-project-name {
     font-size: 0.85rem;
     color: var(--text-muted);
-    margin-bottom: 0.35rem;
+    margin-bottom: 0;
+    flex-shrink: 0;
 }
 
 .section-nav-project-links {
     display: flex;
     gap: 0.5rem;
+    flex-shrink: 0;
 }
 
 .section-nav-project-links a {
@@ -947,17 +993,21 @@ button.section-nav-item {
         display: block;
         width: 100%;
         max-width: 100%;
+        min-width: 0;
         height: 100px;
         flex-shrink: 0;
         position: relative;
         overflow: hidden;
+        padding: 0 max(env(safe-area-inset-right), 0.5rem) 0 max(env(safe-area-inset-left), 0.5rem);
+        box-sizing: border-box;
     }
 
     body.has-sidebar .mobile-logo-banner {
         width: 100%;
         height: 100%;
         max-width: 100%;
-        object-fit: cover;
+        min-width: 0;
+        object-fit: contain;
         object-position: center top;
     }
 
@@ -975,7 +1025,7 @@ button.section-nav-item {
     body.has-sidebar .mobile-menu-btn {
         position: static;
         align-self: flex-start;
-        margin: 0.5rem 0 0.5rem 0.75rem;
+        margin: 0.5rem 0 0.5rem max(0.75rem, env(safe-area-inset-left));
         display: flex;
         flex-direction: column;
         justify-content: center;
@@ -1029,25 +1079,8 @@ button.section-nav-item {
         width: 100%;
     }
 
-    body.has-sidebar .section-nav-auth-exit {
+    body.has-sidebar:not(.page-profile) .section-nav-auth-exit {
         display: none !important;
-    }
-
-    body.has-sidebar .section-nav-project {
-        display: flex;
-        flex-direction: row;
-        align-items: center;
-        gap: 0.5rem;
-        flex-wrap: nowrap;
-    }
-
-    body.has-sidebar .section-nav-project-name {
-        margin-bottom: 0;
-        flex-shrink: 0;
-    }
-
-    body.has-sidebar .section-nav-project-links {
-        flex-shrink: 0;
     }
 
     /* Backdrop при открытом меню — не перекрывает панель навигации */
