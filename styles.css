@@ -950,10 +950,6 @@ button.section-nav-item {
     }
 
     /* get-free: заголовок в header — выровнять по высоте с остальными */
-    body.has-sidebar .page-get-free .header .page-title-get-free {
-        margin-top: 0;
-        padding-top: 0;
-    }
 
     .header-banner {
         padding-bottom: 1rem;
@@ -1317,7 +1313,7 @@ details[open] .faq-question::after {
 
 /* ========== Страница торговых сигналов ========== */
 .page-signals {
-    max-width: 720px;
+    max-width: none;
 }
 
 .signals-block {
@@ -1525,7 +1521,7 @@ details[open] .faq-question::after {
 
 /* ========== Страница писем инвесторам ========== */
 .page-investors {
-    max-width: 720px;
+    max-width: none;
 }
 
 .investors-block {
@@ -1574,7 +1570,7 @@ details[open] .faq-question::after {
 
 /* ========== Страница обучения торговле ========== */
 .page-training {
-    max-width: 800px;
+    max-width: none;
 }
 
 .page-title-mono {
@@ -2006,9 +2002,7 @@ details[open] .faq-question::after {
 }
 
 /* ========== Страница «Получить доступ» ========== */
-.page-get-free {
-    max-width: 560px;
-}
+/* Получить всё — как индикаторы, единая ширина 720px */
 
 .page-title-get-free {
     margin-top: 1rem;
@@ -2819,7 +2813,7 @@ details[open] .faq-question::after {
 
 /* ========== Страница «Календарь событий» (Путешествия) ========== */
 .page-travel {
-    max-width: 800px;
+    max-width: none;
 }
 
 .travel-intro {
@@ -3207,13 +3201,7 @@ details[open] .faq-question::after {
 }
 
 /* ========== Мини-курс ========== */
-.page-mini-course {
-    max-width: 680px;
-}
-
-.page-mini-course .main {
-    padding-top: 0.5rem;
-}
+/* Мини-курс — как индикаторы, единая ширина и отступы */
 
 .mini-course-intro {
     font-size: 0.95rem;
