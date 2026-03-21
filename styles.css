@@ -31,7 +31,31 @@ body {
     padding-bottom: 2rem;
 }
 
+/* Skip link для доступности */
+.skip-link {
+    position: absolute;
+    top: -100px;
+    left: 1rem;
+    z-index: 9999;
+    padding: 0.75rem 1.25rem;
+    background: var(--accent);
+    color: #0f172a;
+    font-weight: 600;
+    text-decoration: none;
+    border-radius: 8px;
+    transition: top 0.2s;
+}
+.skip-link:focus {
+    top: 1rem;
+    outline: 2px solid #fff;
+    outline-offset: 2px;
+}
+
 /* Кнопка «Поддержка» справа снизу — фиксированная иконка */
+.support-fab-same-page {
+    display: none;
+}
+
 .support-fab {
     position: fixed;
     bottom: 1.5rem;
@@ -116,17 +140,6 @@ body {
 .header-auth-btn:hover {
     background: rgba(255, 255, 255, 0.1);
     border-color: rgba(255, 255, 255, 0.2);
-}
-
-.header-auth-btn-reg {
-    background: rgba(124, 154, 184, 0.2);
-    border-color: rgba(124, 154, 184, 0.4);
-    color: var(--accent);
-}
-
-.header-auth-btn-reg:hover {
-    background: rgba(124, 154, 184, 0.3);
-    border-color: rgba(124, 154, 184, 0.5);
 }
 
 .header-auth-user {
@@ -222,7 +235,7 @@ body {
 .logo {
     display: inline-flex;
     align-items: center;
-    gap: 0.75rem;
+    gap: 0.5rem;
     text-decoration: none;
     cursor: pointer;
     transition: opacity 0.2s;
@@ -236,9 +249,21 @@ body {
     outline: none;
 }
 
-.logo-icon {
+.logo-icon-wrap {
+    display: flex;
+    align-items: center;
+    justify-content: center;
     width: 48px;
     height: 48px;
+    flex-shrink: 0;
+    background: #000;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.logo-icon {
+    width: 36px;
+    height: 36px;
     object-fit: contain;
 }
 
@@ -604,7 +629,7 @@ body {
     top: 0;
     bottom: 0;
     width: 260px;
-    padding: 2rem 1.25rem;
+    padding: 6rem 1.25rem 2rem;
     background: rgba(15, 23, 42, 0.98);
     border-right: 1px solid var(--border);
     overflow-y: auto;
@@ -613,11 +638,76 @@ body {
     flex-direction: column;
 }
 
+.section-nav-logo {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    flex-shrink: 0;
+    margin-bottom: 1.25rem;
+    transition: transform 0.2s;
+}
+
+.section-nav-logo:hover {
+    transform: translateY(-2px);
+}
+
+.section-nav-logo:active {
+    transform: translateY(1px);
+}
+
+.section-nav-logo .logo-icon-wrap {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 120px;
+    height: 120px;
+    flex-shrink: 0;
+    padding: 6px;
+    background: linear-gradient(145deg, #1a1a1a 0%, #000 50%, #0d0d0d 100%);
+    border-radius: 14px;
+    overflow: hidden;
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    box-shadow:
+        0 6px 0 rgba(0, 0, 0, 0.45),
+        0 10px 20px rgba(0, 0, 0, 0.35),
+        inset 0 1px 0 rgba(255, 255, 255, 0.1),
+        inset 0 -1px 0 rgba(0, 0, 0, 0.4);
+    transition: box-shadow 0.2s, transform 0.2s;
+}
+
+.section-nav-logo:hover .logo-icon-wrap {
+    box-shadow:
+        0 8px 0 rgba(0, 0, 0, 0.4),
+        0 14px 28px rgba(0, 0, 0, 0.3),
+        inset 0 1px 0 rgba(255, 255, 255, 0.12),
+        inset 0 -1px 0 rgba(0, 0, 0, 0.4);
+}
+
+.section-nav-logo .logo-icon {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    filter:
+        drop-shadow(0 1px 2px rgba(0, 0, 0, 0.4))
+        drop-shadow(0 0 16px rgba(124, 154, 184, 0.2))
+        brightness(1.08)
+        contrast(1.05);
+    transition: filter 0.2s;
+}
+
+.section-nav-logo:hover .logo-icon {
+    filter:
+        drop-shadow(0 2px 4px rgba(0, 0, 0, 0.35))
+        drop-shadow(0 0 20px rgba(124, 154, 184, 0.25))
+        brightness(1.12)
+        contrast(1.06);
+}
+
 .section-nav-list {
     display: flex;
     flex-direction: column;
     gap: 0.5rem;
-    padding-top: 1.5rem;
+    padding-top: 0.5rem;
     flex: 1;
 }
 
@@ -727,6 +817,10 @@ button.section-nav-item {
     flex-direction: column;
 }
 
+.page-footer-mobile {
+    display: none;
+}
+
 @media (max-width: 767px) {
     .section-nav {
         left: auto;
@@ -740,6 +834,20 @@ button.section-nav-item {
         padding: 1rem;
         overflow-x: auto;
         overflow-y: hidden;
+        flex-direction: row;
+        align-items: center;
+        gap: 0.75rem;
+    }
+
+    .section-nav-logo {
+        margin-bottom: 0;
+        flex-shrink: 0;
+    }
+
+    .section-nav-logo .logo-icon-wrap {
+        width: 52px;
+        height: 52px;
+        padding: 4px;
     }
 
     .section-nav-list {
@@ -748,11 +856,20 @@ button.section-nav-item {
         flex-wrap: nowrap;
         padding-top: 0;
         padding-bottom: 0.25rem;
-        flex: none;
+        flex: 1;
+        min-width: 0;
     }
 
     .section-nav-footer {
         display: none;
+    }
+
+    .page-footer-mobile {
+        display: block;
+        padding: 1.5rem 1.25rem;
+        margin-top: 2rem;
+        border-top: 1px solid var(--border);
+        font-size: 0.85rem;
     }
 
     .section-nav-item {
@@ -791,6 +908,15 @@ button.section-nav-item {
     border-bottom: 1px solid var(--border);
 }
 
+.indicators-cta-top {
+    margin: 1.5rem 0 2rem;
+}
+
+.indicators-cta-top .btn-cta-large {
+    max-width: 340px;
+    margin: 0 auto;
+}
+
 .indicators-video-section {
     margin-bottom: 2rem;
 }
@@ -821,25 +947,18 @@ button.section-nav-item {
     box-shadow: 0 8px 32px rgba(0, 0, 0, 0.25);
 }
 
+.indicators-video-inner {
+    --youtube-crop-top: 56px;
+}
+
 .indicators-video-inner iframe {
     position: absolute;
-    inset: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
     width: 100%;
-    height: 100%;
-}
-
-.indicators-video-link {
-    display: inline-block;
-    margin-top: 0.75rem;
-    font-size: 0.9rem;
-    color: var(--accent);
-    text-decoration: none;
-    transition: opacity 0.2s;
-}
-
-.indicators-video-link:hover {
-    opacity: 0.85;
-    text-decoration: underline;
+    top: calc(-1 * var(--youtube-crop-top));
+    height: calc(100% + var(--youtube-crop-top));
 }
 
 .indicators-block {
@@ -1195,13 +1314,17 @@ details[open] .faq-question::after {
     overflow: hidden;
     border: 1px solid var(--border);
     box-shadow: 0 8px 32px rgba(0, 0, 0, 0.25);
+    --youtube-crop-top: 56px;
 }
 
 .signals-video-inner iframe {
     position: absolute;
-    inset: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
     width: 100%;
-    height: 100%;
+    top: calc(-1 * var(--youtube-crop-top));
+    height: calc(100% + var(--youtube-crop-top));
 }
 
 .signals-video-link {
@@ -1242,25 +1365,17 @@ details[open] .faq-question::after {
     border-radius: 8px;
     overflow: hidden;
     border: 1px solid var(--border);
+    --youtube-crop-top: 56px;
 }
 
 .example-video iframe {
     position: absolute;
-    inset: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
     width: 100%;
-    height: 100%;
-}
-
-.video-fallback-link {
-    display: block;
-    margin-top: 0.5rem;
-    font-size: 0.85rem;
-    color: var(--accent);
-    text-decoration: underline;
-}
-
-.video-fallback-link:hover {
-    filter: brightness(1.2);
+    top: calc(-1 * var(--youtube-crop-top));
+    height: calc(100% + var(--youtube-crop-top));
 }
 
 .features-grid {
@@ -1477,13 +1592,17 @@ details[open] .faq-question::after {
     border-radius: 8px;
     overflow: hidden;
     border: 1px solid var(--border);
+    --youtube-crop-top: 56px;
 }
 
 .training-video iframe {
     position: absolute;
-    inset: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
     width: 100%;
-    height: 100%;
+    top: calc(-1 * var(--youtube-crop-top));
+    height: calc(100% + var(--youtube-crop-top));
 }
 
 .program-section {
@@ -2079,20 +2198,17 @@ details[open] .faq-question::after {
     border-radius: 8px;
     overflow: hidden;
     border: 1px solid var(--border);
+    --youtube-crop-top: 56px;
 }
 
 .indicator-modal-video-wrap iframe {
     position: absolute;
-    inset: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
     width: 100%;
-    height: 100%;
-}
-
-.indicator-modal-video-wrap .video-fallback-link {
-    display: block;
-    margin-top: 0.5rem;
-    font-size: 0.85rem;
-    color: var(--accent);
+    top: calc(-1 * var(--youtube-crop-top));
+    height: calc(100% + var(--youtube-crop-top));
 }
 
 .modal-title {
@@ -2246,6 +2362,7 @@ details[open] .faq-question::after {
     display: block;
     max-width: 100%;
     width: 100%;
+    height: auto;
     border-radius: 8px;
     margin: 0.75rem 0;
     border: 1px solid var(--border);
@@ -2277,6 +2394,34 @@ details[open] .faq-question::after {
 
 .referral-check {
     margin-bottom: 2rem;
+}
+
+.get-free-progress {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 1.25rem;
+    font-size: 0.85rem;
+}
+
+.get-free-progress-step {
+    color: var(--text-muted);
+}
+
+.get-free-progress-step-active {
+    color: var(--accent);
+    font-weight: 600;
+}
+
+.get-free-progress-step-done {
+    color: #22c55e;
+}
+
+.get-free-progress-line {
+    flex: 1;
+    height: 2px;
+    background: rgba(255, 255, 255, 0.1);
+    min-width: 24px;
 }
 
 .referral-check-block {
@@ -3320,25 +3465,45 @@ details[open] .faq-question::after {
     overflow: hidden;
     border: 1px solid var(--border);
     background: #000;
+    --youtube-crop-top: 56px;
 }
 
 .mini-course-video-inner iframe {
     position: absolute;
-    inset: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
     width: 100%;
-    height: 100%;
+    top: calc(-1 * var(--youtube-crop-top));
+    height: calc(100% + var(--youtube-crop-top));
 }
 
-.mini-course-video-link {
-    display: block;
-    margin-top: 0.75rem;
-    font-size: 0.9rem;
+.mini-course-video-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    justify-content: center;
+    margin-top: 1rem;
+}
+
+.btn-next-lesson {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.65rem 1.25rem;
+    font-size: 0.95rem;
+    font-weight: 600;
     color: var(--accent);
-    text-decoration: underline;
+    background: rgba(124, 154, 184, 0.2);
+    border: 1px solid rgba(124, 154, 184, 0.4);
+    border-radius: 10px;
+    cursor: pointer;
+    transition: background 0.2s, transform 0.2s;
 }
 
-.mini-course-video-link:hover {
-    opacity: 0.9;
+.btn-next-lesson:hover {
+    background: rgba(124, 154, 184, 0.3);
+    transform: translateX(2px);
 }
 
 .btn-mark-watched {

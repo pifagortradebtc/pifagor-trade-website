@@ -210,17 +210,29 @@
     var iframe = document.getElementById('video-iframe');
     var titleEl = document.getElementById('video-title');
     var linkEl = document.getElementById('video-youtube-link');
+    var nextBtn = document.getElementById('btn-next-lesson');
 
     if (!section || !iframe || !lesson) return;
 
     titleEl.textContent = lesson.title;
     iframe.src = 'https://www.youtube-nocookie.com/embed/' + lesson.videoId + '?rel=0';
     iframe.title = lesson.title;
-    linkEl.href = 'https://www.youtube.com/watch?v=' + lesson.videoId;
+    if (linkEl) linkEl.href = 'https://www.youtube.com/watch?v=' + lesson.videoId;
 
     currentLessonIndex = globalIdx;
     section.hidden = false;
     document.body.style.overflow = 'hidden';
+
+    if (nextBtn) {
+      var hasNext = globalIdx + 1 < totalLessons;
+      var nextIdx = globalIdx + 1;
+      if (hasNext && nextIdx >= REFERRAL_LOCK_START && !isReferralVerified()) {
+        nextBtn.style.display = 'none';
+      } else {
+        nextBtn.style.display = hasNext ? '' : 'none';
+      }
+    }
+
     if (window.pifagorAnalytics && window.pifagorAnalytics.send) {
       window.pifagorAnalytics.send('lesson_opened', { title: lesson.title, lessonIndex: globalIdx });
     }
@@ -234,7 +246,7 @@
     document.body.style.overflow = '';
   }
 
-  function markWatched() {
+  function markCurrentWatchedOnly() {
     if (watchedIds.indexOf(currentLessonIndex) < 0) {
       watchedIds.push(currentLessonIndex);
       watchedIds.sort(function (a, b) { return a - b; });
@@ -247,6 +259,10 @@
         window.pifagorAnalytics.send('lesson_watched', { title: lesson ? lesson.title : '', lessonIndex: currentLessonIndex, progress: Math.round((watchedIds.length / totalLessons) * 100) });
       }
     }
+  }
+
+  function markWatched() {
+    markCurrentWatchedOnly();
     closeVideo();
   }
 
@@ -318,9 +334,22 @@
 
     var closeBtn = document.getElementById('video-close');
     var markBtn = document.getElementById('btn-mark-watched');
+    var nextBtn = document.getElementById('btn-next-lesson');
     var backdrop = document.getElementById('video-backdrop');
     if (closeBtn) closeBtn.addEventListener('click', closeVideo);
     if (markBtn) markBtn.addEventListener('click', markWatched);
+    if (nextBtn) nextBtn.addEventListener('click', function () {
+      var nextIdx = currentLessonIndex + 1;
+      markCurrentWatchedOnly();
+      closeVideo();
+      if (nextIdx < totalLessons) {
+        if (nextIdx >= REFERRAL_LOCK_START && !isReferralVerified()) {
+          showReferralModal(nextIdx);
+        } else {
+          setTimeout(function () { openVideo(nextIdx); }, 100);
+        }
+      }
+    });
     if (backdrop) backdrop.addEventListener('click', closeVideo);
     var refForm = document.getElementById('referral-verify-form');
     var refClose = document.getElementById('referral-verify-close');
