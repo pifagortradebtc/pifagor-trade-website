@@ -50,6 +50,7 @@
                 <span class="logo-icon-wrap"><img src="/images/logo.png" alt="" class="logo-icon"></span>
             </a>
             <nav class="section-nav-list">
+                <a href="mini-course.html" class="section-nav-item section-nav-featured">Мини-курс новичкам</a>
                 <a href="indicators.html" class="section-nav-item">Индикаторы</a>
                 <a href="signals.html" class="section-nav-item">Торговые сигналы</a>
                 <a href="investors-letters.html" class="section-nav-item">Письма инвесторам</a>
@@ -584,11 +585,21 @@
       var timerEl = document.getElementById('register-modal-timer');
       var BYBIT_REG_URL = 'https://www.bybit.com/ru-RU/aff-bind?affiliate_id=24722';
       var registerCountdownTimer = null;
+      var tg = window.Telegram && window.Telegram.WebApp;
+
+      function openBybitUrl() {
+        if (tg && typeof tg.openLink === 'function') {
+          tg.openLink(BYBIT_REG_URL);
+        } else {
+          var w = window.open(BYBIT_REG_URL, '_blank', 'noopener,noreferrer');
+          if (!w) window.location.href = BYBIT_REG_URL;
+        }
+        closeModal();
+      }
 
       function openModal() {
         modal.hidden = false;
         document.body.style.overflow = 'hidden';
-        if (registerBtn) registerBtn.disabled = true;
         if (timerEl) timerEl.textContent = '4';
         var count = 4;
         function tick() {
@@ -597,8 +608,7 @@
             count--;
             registerCountdownTimer = setTimeout(tick, 1000);
           } else {
-            window.open(BYBIT_REG_URL, '_blank', 'noopener,noreferrer');
-            closeModal();
+            openBybitUrl();
           }
         }
         tick();
@@ -611,13 +621,13 @@
         }
         modal.hidden = true;
         document.body.style.overflow = '';
-        if (registerBtn) registerBtn.disabled = false;
         if (timerEl) timerEl.textContent = '';
       }
 
       openBtns.forEach(function(btn) { btn.addEventListener('click', openModal); });
       if (closeBtn) closeBtn.addEventListener('click', closeModal);
       if (backdrop) backdrop.addEventListener('click', closeModal);
+      if (registerBtn) registerBtn.addEventListener('click', openBybitUrl);
 
       var checkModal = document.getElementById('check-modal');
       var checkModalClose = document.getElementById('check-modal-close');
