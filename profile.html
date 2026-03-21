@@ -2,6 +2,7 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
+    <script>try{var _u=localStorage.getItem('pifagor_telegram_user');if(_u||(window.Telegram&&window.Telegram.WebApp&&window.Telegram.WebApp.initDataUnsafe&&window.Telegram.WebApp.initDataUnsafe.user))document.documentElement.classList.add('user-logged-in-early');}catch(e){}</script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <meta name="description" content="Профиль пользователя Pifagor Trade. Данные для доступа к индикаторам.">
     <meta property="og:type" content="website">
@@ -17,16 +18,15 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
     <script src="https://telegram.org/js/telegram-web-app.js" async></script>
-    <script>try{var _u=localStorage.getItem('pifagor_telegram_user');if(_u||(window.Telegram&&window.Telegram.WebApp&&window.Telegram.WebApp.initDataUnsafe&&window.Telegram.WebApp.initDataUnsafe.user))document.documentElement.classList.add('user-logged-in-early');}catch(e){}</script>
 </head>
-<body class="has-sidebar">
+<body class="has-sidebar page-profile">
     <a href="#main-content" class="skip-link">Перейти к содержимому</a>
     <div class="site-top-bar">
         <a href="indicators.html" class="mobile-logo" aria-label="Pifagor Trade">
             <img src="/images/header-banner.png" alt="Pifagor Trade" class="mobile-logo-banner">
         </a>
         <button type="button" class="mobile-menu-btn" aria-label="Открыть меню" aria-expanded="false">
-            <span></span><span></span><span></span>
+            <svg class="mobile-menu-icon" viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="6" r="2"/><circle cx="12" cy="12" r="2"/><circle cx="12" cy="18" r="2"/></svg>
         </button>
         <div class="header-auth-bar">
         <div class="header-auth-main">
@@ -43,6 +43,9 @@
     </a>
     <div class="page page-profile page-with-sidebar">
         <aside class="section-nav" aria-label="Навигация по разделам">
+            <a href="indicators.html" class="section-nav-logo" aria-label="Профиль — Pifagor Trade">
+                <span class="logo-icon-wrap"><img src="/images/logo.png" alt="" class="logo-icon"></span>
+            </a>
             <nav class="section-nav-list">
                 <a href="mini-course.html" class="section-nav-item section-nav-featured">Мини-курс новичкам</a>
                 <a href="indicators.html" class="section-nav-item">Индикаторы</a>
@@ -54,7 +57,6 @@
                 <a href="get-free.html" class="section-nav-item">Получить всё</a>
                 <div class="section-nav-auth">
                     <a href="#" class="section-nav-item header-auth-btn header-auth-btn-login">Войти</a>
-                    <a href="profile.html" class="section-nav-item header-auth-btn section-nav-auth-user" style="display:none" title="Профиль"></a>
                     <button type="button" class="section-nav-item section-nav-auth-exit" id="section-nav-exit" style="display:none">Выйти</button>
                 </div>
             </nav>
