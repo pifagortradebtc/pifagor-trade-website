@@ -356,7 +356,10 @@
         e.preventDefault();
         if (localStorage.getItem('referral_confirmed') === 'true' && localStorage.getItem('referral_uid')) return;
         const uid = uidInput.value.trim();
-        if (!uid) return;
+        if (!uid) {
+          if (window.pifagorAnalytics) window.pifagorAnalytics.send('referral_check_result', { result: 'empty_attempt', source: 'form' });
+          return;
+        }
 
         checkBtn.disabled = true;
         checkBtn.classList.add('btn-loading');
@@ -373,23 +376,27 @@
           const data = await res.json();
 
           if (!res.ok) {
+            if (window.pifagorAnalytics) window.pifagorAnalytics.send('referral_check_result', { result: 'error', source: 'form' });
             showResult('error', 'Ошибка', data.error || 'Не удалось выполнить проверку');
             return;
           }
 
           if (data.success && data.isReferral) {
+            if (window.pifagorAnalytics) window.pifagorAnalytics.send('referral_check_result', { result: 'success', source: 'form' });
             try {
               localStorage.setItem('referral_confirmed', 'true');
               localStorage.setItem('referral_uid', uid);
             } catch (e) {}
             openReferralAccessModal(uid);
           } else if (data.success && !data.isReferral) {
+            if (window.pifagorAnalytics) window.pifagorAnalytics.send('referral_check_result', { result: 'not_referral', source: 'form' });
             var arrowHtml = '<a href="#not-referral-block" class="referral-result-arrow">↓</a>';
             showResult('neutral', 'Нет', data.message, null, arrowHtml);
           } else {
             showResult('error', 'Ошибка', data.error || data.message || 'Неизвестная ошибка');
           }
         } catch (err) {
+          if (window.pifagorAnalytics) window.pifagorAnalytics.send('referral_check_result', { result: 'error', source: 'form', error: 'network' });
           showResult('error', 'Ошибка', 'Не удалось подключиться к серверу. Попробуйте позже или напишите в поддержку.', null, '<p><a href="https://t.me/pifagor_admin" target="_blank" rel="noopener noreferrer" class="referral-result-link">t.me/pifagor_admin</a></p>');
         } finally {
           checkBtn.disabled = false;
@@ -533,11 +540,13 @@
           var data = await res.json();
 
           if (!res.ok) {
+            if (window.pifagorAnalytics) window.pifagorAnalytics.send('referral_access_submitted', { result: 'error', error: (data.error || '').slice(0, 100) });
             referralAccessResult.className = 'referral-result referral-result-error';
             referralAccessResult.innerHTML = '<div class="referral-result-title">Ошибка</div><p class="referral-result-desc">' + escapeHtml(data.error || 'Не удалось отправить') + '</p>';
             return;
           }
 
+          if (window.pifagorAnalytics) window.pifagorAnalytics.send('referral_access_submitted', { result: 'success', uid: currentReferralUid });
           var msg = data.message || 'Данные приняты. Индикаторы откроются в течение 3 дней. Письмо раз в неделю будет приходить на почту. Ниже ссылка на сигнальный канал.';
           var linkHtml = '';
           if (data.inviteLink) {
@@ -554,6 +563,7 @@
             if (linkEl) linkEl.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
           }
         } catch (err) {
+          if (window.pifagorAnalytics) window.pifagorAnalytics.send('referral_access_submitted', { result: 'error', error: 'network' });
           referralAccessResult.className = 'referral-result referral-result-error';
           referralAccessResult.innerHTML = '<div class="referral-result-title">Ошибка</div><p class="referral-result-desc">Не удалось подключиться к серверу. Попробуйте позже или напишите в <a href="https://t.me/pifagor_admin" target="_blank" rel="noopener noreferrer" class="referral-result-link">поддержку</a>.</p>';
         } finally {
@@ -606,7 +616,10 @@
       checkModalForm.addEventListener('submit', async function(e) {
         e.preventDefault();
         var uid = checkModalUid.value.trim();
-        if (!uid) return;
+        if (!uid) {
+          if (window.pifagorAnalytics) window.pifagorAnalytics.send('referral_check_result', { result: 'empty_attempt', source: 'check_modal' });
+          return;
+        }
 
         checkModalBtn.disabled = true;
         checkModalBtn.classList.add('btn-loading');
@@ -623,11 +636,13 @@
           var data = await res.json();
 
           if (!res.ok) {
+            if (window.pifagorAnalytics) window.pifagorAnalytics.send('referral_check_result', { result: 'error', source: 'check_modal' });
             showResultInModal('error', 'Ошибка', data.error || 'Не удалось выполнить проверку');
             return;
           }
 
           if (data.success && data.isReferral) {
+            if (window.pifagorAnalytics) window.pifagorAnalytics.send('referral_check_result', { result: 'success', source: 'check_modal' });
             try {
               localStorage.setItem('referral_confirmed', 'true');
               localStorage.setItem('referral_uid', uid);
@@ -635,12 +650,15 @@
             closeCheckModal();
             openReferralAccessModal(uid);
           } else if (data.success && !data.isReferral) {
+            if (window.pifagorAnalytics) window.pifagorAnalytics.send('referral_check_result', { result: 'not_referral', source: 'check_modal' });
             var arrowHtml = '<a href="#not-referral-block" class="referral-result-arrow">↓</a>';
             showResultInModal('neutral', 'Нет', data.message, null, arrowHtml);
           } else {
+            if (window.pifagorAnalytics) window.pifagorAnalytics.send('referral_check_result', { result: 'error', source: 'check_modal' });
             showResultInModal('error', 'Ошибка', data.error || data.message || 'Неизвестная ошибка');
           }
         } catch (err) {
+          if (window.pifagorAnalytics) window.pifagorAnalytics.send('referral_check_result', { result: 'error', source: 'check_modal', error: 'network' });
           showResultInModal('error', 'Ошибка', 'Не удалось подключиться к серверу. Попробуйте позже или напишите в поддержку.');
         } finally {
           checkModalBtn.disabled = false;
