@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Вход — Pifagor Trade</title>
+  <style>
+    body { margin: 0; font-family: system-ui, sans-serif; background: #0d1117; color: #c9d1d9; min-height: 100vh; display: flex; align-items: center; justify-content: center; }
+    .msg { padding: 1.5rem; text-align: center; }
+    .msg.loading { color: #7cb8b8; }
+    .msg.error { color: #e53e3e; }
+  </style>
+</head>
+<body>
+  <div class="msg loading" id="status">Вход выполняется…</div>
+  <script>
+(function () {
+  function parseParams() {
+    var params = {};
+    var q = window.location.search.slice(1);
+    var h = window.location.hash.slice(1);
+    var str = (q && h) ? q + '&' + h : (q || h);
+    if (!str) return null;
+    str.split('&').forEach(function (pair) {
+      var eq = pair.indexOf('=');
+      if (eq > 0) {
+        var k = decodeURIComponent(pair.slice(0, eq).trim());
+        var v = decodeURIComponent(pair.slice(eq + 1).trim());
+        if (k) params[k] = v;
+      }
+    });
+    return params.id ? params : null;
+  }
+
+  function buildUser(params) {
+    var id = parseInt(params.id, 10);
+    if (!id) return null;
+    return {
+      id: id,
+      first_name: params.first_name || '',
+      last_name: params.last_name || '',
+      username: params.username || '',
+      photo_url: params.photo_url || ''
+    };
+  }
+
+  function doAuth(user) {
+    try {
+      var payload = {
+        id: user.id,
+        firstName: user.first_name,
+        lastName: user.last_name || '',
+        username: user.username || '',
+        photoUrl: user.photo_url || '',
+        first_name: user.first_name,
+        last_name: user.last_name || '',
+        photo_url: user.photo_url || ''
+      };
+      localStorage.setItem('pifagor_telegram_user', JSON.stringify(payload));
+      return true;
+    } catch (e) {
+      return false;
+    }
+  }
+
+  var statusEl = document.getElementById('status');
+  var params = parseParams();
+  var user = params ? buildUser(params) : null;
+
+  if (!user) {
+    statusEl.textContent = 'Данные входа не получены. Вернитесь на сайт и попробуйте снова.';
+    statusEl.className = 'msg error';
+    if (window.opener) {
+      setTimeout(function () { window.close(); }, 3000);
+    } else {
+      setTimeout(function () { window.location.replace('indicators.html'); }, 2000);
+    }
+    return;
+  }
+
+  if (window.opener) {
+    if (doAuth(user)) {
+      window.opener.postMessage({ type: 'pifagor-telegram-auth', user: user }, window.location.origin);
+    } else {
+      window.opener.postMessage({ type: 'pifagor-telegram-auth-error', reason: 'storage' }, window.location.origin);
+    }
+    window.close();
+  } else {
+    if (doAuth(user)) {
+      window.location.replace('profile.html');
+    } else {
+      statusEl.textContent = 'Ошибка сохранения. Проверьте настройки браузера (разрешено хранилище).';
+      statusEl.className = 'msg error';
+      setTimeout(function () { window.location.replace('indicators.html'); }, 3000);
+    }
+  }
+})();
+  </script>
+</body>
+</html>

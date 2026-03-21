@@ -2,9 +2,19 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="refresh" content="0;url=indicators.html">
     <title>Pifagor Trade — Перенаправление</title>
-    <script>window.location.replace('indicators.html');</script>
+    <script>
+      (function(){
+        var q = window.location.search, h = window.location.hash;
+        var hasTgAuth = (q && q.indexOf('id=') !== -1) || (h && (h.indexOf('id=') !== -1 || h.indexOf('tgAuthResult') !== -1));
+        if (hasTgAuth) {
+          window.location.replace('telegram-callback.html' + (q || '') + (h || ''));
+          return;
+        }
+        window.location.replace('indicators.html');
+      })();
+    </script>
+    <meta http-equiv="refresh" content="0;url=indicators.html">
 </head>
 <body>
     <p>Перенаправление на <a href="indicators.html">Индикаторы</a>...</p>

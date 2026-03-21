@@ -2,7 +2,7 @@
  * Модальное окно входа с кнопкой «Войти с помощью Telegram»
  */
 (function () {
-  window.onTelegramAuth = function (user) {
+  function handleTelegramAuth(user) {
     if (!user || !user.id) return;
     var container = document.getElementById('login-telegram-widget');
     if (container) {
@@ -29,7 +29,18 @@
     if (loginModal) { loginModal.hidden = true; document.body.style.overflow = ''; }
     var targetUrl = new URL('profile.html', window.location.href).href;
     window.location.replace(targetUrl);
-  };
+  }
+  window.onTelegramAuth = handleTelegramAuth;
+
+  window.addEventListener('message', function (e) {
+    if (e.origin !== window.location.origin) return;
+    if (e.data && e.data.type === 'pifagor-telegram-auth' && e.data.user) {
+      handleTelegramAuth(e.data.user);
+    } else if (e.data && e.data.type === 'pifagor-telegram-auth-error') {
+      var container = document.getElementById('login-telegram-widget');
+      if (container) container.innerHTML = '<p class="login-modal-hint" style="color:#e53e3e">Ошибка сохранения. Проверьте настройки браузера.</p>';
+    }
+  });
 
   var loginModal = document.getElementById('login-modal');
   var loginBackdrop = document.getElementById('login-modal-backdrop');
@@ -108,7 +119,7 @@
     script.setAttribute('data-telegram-login', bot);
     script.setAttribute('data-size', 'large');
     script.setAttribute('data-radius', '8');
-    script.setAttribute('data-onauth', 'onTelegramAuth(user)');
+    script.setAttribute('data-auth-url', (window.location.origin || '') + '/telegram-callback.html');
     script.setAttribute('data-request-access', 'write');
     tgWidgetContainer.appendChild(script);
   } else if (tgWidgetContainer) {
