@@ -40,7 +40,7 @@
     </div>
     <div class="mobile-nav-backdrop" aria-hidden="true"></div>
     <script>
-    (function(){try{var s=localStorage.getItem('pifagor_telegram_user');var o=!!(window.Telegram&&window.Telegram.WebApp&&window.Telegram.WebApp.initDataUnsafe&&window.Telegram.WebApp.initDataUnsafe.user)||!!s;if(o){var u=document.getElementById('header-auth-user');var n='';try{var j=null;if(s)j=JSON.parse(s);if(!j){var tw=window.Telegram&&window.Telegram.WebApp&&window.Telegram.WebApp.initDataUnsafe&&window.Telegram.WebApp.initDataUnsafe.user;if(tw)j={first_name:tw.first_name,last_name:tw.last_name,username:tw.username};}if(j){var fn=(j.first_name||'').trim(),ln=(j.last_name||'').trim(),un=(j.username||'').trim();n=(fn+(ln?' '+ln:'')).trim()||(un?'@'+un:'');}}catch(e){}var d=n||'Мой профиль';if(u){u.textContent=d;u.title=d;u.style.display='';}document.querySelectorAll('.section-nav-auth-user').forEach(function(el){el.textContent=d;el.title=d;el.style.display='';});document.querySelectorAll('.header-auth-btn-login').forEach(function(btn){btn.style.display='none';});var ex=document.getElementById('section-nav-exit');if(ex)ex.style.display='';}}}catch(e){}})();
+    (function(){try{var s=localStorage.getItem('pifagor_telegram_user');var o=!!(window.Telegram&&window.Telegram.WebApp&&window.Telegram.WebApp.initDataUnsafe&&window.Telegram.WebApp.initDataUnsafe.user)||!!s;if(o){document.body.classList.add('user-logged-in');var u=document.getElementById('header-auth-user');var n='';try{var j=null;if(s)j=JSON.parse(s);if(!j){var tw=window.Telegram&&window.Telegram.WebApp&&window.Telegram.WebApp.initDataUnsafe&&window.Telegram.WebApp.initDataUnsafe.user;if(tw)j={first_name:tw.first_name,last_name:tw.last_name,username:tw.username};}if(j){var fn=(j.first_name||'').trim(),ln=(j.last_name||'').trim(),un=(j.username||'').trim();n=(fn+(ln?' '+ln:'')).trim()||(un?'@'+un:'');}}catch(e){}var d=n||'Мой профиль';if(u){u.textContent=d;u.title=d;u.style.display='';}document.querySelectorAll('.section-nav-auth-user').forEach(function(el){el.textContent=d;el.title='Профиль';el.href='profile.html';el.style.display='';});document.querySelectorAll('.header-auth-btn-login').forEach(function(btn){btn.style.display='none';});var ex=document.getElementById('section-nav-exit');if(ex)ex.style.display='';}}catch(e){}})();
     </script>
     <a href="support.html" class="support-fab" aria-label="Поддержка" title="Поддержка">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
@@ -61,7 +61,7 @@
                 <a href="get-free.html" class="section-nav-item">Получить всё</a>
                 <div class="section-nav-auth">
                     <a href="#" class="section-nav-item header-auth-btn header-auth-btn-login">Войти</a>
-                    <a href="profile.html" class="section-nav-item header-auth-user section-nav-auth-user" style="display:none" title="Профиль"></a>
+                    <a href="profile.html" class="section-nav-item header-auth-btn section-nav-auth-user" style="display:none" title="Профиль"></a>
                     <button type="button" class="section-nav-item section-nav-auth-exit" id="section-nav-exit" style="display:none">Выйти</button>
                 </div>
             </nav>

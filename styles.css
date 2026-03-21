@@ -115,17 +115,9 @@ body {
     display: none;
 }
 
-/* Страницы без site-top-bar — классический header-auth-bar */
+/* Страницы без site-top-bar — классический header-auth-bar. Скрыто: вход только через левое меню. */
 .header-auth-bar {
-    position: fixed;
-    top: 0;
-    right: 0;
-    z-index: 1001;
-    padding: calc(1rem + env(safe-area-inset-top)) calc(1.5rem + env(safe-area-inset-right)) 1rem 1.5rem;
-    display: flex;
-    flex-direction: column;
-    align-items: flex-end;
-    gap: 0.25rem;
+    display: none !important;
 }
 
 .header-auth-main {
@@ -193,6 +185,19 @@ body {
     transform: translateY(-1px);
     box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
     color: #0f172a;
+}
+
+body.user-logged-in .header-auth-bar {
+    display: none !important;
+}
+
+body.user-logged-in .section-nav-auth .header-auth-btn-login {
+    display: none !important;
+}
+
+body.user-logged-in .section-nav-auth .section-nav-auth-user {
+    display: flex !important;
+    align-items: center;
 }
 
 /* Аватар пользователя Telegram (справа при открытии из бота) */
@@ -931,10 +936,11 @@ button.section-nav-item {
         right: 0;
         width: 100%;
         max-width: 100vw;
-        padding: env(safe-area-inset-top) 0 0;
+        padding: env(safe-area-inset-top) env(safe-area-inset-right) 0 env(safe-area-inset-left);
         z-index: 1102;
         -webkit-tap-highlight-color: transparent;
         overflow: hidden;
+        box-sizing: border-box;
     }
 
     body.has-sidebar .mobile-logo {
@@ -969,7 +975,7 @@ button.section-nav-item {
     body.has-sidebar .mobile-menu-btn {
         position: static;
         align-self: flex-start;
-        margin: 0.5rem 0 0.5rem calc(0.75rem + env(safe-area-inset-left));
+        margin: 0.5rem 0 0.5rem 0.75rem;
         display: flex;
         flex-direction: column;
         justify-content: center;
@@ -1025,6 +1031,23 @@ button.section-nav-item {
 
     body.has-sidebar .section-nav-auth-exit {
         display: none !important;
+    }
+
+    body.has-sidebar .section-nav-project {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        gap: 0.5rem;
+        flex-wrap: nowrap;
+    }
+
+    body.has-sidebar .section-nav-project-name {
+        margin-bottom: 0;
+        flex-shrink: 0;
+    }
+
+    body.has-sidebar .section-nav-project-links {
+        flex-shrink: 0;
     }
 
     /* Backdrop при открытом меню — не перекрывает панель навигации */
