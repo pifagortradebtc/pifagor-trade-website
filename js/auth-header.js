@@ -1,34 +1,25 @@
 /**
- * Обновляет шапку: при входе скрывает «Войти»/«Регистрация», показывает имя с ссылкой на профиль.
+ * Обновляет шапку: при входе скрывает «Войти»/«Регистрация», показывает кнопку «Мой профиль».
  */
 (function () {
-  function getLoggedInUser() {
+  function isLoggedIn() {
     try {
       var tg = window.Telegram && window.Telegram.WebApp;
       var webAppUser = tg && tg.initDataUnsafe && tg.initDataUnsafe.user;
-      if (webAppUser) {
-        var firstName = (webAppUser.first_name || '').trim();
-        var lastName = (webAppUser.last_name || '').trim();
-        return [firstName, lastName].filter(Boolean).join(' ') || 'Профиль';
-      }
+      if (webAppUser) return true;
       var stored = localStorage.getItem('pifagor_telegram_user');
-      if (stored) {
-        var user = JSON.parse(stored);
-        var fn = (user.firstName || '').trim();
-        var ln = (user.lastName || '').trim();
-        return [fn, ln].filter(Boolean).join(' ') || 'Профиль';
-      }
+      if (stored) return true;
     } catch (e) {}
-    return null;
+    return false;
   }
 
-  var displayName = getLoggedInUser();
+  var loggedIn = isLoggedIn();
   var loginBtn = document.querySelector('.header-auth-btn-login');
   var regBtn = document.querySelector('.header-auth-btn-reg');
   var userLink = document.getElementById('header-auth-user');
 
-  if (displayName && userLink) {
-    userLink.textContent = displayName;
+  if (loggedIn && userLink) {
+    userLink.textContent = 'Мой профиль';
     userLink.href = 'profile.html';
     userLink.style.display = '';
     if (loginBtn) loginBtn.style.display = 'none';

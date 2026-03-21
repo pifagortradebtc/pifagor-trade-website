@@ -1,4 +1,4 @@
-require('dotenv').config();
+require('dotenv').config({ path: require('path').join(__dirname, '.env') });
 const path = require('path');
 const fs = require('fs');
 const express = require('express');
@@ -85,14 +85,18 @@ app.use(express.urlencoded({ extended: true }));
 // Динамический конфиг API — страницы получают правильный URL бэкенда
 const API_PUBLIC_URL = (process.env.API_PUBLIC_URL || '').trim();
 const TELEGRAM_LOGIN_BOT = (process.env.TELEGRAM_LOGIN_BOT || '').trim();
+const TELEGRAM_LOGIN_BOT_FALLBACK = 'testminiappifbot';
 
 app.get('/api-config.js', (req, res) => {
   res.set('Cache-Control', 'no-store, no-cache, must-revalidate');
   const base = API_PUBLIC_URL || `${req.protocol}://${req.get('host')}`;
   const apiBase = base.replace(/\/$/, '') + '/api';
+  const host = (req.get('host') || '').toLowerCase();
+  const isLocalhost = host.startsWith('localhost') || host.startsWith('127.0.0.1');
+  const botForClient = TELEGRAM_LOGIN_BOT || (isLocalhost ? TELEGRAM_LOGIN_BOT_FALLBACK : '');
   const vars = [
     `window.API_BASE = ${JSON.stringify(apiBase)}`,
-    `window.TELEGRAM_LOGIN_BOT = ${JSON.stringify(TELEGRAM_LOGIN_BOT)}`,
+    `window.TELEGRAM_LOGIN_BOT = ${JSON.stringify(botForClient)}`,
   ];
   res.type('application/javascript').send(vars.join(';\n') + ';');
 });

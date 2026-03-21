@@ -16,7 +16,7 @@
     <div class="header-auth-bar">
         <a href="#" class="header-auth-btn header-auth-btn-login">Войти</a>
         <a href="#" class="header-auth-btn header-auth-btn-reg">Регистрация</a>
-        <a href="profile.html" class="header-auth-user" id="header-auth-user" style="display:none" title="Профиль">Пользователь</a>
+        <a href="profile.html" class="header-auth-user" id="header-auth-user" style="display:none" title="Мой профиль">Мой профиль</a>
     </div>
     <a href="support.html" class="support-fab" aria-label="Поддержка" title="Поддержка">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
@@ -29,8 +29,7 @@
                     <span class="logo-text">Pifagor Trade</span>
                 </a>
                 <div class="header-reset-btns">
-                    <button type="button" class="header-reset-btn" id="reset-progress">Сбросить прогресс</button>
-                    <button type="button" class="header-reset-btn" id="reset-referral">Сбросить статус реферала</button>
+                    <button type="button" class="header-reset-btn" id="reset-all" title="Выйти из аккаунта и сбросить все данные — вы будете как новый пользователь">Полный сброс</button>
                 </div>
             </div>
 
@@ -135,20 +134,15 @@
         if (window.location.hash === '#automation') openModal();
     })();
     (function() {
-        var resetProgress = document.getElementById('reset-progress');
-        var resetReferral = document.getElementById('reset-referral');
-        if (resetProgress) resetProgress.addEventListener('click', function() {
+        var resetAll = document.getElementById('reset-all');
+        if (resetAll) resetAll.addEventListener('click', function() {
             try {
+                localStorage.removeItem('pifagor_telegram_user');
+                localStorage.removeItem('referral_confirmed');
+                localStorage.removeItem('referral_uid');
                 localStorage.removeItem('pifagor_mini_course_progress');
                 localStorage.removeItem('pifagor_mini_course_modules');
                 localStorage.removeItem('pifagor_mini_course_auto_opened');
-                window.location.reload();
-            } catch (e) {}
-        });
-        if (resetReferral) resetReferral.addEventListener('click', function() {
-            try {
-                localStorage.removeItem('referral_confirmed');
-                localStorage.removeItem('referral_uid');
                 window.location.reload();
             } catch (e) {}
         });

@@ -108,21 +108,26 @@ body {
 }
 
 .header-auth-user {
-    padding: 0.5rem 1rem;
-    font-size: 0.875rem;
-    font-weight: 500;
-    color: var(--text);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.6rem 1.25rem;
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: #0f172a;
     text-decoration: none;
-    border-radius: 8px;
-    border: 1px solid var(--border);
-    background: rgba(255, 255, 255, 0.05);
-    transition: background 0.2s, border-color 0.2s, color 0.2s;
+    border-radius: 10px;
+    border: none;
+    background: rgba(255, 255, 255, 0.95);
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.15);
+    transition: background 0.2s, transform 0.2s, box-shadow 0.2s;
 }
 
 .header-auth-user:hover {
-    background: rgba(255, 255, 255, 0.1);
-    border-color: rgba(255, 255, 255, 0.2);
-    color: var(--text);
+    background: #fff;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+    color: #0f172a;
 }
 
 /* Аватар пользователя Telegram (справа при открытии из бота) */
