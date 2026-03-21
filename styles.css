@@ -1941,10 +1941,10 @@ details[open] .faq-question::after {
     overflow: hidden;
 }
 
-.login-modal-logo-img {
+.login-modal-logo-svg {
     width: 48px;
     height: 48px;
-    object-fit: contain;
+    flex-shrink: 0;
 }
 
 .login-modal-title {
