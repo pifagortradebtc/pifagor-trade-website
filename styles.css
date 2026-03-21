@@ -323,7 +323,7 @@ body {
 /* Защита от огромной иконки при сбое загрузки CSS */
 .logo img,
 .logo .logo-icon,
-.mobile-logo img {
+.mobile-logo img:not(.mobile-logo-banner) {
     max-width: 48px !important;
     max-height: 48px !important;
 }
@@ -916,17 +916,18 @@ button.section-nav-item {
 
     body.has-sidebar .mobile-logo {
         display: flex;
-        flex-shrink: 0;
-        width: 44px;
-        height: 44px;
+        flex: 1;
+        min-width: 0;
         align-items: center;
-        justify-content: center;
+        justify-content: flex-start;
     }
 
-    body.has-sidebar .mobile-logo img {
-        width: 40px;
-        height: 40px;
+    body.has-sidebar .mobile-logo-banner {
+        height: 36px;
+        width: auto;
+        max-width: 100%;
         object-fit: contain;
+        object-position: left center;
     }
 
     body.has-sidebar .mobile-menu-btn {
@@ -970,6 +971,7 @@ button.section-nav-item {
         padding: 0;
         flex-direction: row;
         align-items: center;
+        margin-left: auto;
     }
 
     body.has-sidebar .header-auth-bar {
@@ -984,11 +986,14 @@ button.section-nav-item {
         display: none;
     }
 
-    /* Backdrop при открытом меню */
+    /* Backdrop при открытом меню — не перекрывает панель навигации */
     body.has-sidebar .mobile-nav-backdrop {
         display: block;
         position: fixed;
-        inset: 0;
+        top: 0;
+        left: min(300px, 85vw);
+        right: 0;
+        bottom: 0;
         background: rgba(0, 0, 0, 0.6);
         z-index: 1098;
         opacity: 0;
@@ -1018,6 +1023,8 @@ button.section-nav-item {
         transition: transform 0.25s ease;
         border-right: 1px solid var(--border);
         -webkit-overflow-scrolling: touch;
+        pointer-events: auto;
+        touch-action: manipulation;
     }
 
     body.nav-open .section-nav {
@@ -1055,6 +1062,10 @@ button.section-nav-item {
         font-size: 0.95rem;
         min-height: 48px;
         width: 100%;
+        cursor: pointer;
+        -webkit-tap-highlight-color: transparent;
+        position: relative;
+        z-index: 1;
     }
 
     /* Скрыть сайдбар из потока — место занимает только page-content-wrap */
