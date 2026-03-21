@@ -50,6 +50,10 @@
   };
 
   var bot = (window.TELEGRAM_LOGIN_BOT || '').trim();
+  var hostname = (window.location && window.location.hostname) || '';
+  if (!bot && (hostname === 'localhost' || hostname === '127.0.0.1')) {
+    bot = 'testminiappifbot';
+  }
   if (tgWidgetContainer && bot) {
     var script = document.createElement('script');
     script.async = true;
