@@ -239,11 +239,6 @@ body.user-logged-in .section-nav-auth .section-nav-auth-user {
     text-overflow: ellipsis;
 }
 
-body.page-profile .section-nav-auth .section-nav-auth-user {
-    display: none !important;
-}
-
-
 /* ========== Страница ========== */
 .page {
     position: relative;
