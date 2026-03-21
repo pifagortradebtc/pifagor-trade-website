@@ -1,11 +1,25 @@
 /**
  * Левое меню: при входе — кнопка [аватар + имя] → профиль; на странице профиля — «Выйти».
+ * Если не вошёл — кнопка «Войти».
  */
 function runAuthSidebar() {
   try {
     var s = localStorage.getItem('pifagor_telegram_user');
     var hasUser = !!(window.Telegram && window.Telegram.WebApp && window.Telegram.WebApp.initDataUnsafe && window.Telegram.WebApp.initDataUnsafe.user) || !!s;
-    if (!hasUser) return;
+
+    if (!hasUser) {
+      document.body.classList.remove('user-logged-in', 'page-profile');
+      document.querySelectorAll('.section-nav-auth .header-auth-btn-login').forEach(function (btn) {
+        btn.style.display = '';
+        btn.href = '#';
+      });
+      document.querySelectorAll('.section-nav-auth-user').forEach(function (el) {
+        el.style.display = 'none';
+      });
+      var exitBtn = document.getElementById('section-nav-exit');
+      if (exitBtn) exitBtn.style.display = 'none';
+      return;
+    }
 
     document.body.classList.add('user-logged-in');
 
@@ -65,4 +79,8 @@ if (document.readyState === 'loading') {
   document.addEventListener('DOMContentLoaded', runAuthSidebar);
 } else {
   runAuthSidebar();
+}
+setTimeout(runAuthSidebar, 400);
+if (typeof window !== 'undefined') {
+  window.addEventListener('pifagor:pagechange', runAuthSidebar);
 }

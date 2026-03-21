@@ -118,9 +118,23 @@ body {
     display: none;
 }
 
-/* Страницы без site-top-bar — классический header-auth-bar. Скрыто: вход только через левое меню. */
+/* Страницы без site-top-bar — классический header-auth-bar. На мобильных скрыто: вход через левое меню. */
+/* На десктопе (≥768px) header-auth-bar видна в site-top-bar. */
 .header-auth-bar {
     display: none !important;
+}
+
+@media (min-width: 768px) {
+    body.has-sidebar .site-top-bar .header-auth-bar {
+        display: flex !important;
+        flex-direction: row;
+        align-items: center;
+        gap: 0.5rem;
+    }
+
+    body.has-sidebar.user-logged-in .site-top-bar .header-auth-bar {
+        display: flex !important;
+    }
 }
 
 .header-auth-main {
@@ -1999,6 +2013,17 @@ details[open] .faq-question::after {
     width: 100%;
     margin-top: 1rem;
     padding: 0.6rem 1rem;
+}
+
+.btn-profile-logout {
+    margin-top: 0.75rem;
+    border-color: rgba(255, 255, 255, 0.15);
+    color: var(--text-muted);
+}
+
+.btn-profile-logout:hover {
+    border-color: rgba(220, 80, 80, 0.5);
+    color: #dc5050;
 }
 
 /* ========== Страница «Получить доступ» ========== */

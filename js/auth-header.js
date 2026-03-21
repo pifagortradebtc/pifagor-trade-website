@@ -22,6 +22,9 @@
   var sectionNavExit = document.getElementById('section-nav-exit');
   if (sectionNavExit) sectionNavExit.addEventListener('click', doLogout);
 
+  var profileLogoutBtn = document.getElementById('profile-logout-btn');
+  if (profileLogoutBtn) profileLogoutBtn.addEventListener('click', doLogout);
+
   function isLoggedIn() {
     try {
       var tg = window.Telegram && window.Telegram.WebApp;
