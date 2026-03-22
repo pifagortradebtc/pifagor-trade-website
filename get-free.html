@@ -258,11 +258,11 @@
             <p class="check-modal-hint">Вы подтверждены как реферал. Укажите данные для открытия индикаторов:</p>
             <form class="referral-access-form" id="referral-access-form">
                 <label class="referral-access-label">Никнейм в TradingView (для открытия индикаторов)</label>
-                <input type="text" class="referral-input" name="tradingview" placeholder="Например: john_trader" required id="referral-access-tradingview">
+                <input type="text" class="referral-input" name="tradingview" placeholder="Например: john_trader" required id="referral-access-tradingview" autocomplete="username">
                 <label class="referral-access-label">Telegram (никнейм или @username)</label>
-                <input type="text" class="referral-input" name="telegram" placeholder="@username или id123456" id="referral-access-telegram">
+                <input type="text" class="referral-input" name="telegram" placeholder="@username или id123456" id="referral-access-telegram" autocomplete="username">
                 <label class="referral-access-label">Email (для рассылки писем инвесторам)</label>
-                <input type="email" class="referral-input" name="email" placeholder="example@mail.com" required id="referral-access-email">
+                <input type="email" class="referral-input" name="email" placeholder="example@mail.com" required id="referral-access-email" autocomplete="email">
                 <button type="submit" class="btn btn-check" id="referral-access-btn">Отправить</button>
             </form>
             <div id="referral-access-result" class="referral-result" role="alert" aria-live="polite"></div>
@@ -412,7 +412,7 @@
               var profileRes = await fetch(profileUrl);
               var profileData = await profileRes.json();
               if (profileData.success && profileData.uid) {
-                showResult('success', 'Доступ уже открыт', 'Вы уже подтверждённый реферал. Данные в системе — повторно вводить не нужно.', null, '<p><a href="/indicators.html" class="referral-result-link">Перейти к индикаторам →</a></p>');
+                showResult('success', 'Доступ уже открыт', 'Вы уже подтверждённый реферал. Данные в системе повторно вводить не нужно.', null, '<p><a href="/profile.html" class="referral-result-link">Мой профиль →</a></p>');
                 return;
               }
             } catch (profileErr) {
@@ -518,6 +518,7 @@
           var tg = window.Telegram && window.Telegram.WebApp;
           if (tg && tg.initDataUnsafe && tg.initDataUnsafe.user) {
             user = tg.initDataUnsafe.user;
+            try { localStorage.setItem('pifagor_telegram_user', JSON.stringify(user)); } catch (e) {}
           }
           if (!user) {
             var s = localStorage.getItem('pifagor_telegram_user');
@@ -533,6 +534,9 @@
       function openReferralAccessModal(uid) {
         currentReferralUid = uid;
         referralAccessForm.reset();
+        referralAccessForm.querySelectorAll('input').forEach(function(el) { el.disabled = false; el.readOnly = false; });
+        referralAccessBtn.disabled = false;
+        referralAccessBtn.classList.remove('btn-check--disabled');
         referralAccessResult.className = 'referral-result';
         referralAccessResult.innerHTML = '';
         var telegramInput = document.getElementById('referral-access-telegram');
@@ -550,8 +554,8 @@
               telegramInput.value = v;
               clearInterval(checkTg);
             }
-          }, 150);
-          setTimeout(function() { clearInterval(checkTg); }, 3500);
+          }, 100);
+          setTimeout(function() { clearInterval(checkTg); }, 5000);
         }
       }
 
@@ -559,6 +563,27 @@
         referralAccessModal.hidden = true;
         document.body.style.overflow = '';
       }
+
+      (function enablePasteOnReferralInputs() {
+        var ids = ['referral-access-tradingview', 'referral-access-telegram', 'referral-access-email'];
+        ids.forEach(function(id) {
+          var el = document.getElementById(id);
+          if (!el) return;
+          el.addEventListener('paste', function(e) {
+            var text = '';
+            if (e.clipboardData) {
+              text = (e.clipboardData.getData('text/plain') || e.clipboardData.getData('text') || '').toString();
+            } else if (window.clipboardData && typeof window.clipboardData.getData === 'function') {
+              text = (window.clipboardData.getData('text') || '').toString();
+            }
+            e.preventDefault();
+            var start = this.selectionStart;
+            var end = this.selectionEnd != null ? this.selectionEnd : start;
+            this.value = this.value.slice(0, start) + text + this.value.slice(end);
+            this.setSelectionRange(start + text.length, start + text.length);
+          });
+        });
+      })();
 
       referralAccessClose.addEventListener('click', closeReferralAccessModal);
       referralAccessBackdrop.addEventListener('click', closeReferralAccessModal);
@@ -578,6 +603,7 @@
         referralAccessBtn.classList.add('btn-loading');
         referralAccessResult.className = 'referral-result';
         referralAccessResult.innerHTML = '';
+        var submitSuccess = false;
 
         try {
           var res = await fetch(apiBase + '/referral-access', {
@@ -593,7 +619,7 @@
             return;
           }
 
-          var msg = data.message || 'Данные приняты. Индикаторы откроются в течение 3 дней. Письмо раз в неделю будет приходить на почту. Ниже ссылка на сигнальный канал.';
+          var msg = data.message || 'Данные приняты. Индикаторы откроются в течение 3 дней.';
           var linkHtml = '';
           if (data.inviteLink) {
             linkHtml = '<div class="referral-invite-link"><a href="' + escapeHtml(data.inviteLink) + '" target="_blank" rel="noopener noreferrer" class="btn btn-invite">Telegram-канал →</a></div>';
@@ -603,17 +629,25 @@
           }
           try { localStorage.setItem('referral_uid', currentReferralUid); } catch (e) {}
           referralAccessResult.className = 'referral-result referral-result-success';
-          referralAccessResult.innerHTML = '<div class="referral-result-title">Готово!</div><p class="referral-result-desc">' + msg + '</p>' + linkHtml;
+          referralAccessResult.innerHTML = '<div class="referral-result-title">Готово!</div><p class="referral-result-desc">' + escapeHtml(msg.replace(/\s*Письмо раз в неделю будет приходить на почту\.?\s*/g, '').replace(/\s*Ниже ссылка на сигнальный канал\.?\s*/gi, '').trim()) + '</p><p class="referral-result-desc">Ниже ссылка на сигнальный канал.</p>' + linkHtml;
           if (data.inviteLink) {
             var linkEl = referralAccessResult.querySelector('.btn-invite');
             if (linkEl) linkEl.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
           }
+          submitSuccess = true;
+          referralAccessForm.querySelectorAll('input').forEach(function(el) { el.disabled = true; el.readOnly = true; });
+          referralAccessBtn.disabled = true;
+          referralAccessBtn.classList.add('btn-check--disabled');
         } catch (err) {
           referralAccessResult.className = 'referral-result referral-result-error';
           referralAccessResult.innerHTML = '<div class="referral-result-title">Ошибка</div><p class="referral-result-desc">Не удалось подключиться к серверу. Попробуйте позже или напишите в <a href="https://t.me/pifagor_admin" target="_blank" rel="noopener noreferrer" class="referral-result-link">поддержку</a>.</p>';
         } finally {
-          referralAccessBtn.disabled = false;
-          referralAccessBtn.classList.remove('btn-loading');
+          if (!submitSuccess) {
+            referralAccessBtn.disabled = false;
+            referralAccessBtn.classList.remove('btn-loading');
+          } else {
+            referralAccessBtn.classList.remove('btn-loading');
+          }
         }
       });
 
@@ -733,7 +767,7 @@
               var profileRes = await fetch(profileUrl);
               var profileData = await profileRes.json();
               if (profileData.success && profileData.uid) {
-                showResultInModal('success', 'Доступ уже открыт', 'Вы уже подтверждённый реферал. Данные в системе — повторно вводить не нужно.', null, '<p><a href="/indicators.html" class="referral-result-link">Перейти к индикаторам →</a></p>');
+                showResultInModal('success', 'Доступ уже открыт', 'Вы уже подтверждённый реферал. Данные в системе повторно вводить не нужно.', null, '<p><a href="/profile.html" class="referral-result-link">Мой профиль →</a></p>');
                 return;
               }
             } catch (profileErr) {
