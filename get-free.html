@@ -52,13 +52,13 @@
             </a>
             <nav class="section-nav-list">
                 <a href="mini-course.html" class="section-nav-item section-nav-featured section-nav-mini-course-hidden" aria-hidden="true">Мини-курс новичкам</a>
+                <a href="get-free.html" class="section-nav-item section-nav-active section-nav-get-free-featured">Получить всё</a>
                 <a href="indicators.html" class="section-nav-item">Индикаторы</a>
                 <a href="signals.html" class="section-nav-item">Торговые сигналы</a>
                 <a href="investors-letters.html" class="section-nav-item">Письма инвесторам</a>
                 <a href="training.html" class="section-nav-item">Обучение торговле</a>
                 <button type="button" class="section-nav-item open-automation-modal">Автоматизация торговли</button>
                 <a href="travel.html" class="section-nav-item">Путешествия</a>
-                <a href="get-free.html" class="section-nav-item section-nav-active">Получить всё</a>
                 <div class="section-nav-auth">
                     <a href="#" class="section-nav-item header-auth-btn header-auth-btn-login">Войти</a>
                     <a href="profile.html" class="section-nav-item header-auth-btn section-nav-auth-user" style="display:none" title="Профиль"></a>
@@ -406,6 +406,18 @@
               localStorage.setItem('referral_confirmed', 'true');
               localStorage.setItem('referral_uid', uid);
             } catch (e) {}
+            var telegram = getTelegramFromWebApp();
+            var profileUrl = apiBase + '/referral-profile?uid=' + encodeURIComponent(uid) + (telegram ? '&telegram=' + encodeURIComponent(telegram) : '');
+            try {
+              var profileRes = await fetch(profileUrl);
+              var profileData = await profileRes.json();
+              if (profileData.success && profileData.uid) {
+                showResult('success', 'Доступ уже открыт', 'Вы уже подтверждённый реферал. Данные в системе — повторно вводить не нужно.', null, '<p><a href="/indicators.html" class="referral-result-link">Перейти к индикаторам →</a></p>');
+                return;
+              }
+            } catch (profileErr) {
+              if (typeof console !== 'undefined' && console.log) console.log('[referral-profile]', profileErr);
+            }
             openReferralAccessModal(uid);
           } else if (data.success && !data.isReferral) {
             var arrowHtml = '<a href="#not-referral-block" class="referral-result-arrow">↓</a>';
@@ -502,10 +514,17 @@
 
       function getTelegramFromWebApp() {
         try {
+          var user = null;
           var tg = window.Telegram && window.Telegram.WebApp;
-          var user = tg && tg.initDataUnsafe && tg.initDataUnsafe.user;
-          if (user && user.username) return '@' + user.username;
-          if (user && (user.first_name || user.last_name)) return (user.first_name || '') + ' ' + (user.last_name || '').trim();
+          if (tg && tg.initDataUnsafe && tg.initDataUnsafe.user) {
+            user = tg.initDataUnsafe.user;
+          }
+          if (!user) {
+            var s = localStorage.getItem('pifagor_telegram_user');
+            if (s) try { user = JSON.parse(s); if (user) user.id = user.id || user.Id; } catch (e) {}
+          }
+          if (user && user.username) return '@' + String(user.username).replace(/^@/, '');
+          if (user && (user.first_name || user.firstName || user.last_name || user.lastName)) return ((user.first_name || user.firstName || '') + ' ' + (user.last_name || user.lastName || '')).trim();
           if (user && user.id) return 'id' + user.id;
         } catch (e) {}
         return '';
@@ -524,6 +543,16 @@
         }
         referralAccessModal.hidden = false;
         document.body.style.overflow = 'hidden';
+        if (telegramInput && !telegramInput.value) {
+          var checkTg = setInterval(function() {
+            var v = getTelegramFromWebApp();
+            if (v) {
+              telegramInput.value = v;
+              clearInterval(checkTg);
+            }
+          }, 150);
+          setTimeout(function() { clearInterval(checkTg); }, 3500);
+        }
       }
 
       function closeReferralAccessModal() {
@@ -698,6 +727,18 @@
               localStorage.setItem('referral_confirmed', 'true');
               localStorage.setItem('referral_uid', uid);
             } catch (e) {}
+            var telegram = getTelegramFromWebApp();
+            var profileUrl = apiBase + '/referral-profile?uid=' + encodeURIComponent(uid) + (telegram ? '&telegram=' + encodeURIComponent(telegram) : '');
+            try {
+              var profileRes = await fetch(profileUrl);
+              var profileData = await profileRes.json();
+              if (profileData.success && profileData.uid) {
+                showResultInModal('success', 'Доступ уже открыт', 'Вы уже подтверждённый реферал. Данные в системе — повторно вводить не нужно.', null, '<p><a href="/indicators.html" class="referral-result-link">Перейти к индикаторам →</a></p>');
+                return;
+              }
+            } catch (profileErr) {
+              if (typeof console !== 'undefined' && console.log) console.log('[referral-profile]', profileErr);
+            }
             closeCheckModal();
             openReferralAccessModal(uid);
           } else if (data.success && !data.isReferral) {
