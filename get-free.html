@@ -419,6 +419,10 @@
                 showResult('success', 'Доступ уже открыт', 'Вы уже подтверждённый реферал. Данные в системе повторно вводить не нужно.', null, '<p><a href="/profile.html" class="referral-result-link">Мой профиль →</a></p>');
                 return;
               }
+              if (profileData.error && profileData.error.indexOf('привязан к другому аккаунту') !== -1) {
+                showResult('error', 'Ошибка', profileData.error);
+                return;
+              }
             } catch (profileErr) {
               if (typeof console !== 'undefined' && console.log) console.log('[referral-profile]', profileErr);
             }
@@ -558,22 +562,25 @@
         referralAccessResult.className = 'referral-result';
         referralAccessResult.innerHTML = '';
         var telegramInput = document.getElementById('referral-access-telegram');
-        if (telegramInput) {
+        function fillTelegram() {
+          if (!telegramInput) return false;
           var tg = getTelegramFromWebApp();
-          telegramInput.value = tg || '';
-          telegramInput.placeholder = tg ? '' : '@username или id123456';
+          if (tg) {
+            telegramInput.value = tg;
+            telegramInput.placeholder = '';
+            return true;
+          }
+          return false;
         }
+        fillTelegram();
+        if (telegramInput) telegramInput.placeholder = telegramInput.value ? '' : '@username или id123456';
         referralAccessModal.hidden = false;
         document.body.style.overflow = 'hidden';
         if (telegramInput && !telegramInput.value) {
           var checkTg = setInterval(function() {
-            var v = getTelegramFromWebApp();
-            if (v) {
-              telegramInput.value = v;
-              clearInterval(checkTg);
-            }
+            if (fillTelegram()) clearInterval(checkTg);
           }, 100);
-          setTimeout(function() { clearInterval(checkTg); }, 5000);
+          setTimeout(function() { clearInterval(checkTg); fillTelegram(); }, 5000);
         }
       }
 
@@ -649,7 +656,7 @@
           }
           try { localStorage.setItem('referral_uid', currentReferralUid); } catch (e) {}
           referralAccessResult.className = 'referral-result referral-result-success';
-          referralAccessResult.innerHTML = '<div class="referral-result-title">Готово!</div><p class="referral-result-desc">' + escapeHtml(msg.replace(/\s*Письмо раз в неделю будет приходить на почту\.?\s*/g, '').replace(/\s*Ниже ссылка на сигнальный канал\.?\s*/gi, '').trim()) + '</p><p class="referral-result-desc">Ниже ссылка на сигнальный канал.</p>' + linkHtml;
+          referralAccessResult.innerHTML = '<div class="referral-result-title">Готово!</div><p class="referral-result-desc">Данные приняты!<br>Индикаторы откроются в течение трёх дней.</p><p class="referral-result-desc">&nbsp;</p><p class="referral-result-desc"><u>Одноразовая</u> Ссылка на сигнальный канал.</p>' + linkHtml;
           if (data.inviteLink) {
             var linkEl = referralAccessResult.querySelector('.btn-invite');
             if (linkEl) linkEl.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
@@ -792,6 +799,10 @@
               var profileData = await profileRes.json();
               if (profileData.success && profileData.uid) {
                 showResultInModal('success', 'Доступ уже открыт', 'Вы уже подтверждённый реферал. Данные в системе повторно вводить не нужно.', null, '<p><a href="/profile.html" class="referral-result-link">Мой профиль →</a></p>');
+                return;
+              }
+              if (profileData.error && profileData.error.indexOf('привязан к другому аккаунту') !== -1) {
+                showResultInModal('error', 'Ошибка', profileData.error);
                 return;
               }
             } catch (profileErr) {
