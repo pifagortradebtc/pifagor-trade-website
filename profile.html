@@ -180,7 +180,13 @@
                 var stored = localStorage.getItem('pifagor_telegram_user');
                 if (stored) {
                     var su = JSON.parse(stored);
-                    user = { first_name: su.firstName, last_name: su.lastName, username: su.username, photo_url: su.photoUrl };
+                    user = {
+                        id: su.id,
+                        first_name: su.first_name || su.firstName,
+                        last_name: su.last_name || su.lastName,
+                        username: su.username,
+                        photo_url: su.photo_url || su.photoUrl
+                    };
                 }
             } catch (e) {}
         }
@@ -225,7 +231,7 @@
             if (confirmBtn) confirmBtn.style.display = 'none';
             if (profileDataBlock) profileDataBlock.removeAttribute('hidden');
             if (profileCheckmark) profileCheckmark.removeAttribute('hidden');
-            if (nameEl) { nameEl.textContent = ''; nameEl.style.display = 'none'; }
+            if (nameEl) nameEl.style.display = '';
             var uidEl = document.getElementById('profile-uid');
             if (uidEl && storedUid) uidEl.textContent = storedUid;
         } else {
