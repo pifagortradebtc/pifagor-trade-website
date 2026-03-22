@@ -38,7 +38,7 @@
   }
 
   function getAnalyticsUrl() {
-    var base = (window.ANALYTICS_API_URL || window.API_BASE || '/api').toString().replace(/\/$/, '');
+    var base = (window.API_BASE || window.location.origin + '/api').toString().replace(/\/$/, '');
     return base + '/analytics';
   }
 
@@ -57,27 +57,16 @@
     }
     var url = getAnalyticsUrl();
     var payloadStr = JSON.stringify(payload);
-    var isCrossOrigin = url.indexOf(window.location.origin) !== 0;
-    if (isCrossOrigin) {
+    try {
+      var blob = new Blob([payloadStr], { type: 'application/json' });
+      navigator.sendBeacon(url, blob);
+    } catch (e) {
       fetch(url, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: payloadStr,
-        keepalive: true,
-        mode: 'cors'
+        keepalive: true
       }).catch(function () {});
-    } else {
-      try {
-        var blob = new Blob([payloadStr], { type: 'application/json' });
-        navigator.sendBeacon(url, blob);
-      } catch (e) {
-        fetch(url, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: payloadStr,
-          keepalive: true
-        }).catch(function () {});
-      }
     }
   }
 

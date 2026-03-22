@@ -115,7 +115,7 @@ app.get('/api-config.js', (req, res) => {
 // Аналитика: приём событий от мини-приложения
 const ANALYTICS_FILE = path.join(__dirname, 'analytics.jsonl');
 
-app.post('/api/analytics', (req, res) => {
+app.post('/api/analytics', async (req, res) => {
   res.status(204).end();
   const body = req.body || {};
   const ts = body.ts || new Date().toISOString();
@@ -145,11 +145,31 @@ app.post('/api/analytics', (req, res) => {
     device,
     ...extra,
   }) + '\n';
-  try {
-    fs.appendFileSync(ANALYTICS_FILE, line);
-  } catch (err) {
-    console.error('[analytics] write error:', err.message);
+
+  if (ANALYTICS_API_URL) {
+    const analyticsUrl = ANALYTICS_API_URL.replace(/\/$/, '') + '/analytics';
+    try {
+      await fetch(analyticsUrl, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(body),
+      });
+    } catch (err) {
+      console.error('[analytics] proxy to redesign failed:', err.message);
+      try {
+        fs.appendFileSync(ANALYTICS_FILE, line);
+      } catch (e2) {
+        console.error('[analytics] local fallback write error:', e2.message);
+      }
+    }
+  } else {
+    try {
+      fs.appendFileSync(ANALYTICS_FILE, line);
+    } catch (err) {
+      console.error('[analytics] write error:', err.message);
+    }
   }
+
   if (GOOGLE_SCRIPT_URL) {
     postToGoogleScript({
       type: 'analytics',
