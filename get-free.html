@@ -385,8 +385,10 @@
         resultEl.className = 'referral-result';
         resultEl.innerHTML = '';
 
+        var fetchUrl = apiBase + '/check-referral';
+        var fetchUrlFull = fetchUrl.startsWith('http') ? fetchUrl : new URL(fetchUrl, window.location.origin).href;
         try {
-          const res = await fetch(apiBase + '/check-referral', {
+          const res = await fetch(fetchUrl, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ uid }),
@@ -411,7 +413,9 @@
             showResult('error', 'Ошибка', data.error || data.message || 'Неизвестная ошибка');
           }
         } catch (err) {
-          showResult('error', 'Ошибка', 'Не удалось подключиться к серверу. Попробуйте позже или напишите в поддержку.', null, '<p><a href="https://t.me/pifagor_admin" target="_blank" rel="noopener noreferrer" class="referral-result-link">t.me/pifagor_admin</a></p>');
+          console.error('[check-referral]', fetchUrlFull, err);
+          var errDetail = '<p class="referral-result-debug" style="font-size:0.75rem;opacity:0.8;margin-top:0.5rem;">Запрос: ' + escapeHtml(fetchUrlFull) + '</p>';
+          showResult('error', 'Ошибка', 'Не удалось подключиться к серверу. Попробуйте позже или напишите в поддержку.', null, errDetail + '<p><a href="https://t.me/pifagor_admin" target="_blank" rel="noopener noreferrer" class="referral-result-link">t.me/pifagor_admin</a></p>');
         } finally {
           checkBtn.disabled = false;
           checkBtn.classList.remove('btn-loading');
