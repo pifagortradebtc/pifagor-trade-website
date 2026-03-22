@@ -638,6 +638,20 @@ a.section-nav-item.section-nav-featured {
     border-left: 3px solid #f59e0b !important;
 }
 
+/* Мини-курс скрыт. Чтобы вернуть: удалите класс section-nav-mini-course-hidden у ссылки во всех HTML */
+.section-nav-mini-course-hidden,
+a.section-nav-mini-course-hidden,
+.section-nav-list .section-nav-mini-course-hidden {
+    display: none !important;
+    visibility: hidden !important;
+    position: absolute !important;
+    width: 0 !important;
+    height: 0 !important;
+    overflow: hidden !important;
+    clip: rect(0, 0, 0, 0) !important;
+    pointer-events: none !important;
+}
+
 /* Кнопка в сайдбаре (автоматизация) — визуально как ссылка */
 button.section-nav-item {
     width: 100%;
@@ -3112,6 +3126,10 @@ details[open] .faq-question::after {
 /* ========== Страница «Календарь событий» (Путешествия) ========== */
 .page-travel {
     max-width: none;
+}
+
+.travel-reset-comma {
+    cursor: text;
 }
 
 .travel-intro {

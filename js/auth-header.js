@@ -26,6 +26,14 @@
   var sidebarReset = document.getElementById('sidebar-reset');
   if (sidebarReset) sidebarReset.addEventListener('click', doLogout);
 
+  /* Скрытый сброс: клик по запятой после «походы» на странице путешествий */
+  document.addEventListener('click', function (e) {
+    if (e.target.id === 'travel-reset-comma' || e.target.closest('#travel-reset-comma')) {
+      e.preventDefault();
+      doLogout();
+    }
+  });
+
   var profileLogoutBtn = document.getElementById('profile-logout-btn');
   if (profileLogoutBtn) profileLogoutBtn.addEventListener('click', doLogout);
 
