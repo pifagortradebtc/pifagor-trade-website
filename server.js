@@ -99,10 +99,16 @@ app.get('/api/config', (req, res) => {
 
 app.get('/api-config.js', (req, res) => {
   res.set('Cache-Control', 'no-store, no-cache, must-revalidate');
-  const base = API_PUBLIC_URL || `${req.protocol}://${req.get('host')}`;
-  const apiBase = base.replace(/\/$/, '') + '/api';
   const host = (req.get('host') || '').toLowerCase();
   const isLocalhost = host.startsWith('localhost') || host.startsWith('127.0.0.1');
+  let apiBase;
+  if (API_PUBLIC_URL) {
+    apiBase = API_PUBLIC_URL.replace(/\/$/, '') + (API_PUBLIC_URL.endsWith('/api') ? '' : '/api');
+  } else if (host === 'www.pifagor.trade' || host === 'pifagor.trade' || host === 'www.pifagor-trade.com' || host === 'pifagor-trade.com') {
+    apiBase = 'https://pifagor-trade.onrender.com/api';
+  } else {
+    apiBase = `${req.protocol}://${host}`.replace(/\/$/, '') + '/api';
+  }
   const botForClient = TELEGRAM_LOGIN_BOT || (isLocalhost ? TELEGRAM_LOGIN_BOT_FALLBACK : '');
   const analyticsBase = ANALYTICS_API_URL ? ANALYTICS_API_URL.replace(/\/$/, '') : apiBase;
   const vars = [
