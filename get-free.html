@@ -236,9 +236,8 @@
                 <li>Не забудь указать партнёрский код <strong class="partner-code">24722</strong></li>
                 <li>Пополни на <strong>100 USDT</strong></li>
             </ul>
-            <div class="modal-buttons modal-buttons-with-timer">
+            <div class="modal-buttons">
                 <button type="button" class="btn btn-modal" id="register-modal-btn">Зарегистрироваться на Bybit</button>
-                <span class="register-modal-timer" id="register-modal-timer" aria-live="polite"></span>
             </div>
         </div>
     </div>
@@ -582,53 +581,33 @@
       var closeBtn = document.getElementById('register-modal-close');
       var backdrop = document.getElementById('register-modal-backdrop');
       var registerBtn = document.getElementById('register-modal-btn');
-      var timerEl = document.getElementById('register-modal-timer');
       var BYBIT_REG_URL = 'https://partner.bybit.com/b/24722';
-      var registerCountdownTimer = null;
       var tg = window.Telegram && window.Telegram.WebApp;
 
-      function openBybitUrl(andClose) {
+      function openBybitUrl() {
         if (tg && typeof tg.openLink === 'function') {
           tg.openLink(BYBIT_REG_URL);
         } else {
           var w = window.open(BYBIT_REG_URL, '_blank', 'noopener,noreferrer');
           if (!w) window.location.href = BYBIT_REG_URL;
         }
-        if (andClose) closeModal();
+        closeModal();
       }
 
       function openModal() {
-        openBybitUrl(false);
         modal.hidden = false;
         document.body.style.overflow = 'hidden';
-        if (timerEl) timerEl.textContent = '4';
-        var count = 4;
-        function tick() {
-          if (count > 0) {
-            if (timerEl) timerEl.textContent = count;
-            count--;
-            registerCountdownTimer = setTimeout(tick, 1000);
-          } else {
-            closeModal();
-          }
-        }
-        tick();
       }
 
       function closeModal() {
-        if (registerCountdownTimer) {
-          clearTimeout(registerCountdownTimer);
-          registerCountdownTimer = null;
-        }
         modal.hidden = true;
         document.body.style.overflow = '';
-        if (timerEl) timerEl.textContent = '';
       }
 
       openBtns.forEach(function(btn) { btn.addEventListener('click', openModal); });
       if (closeBtn) closeBtn.addEventListener('click', closeModal);
       if (backdrop) backdrop.addEventListener('click', closeModal);
-      if (registerBtn) registerBtn.addEventListener('click', function() { openBybitUrl(true); });
+      if (registerBtn) registerBtn.addEventListener('click', openBybitUrl);
 
       var checkModal = document.getElementById('check-modal');
       var checkModalClose = document.getElementById('check-modal-close');
