@@ -4,7 +4,7 @@
  *
  * Листы в таблице:
  * - "Путешествия": колонка A=email (подписчики на мероприятия)
- * - "Рефералы": колонки A=uid, B=tradingview, C=telegram (опционально), D=email
+ * - "Рефералы": колонки A=uid, B=tradingview, C=telegram (опционально), D=email, E=tgId (Telegram ID)
  * - "InviteResent": колонка A=uid (рефералы, использовавшие «Потерял ссылку»)
  * - "Аналитика": аналитика событий
  */
@@ -72,6 +72,7 @@ function handleReferral(params) {
   var tradingview = (params.tradingview || params.tradingView || params.TradingView || '').trim();
   var telegram = (params.telegram || '').trim();
   var email = (params.email || '').trim().toLowerCase();
+  var tgId = (params.tgId || params.tg_id || '').toString().trim();
 
   if (!uid) {
     return createResponse({ success: false, error: 'UID не указан' });
@@ -85,9 +86,9 @@ function handleReferral(params) {
 
   var sheet = getOrCreateSheet('Рефералы');
   if (sheet.getLastRow() === 0) {
-    sheet.appendRow(['uid', 'tradingview', 'telegram', 'email']);
+    sheet.appendRow(['uid', 'tradingview', 'telegram', 'email', 'tgId']);
   }
-  var newRow = [uid, tradingview, telegram, email];
+  var newRow = [uid, tradingview, telegram, email, tgId || ''];
   if (rowExistsFull(sheet, newRow)) {
     return createResponse({ success: true, message: 'Эй, не паникуй! Я всё получил. Уже всё есть.' });
   }
@@ -109,12 +110,14 @@ function handleReferral(params) {
 }
 
 /**
- * Возвращает последнюю запись реферала по UID или по Telegram (email, tradingview, telegram).
+ * Возвращает последнюю запись реферала по tgId, UID или Telegram.
+ * Порядок поиска: tgId -> uid -> telegram. При поиске по tgId также учитываются строки с telegram="id{id}".
  */
 function handleReferralProfile(params) {
   var uid = (params.uid || '').trim();
   var telegram = (params.telegram || '').trim();
-  if (!uid && !telegram) return createResponse({ success: false, error: 'UID или Telegram не указан' });
+  var tgId = (params.tgId || params.tg_id || '').toString().trim();
+  if (!uid && !telegram && !tgId) return createResponse({ success: false, error: 'UID, Telegram или tgId не указан' });
   var sheet = getOrCreateSheet('Рефералы');
   if (sheet.getLastRow() < 2) return createResponse({ success: false, error: 'Данные не найдены' });
   var data = sheet.getDataRange().getValues();
@@ -124,13 +127,20 @@ function handleReferralProfile(params) {
     return s.replace(/^@/, '');
   };
   var tgSearch = telegram ? normalizeTg(telegram) : '';
+  var tgIdStr = tgId ? String(tgId).trim() : '';
   for (var i = data.length - 1; i >= 1; i--) {
-    if (uid) {
+    var rowTgId = String(data[i][4] != null ? data[i][4] : '').trim();
+    var colTg = String(data[i][2] != null ? data[i][2] : '').trim();
+    if (tgIdStr && (rowTgId === tgIdStr || colTg === 'id' + tgIdStr || colTg.toLowerCase() === 'id' + tgIdStr)) {
+      last = data[i]; break;
+    }
+    if (!last && uid) {
       var a = String(data[i][0] || '').trim();
       if (a === uid) { last = data[i]; break; }
-    } else if (tgSearch) {
-      var colTg = normalizeTg(data[i][2]);
-      if (colTg === tgSearch || colTg === '@' + tgSearch) { last = data[i]; break; }
+    }
+    if (!last && tgSearch) {
+      var nColTg = normalizeTg(colTg);
+      if (nColTg === tgSearch || nColTg === '@' + tgSearch) { last = data[i]; break; }
     }
   }
   if (!last) return createResponse({ success: false, error: 'Реферал не найден' });
@@ -188,30 +198,40 @@ function uidExistsInColumn(sheet, col, uid) {
 
 /**
  * Добавляет новую строку с изменёнными данными. Колонка F = "изменено".
- * Берёт последнюю запись по UID и подставляет новые значения (если переданы).
+ * Берёт последнюю запись по UID или tgId, подставляет новые значения. При нахождении сохраняет tgId (backfill).
  */
 function handleReferralUpdate(params) {
   var uid = (params.uid || '').trim();
-  if (!uid) return createResponse({ success: false, error: 'UID не указан' });
+  var tgId = (params.tgId || params.tg_id || '').toString().trim();
+  if (!uid && !tgId) return createResponse({ success: false, error: 'UID или tgId не указан' });
   var sheet = getOrCreateSheet('Рефералы');
   if (sheet.getLastRow() < 2) return createResponse({ success: false, error: 'Данные не найдены' });
   var data = sheet.getDataRange().getValues();
-  var u = String(uid).trim();
   var last = null;
   for (var i = data.length - 1; i >= 1; i--) {
-    var a = String(data[i][0] || '').trim();
-    if (a === u) {
-      last = data[i];
-      break;
+    var rowTgId = String(data[i][4] != null ? data[i][4] : '').trim();
+    var colTg = String(data[i][2] != null ? data[i][2] : '').trim();
+    if (tgId && (rowTgId === tgId || colTg === 'id' + tgId || colTg.toLowerCase() === 'id' + tgId)) {
+      last = data[i]; break;
+    }
+    if (uid) {
+      var a = String(data[i][0] || '').trim();
+      if (a === uid) { last = data[i]; break; }
     }
   }
-  if (!last) return createResponse({ success: false, error: 'Реферал с таким UID не найден' });
+  if (!last) {
+    if (uid) return createResponse({ success: false, error: 'Реферал с таким UID не найден' });
+    return createResponse({ success: false, error: 'Реферал не найден' });
+  }
+  var resolvedUid = String(last[0] != null ? last[0] : '').trim();
   var tv = (params.tradingview != null && params.tradingview !== '') ? String(params.tradingview).trim() : String(last[1] != null ? last[1] : '').trim();
   var tg = (params.telegram != null && params.telegram !== '') ? String(params.telegram).trim() : String(last[2] != null ? last[2] : '').trim();
   var em = (params.email != null && params.email !== '') ? String(params.email).trim().toLowerCase() : String(last[3] != null ? last[3] : '').trim().toLowerCase();
+  var savedTgId = (params.tgId != null && params.tgId !== '') ? String(params.tgId).trim() : String(last[4] != null ? last[4] : '').trim();
+  if (tgId && !savedTgId) savedTgId = tgId;
   if (!tv) return createResponse({ success: false, error: 'Укажите никнейм в TradingView' });
   if (!em) return createResponse({ success: false, error: 'Укажите email' });
-  sheet.appendRow([uid, tv, tg, em, '', 'изменено']);
+  sheet.appendRow([resolvedUid, tv, tg, em, savedTgId, 'изменено']);
   return createResponse({ success: true, message: 'Данные обновлены.' });
 }
 

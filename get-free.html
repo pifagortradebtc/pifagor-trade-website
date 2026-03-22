@@ -407,7 +407,11 @@
               localStorage.setItem('referral_uid', uid);
             } catch (e) {}
             var telegram = getTelegramFromWebApp();
-            var profileUrl = apiBase + '/referral-profile?uid=' + encodeURIComponent(uid) + (telegram ? '&telegram=' + encodeURIComponent(telegram) : '');
+            var tgId = getTgIdFromWebApp();
+            var profileParams = ['uid=' + encodeURIComponent(uid)];
+            if (telegram) profileParams.push('telegram=' + encodeURIComponent(telegram));
+            if (tgId) profileParams.push('tgId=' + encodeURIComponent(tgId));
+            var profileUrl = apiBase + '/referral-profile?' + profileParams.join('&');
             try {
               var profileRes = await fetch(profileUrl);
               var profileData = await profileRes.json();
@@ -531,6 +535,20 @@
         return '';
       }
 
+      function getTgIdFromWebApp() {
+        try {
+          var user = null;
+          var tg = window.Telegram && window.Telegram.WebApp;
+          if (tg && tg.initDataUnsafe && tg.initDataUnsafe.user) user = tg.initDataUnsafe.user;
+          if (!user) {
+            var s = localStorage.getItem('pifagor_telegram_user');
+            if (s) try { user = JSON.parse(s); if (user) user.id = user.id || user.Id; } catch (e) {}
+          }
+          if (user && user.id) return String(user.id).trim();
+        } catch (e) {}
+        return '';
+      }
+
       function openReferralAccessModal(uid) {
         currentReferralUid = uid;
         referralAccessForm.reset();
@@ -593,10 +611,12 @@
         var tradingview = (document.getElementById('referral-access-tradingview').value || '').trim();
         var email = (document.getElementById('referral-access-email').value || '').trim().toLowerCase();
         var telegramInput = document.getElementById('referral-access-telegram');
-        var telegram = (telegramInput && telegramInput.value || '').trim() || getTelegramFromWebApp();
+        var telegram = getTelegramFromWebApp() || (telegramInput && telegramInput.value || '').trim();
+        var tgId = getTgIdFromWebApp();
         if (!tradingview || !email || !currentReferralUid) return;
 
         var payload = { uid: currentReferralUid, tradingview: tradingview, telegram: telegram, email: email };
+        if (tgId) payload.tgId = tgId;
         if (typeof console !== 'undefined' && console.log) console.log('[referral] sending:', payload);
 
         referralAccessBtn.disabled = true;
@@ -609,7 +629,7 @@
           var res = await fetch(apiBase + '/referral-access', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ uid: currentReferralUid, tradingview: tradingview, telegram: telegram, email: email }),
+            body: JSON.stringify(Object.assign({ uid: currentReferralUid, tradingview: tradingview, telegram: telegram, email: email }, tgId ? { tgId: tgId } : {})),
           });
           var data = await res.json();
 
@@ -762,7 +782,11 @@
               localStorage.setItem('referral_uid', uid);
             } catch (e) {}
             var telegram = getTelegramFromWebApp();
-            var profileUrl = apiBase + '/referral-profile?uid=' + encodeURIComponent(uid) + (telegram ? '&telegram=' + encodeURIComponent(telegram) : '');
+            var tgId = getTgIdFromWebApp();
+            var profileParams = ['uid=' + encodeURIComponent(uid)];
+            if (telegram) profileParams.push('telegram=' + encodeURIComponent(telegram));
+            if (tgId) profileParams.push('tgId=' + encodeURIComponent(tgId));
+            var profileUrl = apiBase + '/referral-profile?' + profileParams.join('&');
             try {
               var profileRes = await fetch(profileUrl);
               var profileData = await profileRes.json();

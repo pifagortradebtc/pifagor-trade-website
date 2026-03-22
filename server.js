@@ -483,8 +483,9 @@ app.post('/api/referral-access', async (req, res) => {
   const tradingview = (body.tradingview || body.tradingView || body.TradingView || '').trim();
   const telegram = (body.telegram || '').trim();
   const email = (body.email || '').trim().toLowerCase();
+  const tgId = (body.tgId || body.tg_id || '').toString().trim();
 
-  console.log('[referral-access] received:', { uid, tradingview: tradingview || '(empty)', telegram: telegram || '(empty)', email: email ? '***' : '(empty)' });
+  console.log('[referral-access] received:', { uid, tradingview: tradingview || '(empty)', telegram: telegram || '(empty)', email: email ? '***' : '(empty)', hasTgId: !!tgId });
 
   if (!uid) {
     return res.status(400).json({ success: false, error: 'UID не указан' });
@@ -507,8 +508,8 @@ app.post('/api/referral-access', async (req, res) => {
         error: 'GOOGLE_SCRIPT_URL не настроен. Добавьте в .env (или в переменные Render).',
       });
     }
-    const payload = { type: 'referral', uid, tradingview, telegram: telegram || '', email, investorLetterUrl: INVESTOR_LETTER_URL || '' };
-    console.log('[referral-access] sending to Google:', { uid, tradingview: tradingview || '(empty)', hasEmail: !!email });
+    const payload = { type: 'referral', uid, tradingview, telegram: telegram || '', email, tgId: tgId || '', investorLetterUrl: INVESTOR_LETTER_URL || '' };
+    console.log('[referral-access] sending to Google:', { uid, tradingview: tradingview || '(empty)', hasEmail: !!email, hasTgId: !!tgId });
     const data = await postToGoogleScript(payload);
     console.log('[referral-access] Google response:', data.success ? 'OK' : data.error);
     let inviteLink = null;
@@ -551,8 +552,9 @@ app.get('/api/referral-access', (req, res) => {
 app.get('/api/referral-profile', async (req, res) => {
   const uid = (req.query.uid || '').trim();
   const telegram = (req.query.telegram || '').trim();
-  if (!uid && !telegram) {
-    return res.status(400).json({ success: false, error: 'UID или Telegram не указан' });
+  const tgId = (req.query.tgId || req.query.tg_id || '').toString().trim();
+  if (!uid && !telegram && !tgId) {
+    return res.status(400).json({ success: false, error: 'UID, Telegram или tgId не указан' });
   }
   try {
     if (!GOOGLE_SCRIPT_URL) {
@@ -561,6 +563,7 @@ app.get('/api/referral-profile', async (req, res) => {
     const payload = { type: 'referral_profile' };
     if (uid) payload.uid = uid;
     if (telegram) payload.telegram = telegram;
+    if (tgId) payload.tgId = tgId;
     const data = await postToGoogleScript(payload);
     res.json(data);
   } catch (err) {
@@ -574,8 +577,9 @@ app.post('/api/referral-update', async (req, res) => {
   const uid = (body.uid || '').trim();
   const tradingview = (body.tradingview || body.tradingView || '').trim();
   const email = (body.email || '').trim().toLowerCase();
-  if (!uid) {
-    return res.status(400).json({ success: false, error: 'UID не указан' });
+  const tgId = (body.tgId || body.tg_id || '').toString().trim();
+  if (!uid && !tgId) {
+    return res.status(400).json({ success: false, error: 'UID или tgId не указан' });
   }
   if (email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
     return res.status(400).json({ success: false, error: 'Некорректный email' });
@@ -584,7 +588,9 @@ app.post('/api/referral-update', async (req, res) => {
     if (!GOOGLE_SCRIPT_URL) {
       return res.status(500).json({ success: false, error: 'GOOGLE_SCRIPT_URL не настроен' });
     }
-    const payload = { type: 'referral_update', uid };
+    const payload = { type: 'referral_update' };
+    if (uid) payload.uid = uid;
+    if (tgId) payload.tgId = tgId;
     if (tradingview) payload.tradingview = tradingview;
     if (email) payload.email = email;
     const data = await postToGoogleScript(payload);
