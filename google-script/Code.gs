@@ -5,6 +5,8 @@
  * Листы в таблице:
  * - "Путешествия": колонка A=email (подписчики на мероприятия)
  * - "Рефералы": колонки A=uid, B=tradingview, C=telegram (опционально), D=email
+ * - "InviteResent": колонка A=uid (рефералы, использовавшие «Потерял ссылку»)
+ * - "Аналитика": аналитика событий
  */
 
 function doPost(e) {
@@ -33,6 +35,8 @@ function doPost(e) {
       output = handleReferralProfile(params);
     } else if (type === 'referral_update') {
       output = handleReferralUpdate(params);
+    } else if (type === 'invite_resent') {
+      output = handleInviteResent(params);
     } else {
       output = handleSubscribe(params);
     }
@@ -63,6 +67,7 @@ function handleSubscribe(params) {
 }
 
 function handleReferral(params) {
+  params = params || {};
   var uid = (params.uid || '').trim();
   var tradingview = (params.tradingview || params.tradingView || params.TradingView || '').trim();
   var telegram = (params.telegram || '').trim();
@@ -87,6 +92,16 @@ function handleReferral(params) {
     return createResponse({ success: true, message: 'Эй, не паникуй! Я всё получил. Уже всё есть.' });
   }
   sheet.appendRow(newRow);
+  var letterUrl = (params.investorLetterUrl || '').toString().trim();
+  if (letterUrl && email) {
+    try {
+      MailApp.sendEmail(email, 'Письмо инвесторам — Pifagor Trade', '', {
+        htmlBody: '<p>Добрый день, большое спасибо, что являетесь рефералом. Как я и сказал, для вас в этом нет никакой платы, никаких дополнительных затрат. Надеюсь, что мой контент и мои разработки будут вам полезны.</p><p>Это ваше первое письмо инвестору: <a href="' + letterUrl + '">Письмо инвестору</a></p><p>Вы можете всегда посмотреть последнюю версию в приложении или на веб-сайте в своем профиле в разделе «Письмо инвестору».</p><p>Спасибо, удачи нам с вами на рынке.</p>'
+      });
+    } catch (mailErr) {
+      Logger.log('Ошибка отправки письма инвестора на ' + email + ': ' + (mailErr.message || String(mailErr)));
+    }
+  }
   return createResponse({
     success: true,
     message: 'Данные приняты. Индикаторы откроются в течение 3 дней. Письмо раз в неделю будет приходить на почту. Ниже ссылка на сигнальный канал.'
@@ -119,13 +134,56 @@ function handleReferralProfile(params) {
     }
   }
   if (!last) return createResponse({ success: false, error: 'Реферал не найден' });
+  var lastUid = String(last[0] != null ? last[0] : '').trim();
+  var inviteResentUsed = inviteResentUsedForUid(lastUid);
   return createResponse({
     success: true,
-    uid: String(last[0] != null ? last[0] : '').trim(),
+    uid: lastUid,
     email: String(last[3] != null ? last[3] : '').trim(),
     tradingview: String(last[1] != null ? last[1] : '').trim(),
-    telegram: String(last[2] != null ? last[2] : '').trim()
+    telegram: String(last[2] != null ? last[2] : '').trim(),
+    inviteResentUsed: inviteResentUsed
   });
+}
+
+/**
+ * Обработка «Потерял ссылку»: action 'check' — проверка, 'mark' — пометить использованным.
+ */
+function handleInviteResent(params) {
+  params = params || {};
+  var uid = (params.uid || '').trim();
+  var action = (params.action || 'check').toString().toLowerCase();
+  if (!uid) return createResponse({ success: false, error: 'UID не указан' });
+  var sheet = getOrCreateSheet('InviteResent');
+  if (sheet.getLastRow() === 0) sheet.appendRow(['uid']);
+  var used = uidExistsInColumn(sheet, 1, uid);
+  if (action === 'check') return createResponse({ success: true, alreadyUsed: used });
+  if (action === 'mark') {
+    if (used) return createResponse({ success: true, alreadyUsed: true });
+    sheet.appendRow([uid]);
+    return createResponse({ success: true });
+  }
+  return createResponse({ success: false, error: 'Неизвестный action' });
+}
+
+function inviteResentUsedForUid(uid) {
+  if (!uid) return false;
+  try {
+    var ss = getSpreadsheet();
+    var sheet = ss.getSheetByName('InviteResent');
+    if (!sheet || sheet.getLastRow() < 2) return false;
+    return uidExistsInColumn(sheet, 1, uid);
+  } catch (e) { return false; }
+}
+
+function uidExistsInColumn(sheet, col, uid) {
+  var data = sheet.getDataRange().getValues();
+  var u = String(uid || '').trim();
+  if (data.length <= 1) return false;
+  for (var i = 1; i < data.length; i++) {
+    if (String(data[i][col - 1] || '').trim() === u) return true;
+  }
+  return false;
 }
 
 /**
@@ -183,6 +241,14 @@ function doGet(e) {
     ok: true,
     message: 'Скрипт работает. Используйте POST для отправки данных.'
   })).setMimeType(ContentService.MimeType.JSON);
+}
+
+/**
+ * Запустите ОДИН РАЗ вручную: выбрать testGmailAuth → Выполнить.
+ * Откроет окно авторизации Gmail. После этого письма рефералам будут отправляться.
+ */
+function testGmailAuth() {
+  MailApp.sendEmail(Session.getActiveUser().getEmail(), 'Тест Gmail — Pifagor Trade', 'Если вы получили это письмо — авторизация работает.');
 }
 
 function doOptions(e) {

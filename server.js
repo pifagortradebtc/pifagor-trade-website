@@ -23,6 +23,7 @@ const TELEGRAM_SIGNAL_LINK = (process.env.TELEGRAM_SIGNAL_LINK || '').trim();
 const TELEGRAM_BOT_TOKEN = (process.env.TELEGRAM_BOT_TOKEN || '').trim();
 const TELEGRAM_CHAT_ID = (process.env.TELEGRAM_CHAT_ID || '').trim();
 const GOOGLE_SCRIPT_URL = (process.env.GOOGLE_SCRIPT_URL || '').trim();
+const INVESTOR_LETTER_URL = (process.env.INVESTOR_LETTER_URL || '').trim();
 const GOOGLE_SHEET_URL = (process.env.GOOGLE_SHEET_URL || '').trim();
 
 async function createTelegramInviteLink() {
@@ -496,7 +497,7 @@ app.post('/api/referral-access', async (req, res) => {
         error: 'GOOGLE_SCRIPT_URL не настроен. Добавьте в .env (или в переменные Render).',
       });
     }
-    const payload = { type: 'referral', uid, tradingview, telegram: telegram || '', email };
+    const payload = { type: 'referral', uid, tradingview, telegram: telegram || '', email, investorLetterUrl: INVESTOR_LETTER_URL || '' };
     console.log('[referral-access] sending to Google:', { uid, tradingview: tradingview || '(empty)', hasEmail: !!email });
     const data = await postToGoogleScript(payload);
     console.log('[referral-access] Google response:', data.success ? 'OK' : data.error);
