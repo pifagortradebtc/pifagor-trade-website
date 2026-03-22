@@ -117,7 +117,13 @@ app.post('/api/analytics', (req, res) => {
   const tgId = body.tg && body.tg.id ? String(body.tg.id) : '';
   const tgUsername = body.tg && body.tg.username ? String(body.tg.username).slice(0, 100) : '';
   const extra = {};
-  ['element', 'href', 'durationSec', 'title', 'lessonIndex', 'progress'].forEach((k) => {
+  const client = (body.client || 'website').toString().slice(0, 20);
+  const device = (body.device || 'desktop').toString().slice(0, 20);
+  [
+    'element', 'href', 'durationSec', 'title', 'lessonIndex', 'progress',
+    'sessionDurationSec', 'startParam', 'modalId', 'inputId', 'valueLength',
+    'result', 'source', 'error', 'externalUrl', 'uid'
+  ].forEach((k) => {
     if (body[k] !== undefined) extra[k] = String(body[k]).slice(0, 500);
   });
   const line = JSON.stringify({
@@ -127,6 +133,8 @@ app.post('/api/analytics', (req, res) => {
     sessionId,
     tgId,
     tgUsername,
+    client,
+    device,
     ...extra,
   }) + '\n';
   try {

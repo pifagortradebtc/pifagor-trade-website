@@ -56,16 +56,28 @@
       for (var k in data) if (data.hasOwnProperty(k)) payload[k] = data[k];
     }
     var url = getAnalyticsUrl();
-    try {
-      var blob = new Blob([JSON.stringify(payload)], { type: 'application/json' });
-      navigator.sendBeacon(url, blob);
-    } catch (e) {
+    var payloadStr = JSON.stringify(payload);
+    var isCrossOrigin = url.indexOf(window.location.origin) !== 0;
+    if (isCrossOrigin) {
       fetch(url, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(payload),
-        keepalive: true
+        body: payloadStr,
+        keepalive: true,
+        mode: 'cors'
       }).catch(function () {});
+    } else {
+      try {
+        var blob = new Blob([payloadStr], { type: 'application/json' });
+        navigator.sendBeacon(url, blob);
+      } catch (e) {
+        fetch(url, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: payloadStr,
+          keepalive: true
+        }).catch(function () {});
+      }
     }
   }
 
@@ -81,15 +93,48 @@
     document.addEventListener('click', function (e) {
       var el = e.target.closest('a, button, [data-track]');
       if (!el) return;
+
+      var href = el.href || '';
+      var isExternal = href && (href.indexOf('http') === 0) && (el.target === '_blank' || el.hasAttribute('target'));
+      if (isExternal) {
+        var domain = '';
+        try {
+          domain = new URL(href).hostname.replace(/^www\./, '');
+        } catch (err) {}
+        send('external_click', {
+          element: (el.getAttribute('data-track') || el.textContent || '').trim().slice(0, 80),
+          externalUrl: domain || href.slice(0, 200)
+        });
+        return;
+      }
+
       var label = el.getAttribute('data-track') ||
         (el.querySelector('.home-nav-label') && el.querySelector('.home-nav-label').textContent) ||
         (el.querySelector('.home-cta-banner-text') && el.querySelector('.home-cta-banner-text').textContent) ||
         (el.querySelector('.home-banner-text') && el.querySelector('.home-banner-text').textContent) ||
         (el.textContent || '').trim().slice(0, 80);
-      var href = el.href || '';
       var id = el.id || '';
       send('click', { element: label || id || el.tagName, href: href ? href.replace(/^https?:\/\/[^/]+/, '') : '' });
     }, true);
+
+    var modalIds = [
+      'automation-modal', 'uid-help-modal', 'account-referral-modal', 'register-modal',
+      'referral-access-modal', 'check-modal', 'login-modal'
+    ];
+    modalIds.forEach(function (modalId) {
+      var modal = document.getElementById(modalId);
+      if (!modal) return;
+      try {
+        var obs = new MutationObserver(function (mutations) {
+          mutations.forEach(function (m) {
+            if (m.attributeName !== 'hidden') return;
+            var isHidden = modal.hasAttribute('hidden');
+            send(isHidden ? 'modal_close' : 'modal_open', { modalId: modalId });
+          });
+        });
+        obs.observe(modal, { attributes: true, attributeFilter: ['hidden'] });
+      } catch (e) {}
+    });
 
     window.addEventListener('pagehide', function () {
       var enter = 0;

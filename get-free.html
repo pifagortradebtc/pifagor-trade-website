@@ -99,8 +99,8 @@
             <section id="not-referral-block" class="not-referral-block not-referral-block-visual">
                 <h2 class="section-title">Один шаг<br><span class="get-free-arrow" aria-hidden="true">↓</span></h2>
                 <div class="access-options">
-                    <button type="button" class="btn btn-option btn-option-primary" id="open-register-modal-2">Зарегистрироваться на Bybit</button>
-                    <button type="button" class="btn btn-option" id="open-account-referral-modal">Зарегистрирован, но не ваш реферал</button>
+                    <button type="button" class="btn btn-option btn-option-primary" id="open-register-modal-2" data-track="Зарегистрироваться на Bybit">Зарегистрироваться на Bybit</button>
+                    <button type="button" class="btn btn-option" id="open-account-referral-modal" data-track="Зарегистрирован, но не ваш реферал">Зарегистрирован, но не ваш реферал</button>
                 </div>
             </section>
 
@@ -218,7 +218,7 @@
             <h2 class="modal-title account-referral-title" id="account-referral-modal-title">Не волнуйтесь, перенос займёт одну минуту.</h2>
             <div class="faq-answer account-referral-content">
                 <p class="account-referral-arrow">↓</p>
-                <p class="account-referral-step-row"><span class="account-referral-check">✓</span><span class="account-referral-num">1.</span> <a href="https://www.bybit.com/ru-RU/aff-bind?affiliate_id=24722" target="_blank" rel="noopener noreferrer" class="faq-link" id="account-referral-link">https://www.bybit.com/ru-RU/aff-bind?affiliate_id=24722</a> <button type="button" class="btn-copy-link btn-copy-link-lg" aria-label="Скопировать ссылку" title="Скопировать">📋</button></p>
+                <p class="account-referral-step-row"><span class="account-referral-check">✓</span><span class="account-referral-num">1.</span> <a href="https://www.bybit.com/ru-RU/aff-bind?affiliate_id=24722" target="_blank" rel="noopener noreferrer" class="faq-link" id="account-referral-link" data-track="Ссылка Bybit aff-bind">https://www.bybit.com/ru-RU/aff-bind?affiliate_id=24722</a> <button type="button" class="btn-copy-link btn-copy-link-lg" aria-label="Скопировать ссылку" title="Скопировать">📋</button></p>
                 <p class="account-referral-hint-row account-referral-hint-small">Скопируйте в браузер, где вы залогинены в Bybit</p>
                 <p class="account-referral-hint-small account-referral-hint-line2">Или пройдите по ссылке и залогиньтесь.</p>
                 <p><span class="account-referral-check">✓</span><span class="account-referral-num">2.</span> Введите реферальный код <strong>24722</strong></p>
@@ -236,7 +236,7 @@
                 <li>Не забудь указать партнёрский код <strong class="partner-code">24722</strong></li>
                 <li>Пополни на <strong>100 USDT</strong></li>
             </ul>
-            <p class="register-modal-link-row">Нажми на ссылку: <a href="https://partner.bybit.com/b/24722" target="_blank" rel="noopener noreferrer" class="register-modal-link" id="register-modal-link">https://partner.bybit.com/b/24722</a> <button type="button" class="btn-copy-link" aria-label="Скопировать" title="Скопировать" id="register-copy-btn">📋</button></p>
+            <p class="register-modal-link-row">Нажми на ссылку: <a href="https://partner.bybit.com/b/24722" target="_blank" rel="noopener noreferrer" class="register-modal-link" id="register-modal-link" data-track="Зарегистрироваться на Bybit (модалка)">https://partner.bybit.com/b/24722</a> <button type="button" class="btn-copy-link" aria-label="Скопировать" title="Скопировать" id="register-copy-btn">📋</button></p>
         </div>
     </div>
 
@@ -580,21 +580,37 @@
       var backdrop = document.getElementById('register-modal-backdrop');
       var registerLink = document.getElementById('register-modal-link');
       var registerCopyBtn = document.getElementById('register-copy-btn');
-      var BYBIT_REG_URL = 'https://partner.bybit.com/b/24722';
+      var BYBIT_REG_HTTPS = 'https://partner.bybit.com/b/24722';
+      var BYBIT_AFFBIND_HTTPS = 'https://www.bybit.com/ru-RU/aff-bind?affiliate_id=24722';
+      var isAndroid = /Android/i.test(navigator.userAgent);
+
+      function getBybitUrl(httpsUrl) {
+        if (!isAndroid) return httpsUrl;
+        var encoded = encodeURIComponent(httpsUrl);
+        return 'intent://' + httpsUrl.replace(/^https?:\/\//, '') + '#Intent;scheme=https;package=com.bybit.app;S.browser_fallback_url=' + encoded + ';end';
+      }
+
+      function applyBybitIntentLinks() {
+        if (!isAndroid) return;
+        document.querySelectorAll('a[href*="partner.bybit.com/b/24722"]').forEach(function(a) { a.href = getBybitUrl(BYBIT_REG_HTTPS); });
+        document.querySelectorAll('a[href*="bybit.com/ru-RU/aff-bind"]').forEach(function(a) { a.href = getBybitUrl(BYBIT_AFFBIND_HTTPS); });
+      }
+      applyBybitIntentLinks();
+
       var tg = window.Telegram && window.Telegram.WebApp;
 
       if (registerLink) {
         registerLink.addEventListener('click', function(e) {
           if (tg && typeof tg.openLink === 'function') {
             e.preventDefault();
-            tg.openLink(BYBIT_REG_URL);
+            tg.openLink(getBybitUrl(BYBIT_REG_HTTPS));
           }
           closeModal();
         });
       }
       if (registerCopyBtn) {
         registerCopyBtn.addEventListener('click', function() {
-          navigator.clipboard.writeText(BYBIT_REG_URL).then(function() {
+          navigator.clipboard.writeText(BYBIT_REG_HTTPS).then(function() {
             registerCopyBtn.textContent = '✓';
             setTimeout(function() { registerCopyBtn.textContent = '📋'; }, 1500);
           });
