@@ -2184,6 +2184,27 @@ details[open] .faq-question::after {
     min-width: 0;
 }
 
+.register-modal-link-row {
+    margin-top: 1rem;
+    font-size: 0.95rem;
+    line-height: 1.5;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+}
+
+.register-modal-link {
+    color: var(--accent);
+    text-decoration: underline;
+    cursor: pointer;
+    word-break: break-all;
+}
+
+.register-modal-link:hover {
+    filter: brightness(1.2);
+}
+
 .register-modal-timer {
     font-family: 'JetBrains Mono', 'Consolas', monospace;
     font-size: 0.875rem;

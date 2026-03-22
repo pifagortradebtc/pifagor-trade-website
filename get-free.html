@@ -236,9 +236,7 @@
                 <li>Не забудь указать партнёрский код <strong class="partner-code">24722</strong></li>
                 <li>Пополни на <strong>100 USDT</strong></li>
             </ul>
-            <div class="modal-buttons">
-                <a href="https://partner.bybit.com/b/24722" target="_blank" rel="noopener noreferrer" class="btn btn-modal" id="register-modal-btn">Зарегистрироваться на Bybit</a>
-            </div>
+            <p class="register-modal-link-row">Нажми на ссылку: <a href="https://partner.bybit.com/b/24722" target="_blank" rel="noopener noreferrer" class="register-modal-link" id="register-modal-link">https://partner.bybit.com/b/24722</a> <button type="button" class="btn-copy-link" aria-label="Скопировать" title="Скопировать" id="register-copy-btn">📋</button></p>
         </div>
     </div>
 
@@ -580,17 +578,26 @@
       var openBtns = document.querySelectorAll('#open-register-modal-2');
       var closeBtn = document.getElementById('register-modal-close');
       var backdrop = document.getElementById('register-modal-backdrop');
-      var registerBtn = document.getElementById('register-modal-btn');
+      var registerLink = document.getElementById('register-modal-link');
+      var registerCopyBtn = document.getElementById('register-copy-btn');
       var BYBIT_REG_URL = 'https://partner.bybit.com/b/24722';
       var tg = window.Telegram && window.Telegram.WebApp;
 
-      if (registerBtn) {
-        registerBtn.addEventListener('click', function(e) {
+      if (registerLink) {
+        registerLink.addEventListener('click', function(e) {
           if (tg && typeof tg.openLink === 'function') {
             e.preventDefault();
             tg.openLink(BYBIT_REG_URL);
           }
           closeModal();
+        });
+      }
+      if (registerCopyBtn) {
+        registerCopyBtn.addEventListener('click', function() {
+          navigator.clipboard.writeText(BYBIT_REG_URL).then(function() {
+            registerCopyBtn.textContent = '✓';
+            setTimeout(function() { registerCopyBtn.textContent = '📋'; }, 1500);
+          });
         });
       }
 
