@@ -10,7 +10,7 @@
   if (window.API_BASE_OVERRIDE) {
     window.API_BASE = window.API_BASE_OVERRIDE;
   } else if (h === 'www.pifagor.trade' || h === 'www.pifagor-trade.com') {
-    window.API_BASE = 'https://pifagor.trade/api';
+    window.API_BASE = 'https://pifagor-trade.onrender.com/api';
   } else {
     window.API_BASE = window.location.origin + '/api';
   }
