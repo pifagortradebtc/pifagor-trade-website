@@ -7,10 +7,13 @@
   if (typeof window === 'undefined') return;
   if (window.API_BASE) return;
   var h = (window.location.hostname || '').toLowerCase();
+  var apiHost = 'https://pifagor-trade.onrender.com/api';
+  var needApi = h === 'pifagor.trade' || h === 'www.pifagor.trade' ||
+    h === 'pifagor-trade.com' || h === 'www.pifagor-trade.com';
   if (window.API_BASE_OVERRIDE) {
     window.API_BASE = window.API_BASE_OVERRIDE;
-  } else if (h === 'www.pifagor.trade' || h === 'www.pifagor-trade.com') {
-    window.API_BASE = 'https://pifagor-trade.onrender.com/api';
+  } else if (needApi) {
+    window.API_BASE = apiHost;
   } else {
     window.API_BASE = window.location.origin + '/api';
   }
