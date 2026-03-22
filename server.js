@@ -88,6 +88,14 @@ const ANALYTICS_API_URL = (process.env.ANALYTICS_API_URL || '').trim();
 const TELEGRAM_LOGIN_BOT = (process.env.TELEGRAM_LOGIN_BOT || '').trim();
 const TELEGRAM_LOGIN_BOT_FALLBACK = 'testminiappifbot';
 
+app.get('/api/config', (req, res) => {
+  res.set('Cache-Control', 'no-store, no-cache, must-revalidate');
+  const base = API_PUBLIC_URL || `${req.protocol}://${req.get('host')}`;
+  const apiBase = base.replace(/\/$/, '') + '/api';
+  const analyticsBase = ANALYTICS_API_URL ? ANALYTICS_API_URL.replace(/\/$/, '') : apiBase;
+  res.json({ apiBase, analyticsApiUrl: analyticsBase });
+});
+
 app.get('/api-config.js', (req, res) => {
   res.set('Cache-Control', 'no-store, no-cache, must-revalidate');
   const base = API_PUBLIC_URL || `${req.protocol}://${req.get('host')}`;
@@ -156,7 +164,29 @@ app.post('/api/analytics', (req, res) => {
   }
 });
 
-app.use(express.static(path.join(__dirname)));
+const STATIC_DIR = path.join(__dirname);
+function injectConfigIntoHtml(html) {
+  const configScript = '<script>(function(){try{var x=new XMLHttpRequest();x.open("GET","/api/config",false);x.send();if(x.status===200){var c=JSON.parse(x.responseText);if(c.apiBase)window.API_BASE=c.apiBase;if(c.analyticsApiUrl)window.ANALYTICS_API_URL=c.analyticsApiUrl;}}catch(e){}})();</script>';
+  const headClose = html.indexOf('</head>');
+  if (headClose !== -1) {
+    return html.slice(0, headClose) + configScript + html.slice(headClose);
+  }
+  return html;
+}
+app.use((req, res, next) => {
+  if (!req.path.endsWith('.html') && req.path !== '/') return next();
+  const filePath = req.path === '/' ? path.join(STATIC_DIR, 'index.html') : path.join(STATIC_DIR, req.path);
+  if (!fs.existsSync(filePath) || !fs.statSync(filePath).isFile()) return next();
+  try {
+    let html = fs.readFileSync(filePath, 'utf8');
+    html = injectConfigIntoHtml(html);
+    res.setHeader('Content-Type', 'text/html; charset=utf-8');
+    res.send(html);
+  } catch (e) {
+    next();
+  }
+});
+app.use(express.static(STATIC_DIR));
 
 app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, 'index.html'));
