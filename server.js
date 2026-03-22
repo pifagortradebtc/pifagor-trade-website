@@ -91,7 +91,12 @@ const TELEGRAM_LOGIN_BOT_FALLBACK = 'testminiappifbot';
 
 app.get('/api/config', (req, res) => {
   res.set('Cache-Control', 'no-store, no-cache, must-revalidate');
-  const base = API_PUBLIC_URL || `${req.protocol}://${req.get('host')}`;
+  const reqHost = (req.get('host') || '').toLowerCase();
+  const reqOrigin = `${req.protocol}://${reqHost}`.replace(/\/$/, '');
+  // Same-origin для production — избегаем CORS и ERR_INVALID_REDIRECT
+  const useSameOrigin = /^(www\.)?(pifagor\.trade|pifagor-trade\.com)$/.test(reqHost) ||
+    reqHost.endsWith('.onrender.com');
+  const base = useSameOrigin ? reqOrigin : (API_PUBLIC_URL || reqOrigin);
   const apiBase = base.replace(/\/$/, '') + '/api';
   const analyticsBase = ANALYTICS_API_URL ? ANALYTICS_API_URL.replace(/\/$/, '') : apiBase;
   res.json({ apiBase, analyticsApiUrl: analyticsBase });
@@ -104,9 +109,8 @@ app.get('/api-config.js', (req, res) => {
   let apiBase;
   if (API_PUBLIC_URL) {
     apiBase = API_PUBLIC_URL.replace(/\/$/, '') + (API_PUBLIC_URL.endsWith('/api') ? '' : '/api');
-  } else if (host === 'www.pifagor.trade' || host === 'pifagor.trade' || host === 'www.pifagor-trade.com' || host === 'pifagor-trade.com') {
-    apiBase = 'https://pifagor-trade.onrender.com/api';
   } else {
+    // Same-origin: избегаем CORS и ERR_INVALID_REDIRECT при www/non-www
     apiBase = `${req.protocol}://${host}`.replace(/\/$/, '') + '/api';
   }
   const botForClient = TELEGRAM_LOGIN_BOT || (isLocalhost ? TELEGRAM_LOGIN_BOT_FALLBACK : '');
